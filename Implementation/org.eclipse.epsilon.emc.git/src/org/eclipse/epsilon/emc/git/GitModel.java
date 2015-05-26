@@ -9,6 +9,7 @@ import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.epsilon.eol.exceptions.models.EolNotInstantiableModelElementTypeException;
 import org.eclipse.epsilon.eol.models.CachedModel;
 
+@SuppressWarnings("rawtypes")
 public class GitModel extends CachedModel {
 
 	@Override
