@@ -1,3 +1,6 @@
+Tests/Repositories/*
+!Tests/Repositories/not-a-git-repository/
+
 *.pydevproject
 .metadata
 .gradle
@@ -44,3 +47,4 @@ local.properties
 
 # virtual machine crash logs, see http://www.java.com/en/download/help/error_hotspot.xml
 hs_err_pid*
+Tests/Repositories/not-a-git-repository/.DS_Store
