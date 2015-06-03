@@ -17,6 +17,7 @@ import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
+import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
@@ -83,7 +84,10 @@ public class GitModel extends CachedModel {
 
 	@Override
 	public String getElementId(Object instance) {
-		// TODO Auto-generated method stub
+		if(instance instanceof RevObject) {
+			RevObject revObjectInstance = (RevObject)instance;
+			return revObjectInstance.getId().toString();
+		}
 		return null;
 	}
 

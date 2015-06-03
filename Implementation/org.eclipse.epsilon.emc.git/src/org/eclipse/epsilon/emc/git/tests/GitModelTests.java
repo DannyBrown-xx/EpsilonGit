@@ -7,8 +7,14 @@ import java.io.IOException;
 
 import org.eclipse.epsilon.emc.git.GitModel;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
+import org.eclipse.jgit.errors.CorruptObjectException;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
+import org.eclipse.jgit.errors.MissingObjectException;
+import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
+import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.treewalk.TreeWalk;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
@@ -68,16 +74,25 @@ public class GitModelTests {
 	@Test
 	public void getElementByIdNonExistantTag() {
 		RevTag tag = (RevTag) linuxGitModel.getElementById("986aef29e5bff76d9844d62218b9b7c264531a4a"); //Non-existent hash
-		assertEquals(null, tag);
+		assertNull(tag);
 	}
 	
 	@Test
-	public void getElementByIdValidTree() {
-
+	public void getElementByIdValidTree() throws Exception {
+		RevTree tree = (RevTree) linuxGitModel.getElementById("0059e6d4b4c6cc34465ed6c4cf734af40cc06ba5");
+		TreeWalk treeWalk = new TreeWalk(linuxGitModel.getJGitRepository());
+		treeWalk.addTree(tree);
+        treeWalk.setRecursive(true);
+        while(treeWalk.next()) {
+        	System.out.println(treeWalk.getPathString());
+        }
+        String lastObjectInTree = treeWalk.getPathString();
+		assertEquals("workqueue_internal.h", lastObjectInTree);
 	}
 	
 	@Test
 	public void getElementByIdNonExistantTree() {
-		
+		RevTree tree = (RevTree) linuxGitModel.getElementById("0059e6d4b4c6cc34465ed6c4cf555af40cc06ba5"); //Non-existent hash
+		assertNull(tree);
 	}
 }
