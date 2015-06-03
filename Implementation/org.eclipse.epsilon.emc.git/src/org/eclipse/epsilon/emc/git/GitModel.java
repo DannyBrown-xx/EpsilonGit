@@ -10,11 +10,16 @@ import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundExce
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.epsilon.eol.exceptions.models.EolNotInstantiableModelElementTypeException;
 import org.eclipse.epsilon.eol.models.CachedModel;
+import org.eclipse.jgit.lib.Constants;
+import org.eclipse.jgit.lib.ObjectId;
+import org.eclipse.jgit.lib.ObjectLoader;
+import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevTree;
+import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
 @SuppressWarnings("rawtypes")
@@ -40,19 +45,39 @@ public class GitModel extends CachedModel {
 	@Override
 	public Object getEnumerationValue(String enumeration, String label)
 			throws EolEnumerationValueNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		// No enumerations
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public String getTypeNameOf(Object instance) {
-		// TODO Auto-generated method stub
-		return null;
+		return instance.getClass().getSimpleName();
 	}
 
 	@Override
 	public Object getElementById(String id) {
-		// TODO Auto-generated method stub
+		ObjectId elementId = ObjectId.fromString(id);
+		ObjectReader objectReader = repository.newObjectReader();
+		ObjectLoader objectLoader = null;
+		try {
+			objectLoader = objectReader.open(elementId);
+			switch(objectLoader.getType()) {
+				case Constants.OBJ_BLOB:
+					return null;
+				case Constants.OBJ_TREE:
+					RevTree tree = new RevWalk(repository).lookupTree(elementId);
+					return tree;
+				case Constants.OBJ_COMMIT:
+					RevCommit commit = RevCommit.parse(objectLoader.getBytes());
+					return commit;
+				case Constants.OBJ_TAG:
+					RevTag tag = RevTag.parse(objectLoader.getBytes());
+					return tag;
+			}
+		} 
+		catch (IOException e) {
+			return null;
+		}
 		return null;
 	}
 
@@ -116,14 +141,18 @@ public class GitModel extends CachedModel {
 
 	@Override
 	public boolean store(String location) {
-		// TODO Auto-generated method stub
-		return false;
+		// Store isn't analogous to commit, so doesn't make sense to include 
+		// Additionally, the aim of this module is to provide query and analysis
+		// so nothing to change and need to be stored.
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
 	public boolean store() {
-		// TODO Auto-generated method stub
-		return false;
+		// Store isn't analogous to commit, so doesn't make sense to include 
+		// Additionally, the aim of this module is to provide query and analysis
+		// so nothing to change and need to be stored.
+		throw new UnsupportedOperationException();
 	}
 
 	@Override
