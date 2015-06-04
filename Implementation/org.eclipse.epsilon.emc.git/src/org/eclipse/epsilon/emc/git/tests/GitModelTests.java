@@ -95,4 +95,10 @@ public class GitModelTests {
 		RevTree tree = (RevTree) linuxGitModel.getElementById("0059e6d4b4c6cc34465ed6c4cf555af40cc06ba5"); //Non-existent hash
 		assertNull(tree);
 	}
+	
+	@Test(expected = IllegalArgumentException.class) 
+	public void getElementByIdInvalidIdHash() {
+		RevCommit commit = (RevCommit) linuxGitModel.getElementById("This isn't a valid @£$%%^&&*( hash");
+		assertNull(commit);
+	}
 }
