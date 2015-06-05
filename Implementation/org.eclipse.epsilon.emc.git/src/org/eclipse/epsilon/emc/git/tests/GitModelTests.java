@@ -7,10 +7,6 @@ import java.io.IOException;
 
 import org.eclipse.epsilon.emc.git.GitModel;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
-import org.eclipse.jgit.errors.CorruptObjectException;
-import org.eclipse.jgit.errors.IncorrectObjectTypeException;
-import org.eclipse.jgit.errors.MissingObjectException;
-import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevTree;
@@ -39,6 +35,7 @@ public class GitModelTests {
 		linuxGitModel.load();
 	}
 	
+	//region load tests
 	@Test(expected = EolModelLoadingException.class)  
 	public void loadNonVersionedDirectory() throws EolModelLoadingException, IOException {
 		GitModel gitModel = new GitModel(new File(TEST_GIT_REPOSITORIES_LOCATION + "not-a-git-repository"));
@@ -52,7 +49,9 @@ public class GitModelTests {
 		gitModel.load();
 		assertEquals(simpleGitRepositoryLocation, gitModel.getJGitRepository().getDirectory());
 	}
+	//endregion;
 	
+	//region getElementById tests
 	@Test
 	public void getElementByIdValidCommit() {
 		RevCommit commit = (RevCommit)emcJsonGitModel.getElementById("079fa68889e1c25649cf02341d79d0b0c4d5bffe");
@@ -101,4 +100,34 @@ public class GitModelTests {
 		RevCommit commit = (RevCommit) linuxGitModel.getElementById("This isn't a valid @£$%%^&&*( hash");
 		assertNull(commit);
 	}
+	
+	//endregion;
+	
+	//region hasType tests
+	@Test
+	public void hasTypeRevCommit() {
+		assertTrue(linuxGitModel.hasType("RevCommit"));
+	}
+	
+	@Test
+	public void hasTypeRevTag() {
+		assertTrue(linuxGitModel.hasType("RevTag"));
+	}
+	
+	@Test
+	public void hasTypeRevTree() {
+		assertTrue(linuxGitModel.hasType("RevTree"));
+	}
+	
+	@Test
+	public void hasTypeRevBlob() {
+		assertTrue(linuxGitModel.hasType("RevBlob"));
+	}
+	
+	@Test
+	public void hasTypeTypeNotHad() {
+		assertFalse(linuxGitModel.hasType("Array"));
+	}
+	
+	//endregion;
 }

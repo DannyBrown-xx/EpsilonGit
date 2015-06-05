@@ -93,8 +93,8 @@ public class GitModel extends CachedModel {
 
 	@Override
 	public void setElementId(Object instance, String newId) {
-		// TODO Auto-generated method stub
-		
+		// Can't change the object ID of commits, tags etc.
+		throw new UnsupportedOperationException();
 	}
 
 	/**
@@ -133,14 +133,15 @@ public class GitModel extends CachedModel {
 
 	@Override
 	public boolean isInstantiable(String type) {
-		// TODO Auto-generated method stub
 		return false;
 	}
 
 	@Override
 	public boolean hasType(String type) {
-		// TODO Auto-generated method stub
-		return false;
+		return RevCommit.class.getSimpleName().equals(type) ||
+				RevTag.class.getSimpleName().equals(type) ||
+				RevBlob.class.getSimpleName().equals(type) ||
+				RevTree.class.getSimpleName().equals(type);
 	}
 
 	@Override
