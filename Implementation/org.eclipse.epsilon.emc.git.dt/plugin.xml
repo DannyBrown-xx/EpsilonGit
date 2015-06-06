@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.epsilon.common.dt.modelType">
+      <modelType
+            class="org.eclipse.epsilon.emc.git.GitModel"
+            dialog="org.eclipse.epsilon.emc.git.dt.GitModelConfigurationDialog"
+            icon="images/git.png"
+            label="Git Repository"
+            stable="true"
+            type="git">
+      </modelType>
+   </extension>
+</plugin>

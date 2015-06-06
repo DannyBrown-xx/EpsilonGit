@@ -7,14 +7,12 @@ public class GitModelConfigurationDialog extends
 
 	@Override
 	protected String getModelName() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Git Repository";
 	}
 
 	@Override
 	protected String getModelType() {
-		// TODO Auto-generated method stub
-		return null;
+		return "Git";
 	}
 
 }
