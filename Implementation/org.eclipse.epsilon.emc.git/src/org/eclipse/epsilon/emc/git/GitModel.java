@@ -26,7 +26,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 @SuppressWarnings("rawtypes")
 public class GitModel extends CachedModel {
 	
-	private File repositoryLocation;
+	private final File repositoryLocation;
 	private Repository repository;
 	
 	public GitModel(File repositoryLocation) {
@@ -64,15 +64,16 @@ public class GitModel extends CachedModel {
 			objectLoader = objectReader.open(elementId);
 			switch(objectLoader.getType()) {
 				case Constants.OBJ_BLOB:
-					return null;
+					RevBlob blob = new RevWalk(repository).lookupBlob(elementId);
+					return blob;
 				case Constants.OBJ_TREE:
-					RevTree tree = new RevWalk(repository).lookupTree(elementId);
+					RevTree tree = new RevWalk(repository).parseTree(elementId);
 					return tree;
 				case Constants.OBJ_COMMIT:
-					RevCommit commit = RevCommit.parse(objectLoader.getBytes());
+					RevCommit commit = new RevWalk(repository).parseCommit(elementId);
 					return commit;
 				case Constants.OBJ_TAG:
-					RevTag tag = RevTag.parse(objectLoader.getBytes());
+					RevTag tag = new RevWalk(repository).parseTag(elementId);
 					return tag;
 			}
 		} 

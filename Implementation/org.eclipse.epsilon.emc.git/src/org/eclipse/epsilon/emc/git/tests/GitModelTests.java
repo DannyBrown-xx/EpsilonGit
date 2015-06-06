@@ -7,6 +7,7 @@ import java.io.IOException;
 
 import org.eclipse.epsilon.emc.git.GitModel;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
+import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevTag;
 import org.eclipse.jgit.revwalk.RevTree;
@@ -51,6 +52,32 @@ public class GitModelTests {
 	}
 	//endregion;
 	
+	//region getTypeNameOf tests
+	@Test
+	public void getTypeNameOfRevCommit() {
+		RevCommit testCommit = (RevCommit)emcJsonGitModel.getElementById("079fa68889e1c25649cf02341d79d0b0c4d5bffe");
+		linuxGitModel.getTypeNameOf(testCommit);
+	}
+	
+	@Test
+	public void getTypeNameOfRevTree() {
+		RevTree tree = (RevTree) linuxGitModel.getElementById("0059e6d4b4c6cc34465ed6c4cf734af40cc06ba5");
+		linuxGitModel.getTypeNameOf(tree);
+	}
+	
+	@Test
+	public void getTypeNameOfRevBlob() {
+		RevBlob blob = (RevBlob) linuxGitModel.getElementById("ddfcaaa86623a0c02b68bc93a62c3d54bbe51762");
+		linuxGitModel.getTypeNameOf(blob);
+	}
+	
+	@Test
+	public void getTypeNameOfRevTag() {
+		RevTag tag = (RevTag) linuxGitModel.getElementById("986aef29e5bff76d9844d62218b9b7c264531a7f");
+		linuxGitModel.getTypeNameOf(tag);
+	}
+	//endregion;
+	
 	//region getElementById tests
 	@Test
 	public void getElementByIdValidCommit() {
@@ -83,7 +110,7 @@ public class GitModelTests {
 		treeWalk.addTree(tree);
         treeWalk.setRecursive(true);
         while(treeWalk.next()) {
-        	System.out.println(treeWalk.getPathString());
+        	//Walk to end
         }
         String lastObjectInTree = treeWalk.getPathString();
 		assertEquals("workqueue_internal.h", lastObjectInTree);
@@ -93,6 +120,12 @@ public class GitModelTests {
 	public void getElementByIdNonExistantTree() {
 		RevTree tree = (RevTree) linuxGitModel.getElementById("0059e6d4b4c6cc34465ed6c4cf555af40cc06ba5"); //Non-existent hash
 		assertNull(tree);
+	}
+	
+	@Test
+	public void getElementByIdValidBlob() {
+		RevBlob blob = (RevBlob) linuxGitModel.getElementById("dad10656bf144ea4b9c9e792b2e2186db88e7c07");
+		assertNotNull(blob);
 	}
 	
 	@Test(expected = IllegalArgumentException.class) 
