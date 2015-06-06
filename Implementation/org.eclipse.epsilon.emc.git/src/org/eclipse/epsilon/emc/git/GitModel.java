@@ -17,7 +17,6 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
-import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -27,7 +26,7 @@ import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
-@SuppressWarnings("rawtypes")
+@SuppressWarnings({ "unchecked", "rawtypes" })
 public class GitModel extends CachedModel {
 	
 	private final File repositoryLocation;
@@ -180,15 +179,9 @@ public class GitModel extends CachedModel {
 	@Override
 	protected Collection getAllOfTypeFromModel(String type)
 			throws EolModelElementTypeNotFoundException {
-		//TODO: Implement properly. TDD style.
 		switch(type) {
 			case "RevCommit":
-			try {
-				return makeCollection(git.log().all().call());
-			} catch (GitAPIException | IOException e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
-			}
+				return getAllCommits();
 			default:
 				throw new EolModelElementTypeNotFoundException("GitModel", type);
 		}
@@ -251,11 +244,19 @@ public class GitModel extends CachedModel {
 		return null;
 	}
 	
-	private static <E> Collection<E> makeCollection(Iterable<E> iter) {
-	    Collection<E> list = new ArrayList<E>();
-	    for (E item : iter) {
-	        list.add(item);
-	    }
-	    return list;
+	private Collection<RevCommit> getAllCommits() {
+		try {
+			//Use porcelain api to get all commits.
+			Iterable<RevCommit> allCommitsIterable = git.log().all().call();
+			Collection<RevCommit> collection = new ArrayList<RevCommit>();
+			for(RevCommit commit : allCommitsIterable) {
+				collection.add(commit);
+			}
+			return collection;
+		} 
+		catch (GitAPIException | IOException e) {
+			return null;
+		}
 	}
+	
 }

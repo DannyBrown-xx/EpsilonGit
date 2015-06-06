@@ -20,7 +20,7 @@ import org.junit.Test;
 // -- Assumptions --
 // This JUnit test harness assumes you have `git clone` the following git repositories to
 // EpsilonGit/Tests/Repositories:
-// * http://github.com/epsilonlabs/emc-json.git
+// * https://github.com/epsilonlabs/emc-json.git
 // * https://github.com/torvalds/linux
 
 public class GitModelTests {
@@ -173,9 +173,11 @@ public class GitModelTests {
 		assertTrue(allCommits.size() == 4);
 	}
 	
+	//Caching issue.
 	@Test(expected = EolModelElementTypeNotFoundException.class)
 	public void getAllOfTypeFromModelUnknownType() throws EolModelElementTypeNotFoundException {
 		LinkedList<File> allFiles = (LinkedList<File>) emcJsonGitModel.getAllOfType("File");
+		assertNull(allFiles);
 	}
 	
 	//endregion;
