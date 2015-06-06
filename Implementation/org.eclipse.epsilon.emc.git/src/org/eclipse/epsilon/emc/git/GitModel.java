@@ -29,6 +29,11 @@ public class GitModel extends CachedModel {
 	private final File repositoryLocation;
 	private Repository repository;
 	
+	public GitModel() {
+		//A default constructor is required for now...
+		this.repositoryLocation = new File("/Users/danielbrown/Documents/EpsilonGit/Tests/Repositories/linux/.git");
+	}
+	
 	public GitModel(File repositoryLocation) {
 		this.repositoryLocation = repositoryLocation;
 	}
@@ -204,7 +209,9 @@ public class GitModel extends CachedModel {
 
 	@Override
 	protected void disposeModel() {
-		repository.close();
+		if(repository != null) {
+			repository.close();
+		}
 	}
 
 	@Override

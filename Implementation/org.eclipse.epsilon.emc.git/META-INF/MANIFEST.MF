@@ -10,3 +10,4 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jgit;bundle-version="3.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
+Export-Package: org.eclipse.epsilon.emc.git
