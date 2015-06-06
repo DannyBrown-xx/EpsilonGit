@@ -4,8 +4,10 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.LinkedList;
 
 import org.eclipse.epsilon.emc.git.GitModel;
+import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -160,6 +162,20 @@ public class GitModelTests {
 	@Test
 	public void hasTypeTypeNotHad() {
 		assertFalse(linuxGitModel.hasType("Array"));
+	}
+	
+	//endregion;
+	
+	//region getAllOfTypeFromModel tests
+	@Test	
+	public void getAllOfTypeFromModelRevCommit() throws EolModelElementTypeNotFoundException {
+		LinkedList<RevCommit> allCommits = (LinkedList<RevCommit>) emcJsonGitModel.getAllOfType("RevCommit");
+		assertTrue(allCommits.size() == 4);
+	}
+	
+	@Test(expected = EolModelElementTypeNotFoundException.class)
+	public void getAllOfTypeFromModelUnknownType() throws EolModelElementTypeNotFoundException {
+		LinkedList<File> allFiles = (LinkedList<File>) emcJsonGitModel.getAllOfType("File");
 	}
 	
 	//endregion;

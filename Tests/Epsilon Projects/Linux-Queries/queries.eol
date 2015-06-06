@@ -1,0 +1,4 @@
+"Linux Git Repository Queries".println();
+
+"Number of Tags: ".print();
+RevCommit.all.size().println();

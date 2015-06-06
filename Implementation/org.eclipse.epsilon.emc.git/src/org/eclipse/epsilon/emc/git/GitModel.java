@@ -2,6 +2,7 @@ package org.eclipse.epsilon.emc.git;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Collection;
 
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
@@ -10,10 +11,13 @@ import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundExce
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.epsilon.eol.exceptions.models.EolNotInstantiableModelElementTypeException;
 import org.eclipse.epsilon.eol.models.CachedModel;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -27,6 +31,7 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 public class GitModel extends CachedModel {
 	
 	private final File repositoryLocation;
+	private Git git;
 	private Repository repository;
 	
 	public GitModel() {
@@ -175,8 +180,18 @@ public class GitModel extends CachedModel {
 	@Override
 	protected Collection getAllOfTypeFromModel(String type)
 			throws EolModelElementTypeNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO: Implement properly. TDD style.
+		switch(type) {
+			case "RevCommit":
+			try {
+				return makeCollection(git.log().all().call());
+			} catch (GitAPIException | IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+			default:
+				throw new EolModelElementTypeNotFoundException("GitModel", type);
+		}
 	}
 
 	@Override
@@ -201,6 +216,8 @@ public class GitModel extends CachedModel {
 							.setMustExist(true)
 							.setGitDir(repositoryLocation)
 							.build();
+			
+			git = new Git(repository);
 		}
 		catch(IOException ioException) {
 			throw new EolModelLoadingException(ioException, this);
@@ -232,5 +249,13 @@ public class GitModel extends CachedModel {
 	protected Collection getAllTypeNamesOf(Object instance) {
 		// TODO Auto-generated method stub
 		return null;
+	}
+	
+	private static <E> Collection<E> makeCollection(Iterable<E> iter) {
+	    Collection<E> list = new ArrayList<E>();
+	    for (E item : iter) {
+	        list.add(item);
+	    }
+	    return list;
 	}
 }
