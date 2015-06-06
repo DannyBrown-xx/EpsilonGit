@@ -234,8 +234,8 @@ public class GitModel extends CachedModel {
 	@Override
 	protected Object getCacheKeyForType(String type)
 			throws EolModelElementTypeNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		return type; // Each type must have a different key for the hashmap that caches its objects.
+					 // Each type name is unique so we will use this.
 	}
 
 	@Override
