@@ -219,6 +219,9 @@ public class GitModel extends CachedModel {
 
 	@Override
 	protected void disposeModel() {
+		if(git != null) {
+			git.close();
+		}
 		if(repository != null) {
 			repository.close();
 		}
