@@ -2,8 +2,9 @@ package org.eclipse.epsilon.emc.git;
 
 import java.io.File;
 import java.io.IOException;
-import java.util.ArrayList;
 import java.util.Collection;
+import java.util.LinkedList;
+import java.util.List;
 
 import org.eclipse.epsilon.common.util.StringProperties;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
@@ -18,6 +19,7 @@ import org.eclipse.jgit.lib.Constants;
 import org.eclipse.jgit.lib.ObjectId;
 import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
+import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -185,6 +187,8 @@ public class GitModel extends CachedModel {
 		switch(type) {
 			case "RevCommit":
 				return getAllCommits();
+			case "RevTag":
+				return getAllTags();
 			default:
 				throw new EolModelElementTypeNotFoundException("GitModel", type);
 		}
@@ -263,7 +267,7 @@ public class GitModel extends CachedModel {
 		try {
 			//Use porcelain api to get all commits.
 			Iterable<RevCommit> allCommitsIterable = git.log().all().call();
-			Collection<RevCommit> collection = new ArrayList<RevCommit>();
+			Collection<RevCommit> collection = new LinkedList<RevCommit>();
 			for(RevCommit commit : allCommitsIterable) {
 				collection.add(commit);
 			}
@@ -274,4 +278,20 @@ public class GitModel extends CachedModel {
 		}
 	}
 	
+	private Collection<RevTag> getAllTags() {
+		RevWalk revWalk = new RevWalk(repository);
+		try {
+			List<Ref> tagListAsRefs = git.tagList().call();
+			Collection<RevTag> collection = new LinkedList<RevTag>();
+			for(Ref ref : tagListAsRefs) {
+				collection.add(revWalk.parseTag(ref.getObjectId()));
+			}
+			return collection;
+		} catch (GitAPIException e) {
+			return null;
+		}
+		catch (IOException e) {
+			return null;
+		}
+	}
 }
