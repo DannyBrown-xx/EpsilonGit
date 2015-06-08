@@ -167,6 +167,7 @@ public class GitModelTests {
 	//endregion;
 	
 	//region getAllOfTypeFromModel tests
+	@SuppressWarnings("unchecked")
 	@Test	
 	public void getAllOfTypeFromModelRevCommit() throws EolModelElementTypeNotFoundException {
 		LinkedList<RevCommit> allCommits = (LinkedList<RevCommit>) emcJsonGitModel.getAllOfType("RevCommit");
@@ -174,6 +175,7 @@ public class GitModelTests {
 	}
 	
 	//Caching issue.
+	@SuppressWarnings("unchecked")
 	@Test(expected = EolModelElementTypeNotFoundException.class)
 	public void getAllOfTypeFromModelUnknownType() throws EolModelElementTypeNotFoundException {
 		LinkedList<File> allFiles = (LinkedList<File>) emcJsonGitModel.getAllOfType("File");
