@@ -71,20 +71,21 @@ public class GitModel extends CachedModel {
 		ObjectId elementId = ObjectId.fromString(id);
 		ObjectReader objectReader = repository.newObjectReader();
 		ObjectLoader objectLoader = null;
+		RevWalk revWalk = new RevWalk(repository);
 		try {
 			objectLoader = objectReader.open(elementId);
 			switch(objectLoader.getType()) {
 				case Constants.OBJ_BLOB:
-					RevBlob blob = new RevWalk(repository).lookupBlob(elementId);
+					RevBlob blob = revWalk.lookupBlob(elementId);
 					return blob;
 				case Constants.OBJ_TREE:
-					RevTree tree = new RevWalk(repository).parseTree(elementId);
+					RevTree tree = revWalk.parseTree(elementId);
 					return tree;
 				case Constants.OBJ_COMMIT:
-					RevCommit commit = new RevWalk(repository).parseCommit(elementId);
+					RevCommit commit = revWalk.parseCommit(elementId);
 					return commit;
 				case Constants.OBJ_TAG:
-					RevTag tag = new RevWalk(repository).parseTag(elementId);
+					RevTag tag = revWalk.parseTag(elementId);
 					return tag;
 			}
 		} 
