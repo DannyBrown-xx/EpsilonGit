@@ -5,6 +5,7 @@ import java.io.IOException;
 import java.util.ArrayList;
 import java.util.Collection;
 
+import org.eclipse.epsilon.common.util.StringProperties;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.exceptions.models.EolEnumerationValueNotFoundException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundException;
@@ -29,13 +30,14 @@ import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class GitModel extends CachedModel {
 	
-	private final File repositoryLocation;
+	private File repositoryLocation;
 	private Git git;
 	private Repository repository;
 	
+	public static String RepositoryLocationViaDT = "Repository Location Hash Key";
+	
 	public GitModel() {
 		//A default constructor is required for now...
-		this.repositoryLocation = new File("/Users/danielbrown/Documents/EpsilonGit/Tests/Repositories/linux/.git");
 	}
 	
 	public GitModel(File repositoryLocation) {
@@ -190,8 +192,8 @@ public class GitModel extends CachedModel {
 	@Override
 	protected Collection getAllOfKindFromModel(String kind)
 			throws EolModelElementTypeNotFoundException {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO: Question this (difference between type and kind..? guessing kind includes subclasses)
+		return getAllOfTypeFromModel(kind);
 	}
 
 	@Override
@@ -202,6 +204,15 @@ public class GitModel extends CachedModel {
 		return null;
 	}
 
+	@Override
+	//Method called when attempting loading from configuration dialog
+	public void load(StringProperties properties, String basePath)
+			throws EolModelLoadingException {
+		super.load(properties, basePath);
+		repositoryLocation = new File(properties.getProperty(GitModel.RepositoryLocationViaDT));
+		loadModel();
+	}
+	
 	@Override
 	protected void loadModel() throws EolModelLoadingException {
 		try {

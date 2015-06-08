@@ -1,6 +1,7 @@
 package org.eclipse.epsilon.emc.git.dt;
 
 import org.eclipse.epsilon.common.dt.launching.dialogs.AbstractCachedModelConfigurationDialog;
+import org.eclipse.epsilon.emc.git.GitModel;
 import org.eclipse.swt.SWT;
 import org.eclipse.swt.events.SelectionEvent;
 import org.eclipse.swt.events.SelectionListener;
@@ -56,5 +57,22 @@ public class GitModelConfigurationDialog extends
 				fileText.setText(path);
 			}
 		});
+	}
+	
+	@Override
+	protected void loadProperties() {
+		super.loadProperties();
+		if(properties == null) {
+			return;
+		}
+		else {
+			fileText.setText(properties.getProperty(GitModel.RepositoryLocationViaDT));
+		}
+	}
+	
+	@Override
+	protected void storeProperties() {
+		super.storeProperties();
+		properties.put(GitModel.RepositoryLocationViaDT, fileText.getText());
 	}
 }
