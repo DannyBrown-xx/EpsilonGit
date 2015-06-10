@@ -2,20 +2,20 @@
 "======================\n\n".print();
 
 "COMMIT INFORMATION".println();
-"Number of Commits: ".print(); RevCommit.all.size().println();
-if(RevCommit.all.size() > 0) {
+"Number of Commits: ".print(); Commit.all.size().println();
+if(Commit.all.size() > 0) {
 	"Commit log:".println();
-	for(commit in RevCommit.all) {
+	for(commit in Commit.all) {
 		("* " + commit.getFullMessage()).println();
 	}
 	"\n\n".print();
 }
 
 "TAG INFORMATION".println();
-"Number of Tags: ".print(); RevTag.all.size().println();
-if(RevTag.all.size() > 0) {
+"Number of Tags: ".print(); Tag.all.size().println();
+if(Tag.all.size() > 0) {
 	"Tag Information:".println();
-	for(tag in RevTag.all) {
+	for(tag in Tag.all) {
 		("* " + tag.getTagName()).println();
 	}
-} 
+}

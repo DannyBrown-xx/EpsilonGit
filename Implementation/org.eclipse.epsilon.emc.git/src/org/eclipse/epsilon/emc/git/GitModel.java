@@ -21,11 +21,8 @@ import org.eclipse.jgit.lib.ObjectLoader;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
-import org.eclipse.jgit.revwalk.RevBlob;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTag;
-import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
 
@@ -78,16 +75,20 @@ public class GitModel extends CachedModel {
 			objectLoader = objectReader.open(elementId);
 			switch(objectLoader.getType()) {
 				case Constants.OBJ_BLOB:
-					RevBlob blob = revWalk.lookupBlob(elementId);
+					Blob blob = new Blob(revWalk.lookupBlob(elementId));
+					revWalk.parseBody(blob);
 					return blob;
 				case Constants.OBJ_TREE:
-					RevTree tree = revWalk.parseTree(elementId);
+					Tree tree = new Tree(revWalk.lookupTree(elementId));
+					revWalk.parseBody(tree);
 					return tree;
 				case Constants.OBJ_COMMIT:
-					RevCommit commit = revWalk.parseCommit(elementId);
+					Commit commit = new Commit(revWalk.lookupCommit(elementId));
+					revWalk.parseBody(commit);
 					return commit;
 				case Constants.OBJ_TAG:
-					RevTag tag = revWalk.parseTag(elementId);
+					Tag tag = new Tag(revWalk.lookupTag(elementId));
+					revWalk.parseBody(tag);
 					return tag;
 			}
 		} 
@@ -123,24 +124,24 @@ public class GitModel extends CachedModel {
 	 */
 	@Override
 	public boolean owns(Object instance) {
-		if(instance instanceof RevTree) {
-			RevTree revTreeInstance = (RevTree)instance;
-			return repository.hasObject(revTreeInstance.toObjectId());
+		if(instance instanceof Tree) {
+			Tree treeInstance = (Tree)instance;
+			return repository.hasObject(treeInstance.toObjectId());
 		}
 		
-		if(instance instanceof RevBlob) {
-			RevBlob revBlobInstance = (RevBlob)instance;
-			return repository.hasObject(revBlobInstance.toObjectId());
+		if(instance instanceof Blob) {
+			Blob blobInstance = (Blob)instance;
+			return repository.hasObject(blobInstance.toObjectId());
 		}
 		
-		if(instance instanceof RevCommit) {
-			RevCommit revCommitInstance = (RevCommit)instance;
-			return repository.hasObject(revCommitInstance.toObjectId());
+		if(instance instanceof Commit) {
+			RevCommit commitInstance = (Commit)instance;
+			return repository.hasObject(commitInstance.toObjectId());
 		}
 		
-		if(instance instanceof RevTag) {
-			RevTag revTagInstance = (RevTag)instance;
-			return repository.hasObject(revTagInstance.toObjectId());
+		if(instance instanceof Tag) {
+			Tag tagInstance = (Tag)instance;
+			return repository.hasObject(tagInstance.toObjectId());
 		}
 		
 		return false;
@@ -153,10 +154,10 @@ public class GitModel extends CachedModel {
 
 	@Override
 	public boolean hasType(String type) {
-		return RevCommit.class.getSimpleName().equals(type) ||
-				RevTag.class.getSimpleName().equals(type) ||
-				RevBlob.class.getSimpleName().equals(type) ||
-				RevTree.class.getSimpleName().equals(type);
+		return Commit.class.getSimpleName().equals(type) ||
+				Tag.class.getSimpleName().equals(type) ||
+				Blob.class.getSimpleName().equals(type) ||
+				Tree.class.getSimpleName().equals(type);
 	}
 
 	@Override
@@ -185,9 +186,9 @@ public class GitModel extends CachedModel {
 	protected Collection getAllOfTypeFromModel(String type)
 			throws EolModelElementTypeNotFoundException {
 		switch(type) {
-			case "RevCommit":
+			case "Commit":
 				return getAllCommits();
-			case "RevTag":
+			case "Tag":
 				return getAllTags();
 			default:
 				throw new EolModelElementTypeNotFoundException("GitModel", type);
@@ -263,13 +264,16 @@ public class GitModel extends CachedModel {
 		return null;
 	}
 	
-	private Collection<RevCommit> getAllCommits() {
+	private Collection<Commit> getAllCommits() {
+		RevWalk revWalk = new RevWalk(repository);
 		try {
 			//Use porcelain api to get all commits.
 			Iterable<RevCommit> allCommitsIterable = git.log().all().call();
-			Collection<RevCommit> collection = new LinkedList<RevCommit>();
+			Collection<Commit> collection = new LinkedList<Commit>();
 			for(RevCommit commit : allCommitsIterable) {
-				collection.add(commit);
+				Commit c = new Commit(commit.getId());
+				revWalk.parseBody(c);
+				collection.add(c);
 			}
 			return collection;
 		} 
@@ -278,13 +282,15 @@ public class GitModel extends CachedModel {
 		}
 	}
 	
-	private Collection<RevTag> getAllTags() {
+	private Collection<Tag> getAllTags() {
 		RevWalk revWalk = new RevWalk(repository);
 		try {
 			List<Ref> tagListAsRefs = git.tagList().call();
-			Collection<RevTag> collection = new LinkedList<RevTag>();
+			Collection<Tag> collection = new LinkedList<Tag>();
 			for(Ref ref : tagListAsRefs) {
-				collection.add(revWalk.parseTag(ref.getObjectId()));
+				Tag t = new Tag(revWalk.lookupTag(ref.getObjectId()));
+				revWalk.parseBody(t);
+				collection.add(t);
 			}
 			return collection;
 		} catch (GitAPIException e) {
