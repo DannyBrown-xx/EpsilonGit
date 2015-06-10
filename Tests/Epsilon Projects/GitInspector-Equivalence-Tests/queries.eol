@@ -1,0 +1,24 @@
+"The following historical commit information, by author, was found in the repository:".println();
+"Author\tCommits\tInsertions\tDeletions\t% of Changes\t".println();
+
+var totalRepositoryNumberChanges = getNumberChanges();
+
+for(author in Authors.all.sortBy(a | a.name)) {
+	author.name.print();
+	"\t".print();
+	
+	author.commits.size().print();
+	"\t".print();
+	
+	var totalInsertions = author.commits.totalInsertions();
+	totalInsertions.print();
+	"\t".print();
+	
+	var totalDeletions = author.commits.totalDeletions();
+	totalDeletions.print();
+	"\t".print();
+	
+	var totalAuthorNumberChanges = totalInsertions + totalDeletions;
+	var percentageOfChanges = (totalRepositoryNumberChanges / totalAuthorNumberChanges) * 100;
+	percentageOfChanges.println();
+}

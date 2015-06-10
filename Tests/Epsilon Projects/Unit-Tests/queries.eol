@@ -18,4 +18,4 @@ if(RevTag.all.size() > 0) {
 	for(tag in RevTag.all) {
 		("* " + tag.getTagName()).println();
 	}
-}
+} 
