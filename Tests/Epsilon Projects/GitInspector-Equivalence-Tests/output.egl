@@ -12,7 +12,6 @@
 		canvas {
 			display:block;
 			margin:0 auto;
-			float: left;
 		}
 		header {
 			background:#57346a;
@@ -31,9 +30,6 @@
 		}
 		.title {
 			margin-bottom:10px;
-		}
-		.code-survival-chart-legend {
-			float:right;
 		}
 	</style>
 </head>
@@ -60,27 +56,15 @@
 						  </tr>
 						</thead>
 						<tbody>
+						[% for(author in Author.all.sortBy(a | a.getName())) { %]
 							  <tr>
-							    <td>Daniel Brown</td>
-							    <td>126</td>
-							    <td>423</td>
-							    <td>123</td>
-							    <td>56.53%</td>
+							    <td>[%= author.getName() %]</td>
+							    <td></td>
+							    <td></td>
+							    <td></td>
+							    <td></td>
 							  </tr>
-							  <tr>
-							    <td>Robert Crocombe</td>
-							    <td>47</td>
-							    <td>128</td>
-							    <td>34</td>
-							    <td>16.68%</td>
-							  </tr>
-							  <tr>
-							    <td>Charlotte Godley</td>
-							    <td>17</td>
-							    <td>65</td>
-							    <td>198</td>
-							    <td>27.08%</td>
-							  </tr>
+						[% } %]
 						</tbody>
 					</table>
 				</div>
@@ -105,21 +89,13 @@
 						  </tr>
 						</thead>
 						<tbody>
+						[% for(author in Author.all.sortBy(a | a.getName())) { %]
 							  <tr>
-							    <td>Daniel Brown</td>
-							    <td>126</td>
-							    <td>423</td>
+							    <td>[%= author.getName() %]</td>
+							    <td>[%  %]</td>
+							    <td>[%  %]</td>
 							  </tr>
-							  <tr>
-							    <td>Robert Crocombe</td>
-							    <td>47</td>
-							    <td>128</td>
-							  </tr>
-							  <tr>
-							    <td>Charlotte Godley</td>
-							    <td>17</td>
-							    <td>65</td>
-							  </tr>
+						[% } %]
 						</tbody>
 					</table>
 				</div>
@@ -144,24 +120,14 @@
 				var numberCommitsDonutContext = $("#commit-information-chart").get(0).getContext("2d");
 				var numberCommitsDonutChart = new Chart(numberCommitsDonutContext);
 				var numberCommitsData = [
+					[% for (author in Author.all) { %]
 				    {
 				        value: 423 + 123,
-				        color:"#F7464A",
-				        highlight: "#FF5A5E",
-				        label: "Daniel Brown"
+				        color:'#'+Math.floor(Math.random()*16777215).toString(16),
+				        highlight: '#1A1A1A',
+				        label: "[%= author.getName() %]"
 				    },
-				    {
-				        value: 128 + 34,
-				        color: "#46BFBD",
-				        highlight: "#5AD3D1",
-				        label: "Robert Crocombe"
-				    },
-				    {
-				        value: 198 + 65,
-				        color: "#FDB45C",
-				        highlight: "#FFC870",
-				        label: "Charlotte Godley"
-				    }
+				    [% } %]
 				]
 				
 				numberCommitsDonutChart.Doughnut(numberCommitsData, donutGraphOptions);
@@ -170,25 +136,17 @@
 				//Second graph
 				var codeSurvivalDonutContext = $("#code-survival-chart").get(0).getContext("2d");
 				var codeSurvivalDonutChart = new Chart(codeSurvivalDonutContext);
+				
+				//Clever colour generator code credit: http://www.paulirish.com/2009/random-hex-color-code-snippets/
 				var codeSurvivalData = [
+				    [% for (author in Author.all) { %]
 				    {
-				        value: 70,
-				        color:"#F7464A",
-				        highlight: "#FF5A5E",
-				        label: "Daniel Brown"
+				        value: 423 + 123,
+				        color:'#'+Math.floor(Math.random()*16777215).toString(16),
+				        highlight: '#1A1A1A',
+				        label: "[%= author.getName() %]"
 				    },
-				    {
-				        value: 20,
-				        color: "#46BFBD",
-				        highlight: "#5AD3D1",
-				        label: "Robert Crocombe"
-				    },
-				    {
-				        value: 5,
-				        color: "#FDB45C",
-				        highlight: "#FFC870",
-				        label: "Charlotte Godley"
-				    }
+				    [% } %]
 				]
 				
 				codeSurvivalDonutChart.Doughnut(codeSurvivalData, donutGraphOptions);

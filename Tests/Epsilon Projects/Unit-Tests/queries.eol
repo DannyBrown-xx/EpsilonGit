@@ -24,7 +24,7 @@ if(Tag.all.size() > 0) {
 "Number of authors: ".print(); Author.all.size().println();
 if(Author.all.size() > 0) {
 	"Author Details".println();
-	for(author in Author.all) {
-		("* " + author.getName() + "(" + author.getEmailAddress() + ")").println();
+	for(author in Author.all.sortBy(a | a.getName())) {
+		("* " + author.getName() + " (" + author.getEmailAddress() + ")").println();
 	}
 } 

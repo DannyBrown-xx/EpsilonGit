@@ -3,18 +3,18 @@
 
 var totalRepositoryNumberChanges = getNumberChanges();
 
-for(author in Authors.all.sortBy(a | a.name)) {
-	author.name.print();
+for(author in Author.all.sortBy(a | a.getName())) {
+	author.getName().print();
 	"\t".print();
 	
-	author.commits.size().print();
+	author.getCommits().size().print();
 	"\t".print();
 	
-	var totalInsertions = author.commits.totalInsertions();
+	var totalInsertions = author.getCommits().totalInsertions();
 	totalInsertions.print();
 	"\t".print();
 	
-	var totalDeletions = author.commits.totalDeletions();
+	var totalDeletions = author.getCommits().totalDeletions();
 	totalDeletions.print();
 	"\t".print();
 	
