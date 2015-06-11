@@ -3,9 +3,12 @@ package org.eclipse.epsilon.emc.git;
 import java.io.File;
 import java.io.IOException;
 import java.util.Collection;
+import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Set;
 
+import org.apache.commons.lang3.NotImplementedException;
 import org.eclipse.epsilon.common.util.StringProperties;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.exceptions.models.EolEnumerationValueNotFoundException;
@@ -25,6 +28,7 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.treewalk.TreeWalk;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class GitModel extends CachedModel {
@@ -68,6 +72,9 @@ public class GitModel extends CachedModel {
 	@Override
 	public Object getElementById(String id) {
 		ObjectId elementId = ObjectId.fromString(id);
+		
+		//If element ID works ... 
+		
 		ObjectReader objectReader = repository.newObjectReader();
 		ObjectLoader objectLoader = null;
 		RevWalk revWalk = new RevWalk(repository);
@@ -104,6 +111,12 @@ public class GitModel extends CachedModel {
 			RevObject revObjectInstance = (RevObject)instance;
 			return revObjectInstance.getId().toString();
 		}
+		
+		if(instance instanceof Author) {
+			Author authorInstance = (Author)instance;
+			return authorInstance.getEmailAddress();
+		}
+		
 		return null;
 	}
 
@@ -144,6 +157,15 @@ public class GitModel extends CachedModel {
 			return repository.hasObject(tagInstance.toObjectId());
 		}
 		
+		if(instance instanceof Author) {
+			Author authorInstance = (Author)instance;
+			try {
+				return getAllOfType("Author").contains(authorInstance);
+			} catch (EolModelElementTypeNotFoundException e) {
+				return false;
+			}
+		}
+		
 		return false;
 	}
 
@@ -157,7 +179,8 @@ public class GitModel extends CachedModel {
 		return Commit.class.getSimpleName().equals(type) ||
 				Tag.class.getSimpleName().equals(type) ||
 				Blob.class.getSimpleName().equals(type) ||
-				Tree.class.getSimpleName().equals(type);
+				Tree.class.getSimpleName().equals(type) ||
+				Author.class.getSimpleName().equals(type);
 	}
 
 	@Override
@@ -190,6 +213,8 @@ public class GitModel extends CachedModel {
 				return getAllCommits();
 			case "Tag":
 				return getAllTags();
+			case "Author":
+				return getAllAuthors();
 			default:
 				throw new EolModelElementTypeNotFoundException("GitModel", type);
 		}
@@ -297,6 +322,40 @@ public class GitModel extends CachedModel {
 			return null;
 		}
 		catch (IOException e) {
+			return null;
+		}
+	}
+	
+	private Collection<Blob> getAllBlobs() throws Exception {
+		throw new NotImplementedException("getAllBlobs() not implemented");
+	}
+	
+	//http://www.massapi.com/class/org/eclipse/jgit/treewalk/AbstractTreeIterator.html
+	private Collection<Tree> getAllTrees() {
+		TreeWalk walk = new TreeWalk(repository);
+		Collection<Tree> collection = new LinkedList<Tree>();
+		try {
+			while(walk.next()) {
+				for(int i  = 0; i<walk.getTreeCount(); i++) {
+					//collection.add() walk.getTree(i, WorkingTreeIterator.class));
+				}
+			}
+			
+			return collection;
+		} catch (IOException e) {
+			return null;
+		}
+	}
+	
+	private Collection<Author> getAllAuthors() {
+		try {
+			LinkedList<Commit> commits = (LinkedList<Commit>) getAllOfKind("Commit");
+			Set<Author> set = new HashSet<Author>();
+			for(Commit commit : commits) {
+				set.add(new Author(commit.getAuthorIdent().getName(), commit.getAuthorIdent().getEmailAddress()));
+			}
+			return set;
+		} catch (EolModelElementTypeNotFoundException e) {
 			return null;
 		}
 	}

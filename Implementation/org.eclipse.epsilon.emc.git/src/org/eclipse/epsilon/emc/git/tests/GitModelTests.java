@@ -4,8 +4,11 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.HashSet;
 import java.util.LinkedList;
+import java.util.Set;
 
+import org.eclipse.epsilon.emc.git.Author;
 import org.eclipse.epsilon.emc.git.Blob;
 import org.eclipse.epsilon.emc.git.Commit;
 import org.eclipse.epsilon.emc.git.GitModel;
@@ -184,4 +187,15 @@ public class GitModelTests {
 	}
 	
 	//endregion;
+	@Test
+	public void authorSet() {
+		Author danny = new Author("Daniel Brown", "d.t.brown@outlook.com");
+		Author danny2 = new Author("Daniel Brown", "d.t.brown@outlook.com");
+		
+		Set<Author> authorsDeDuped = new HashSet<Author>();
+		authorsDeDuped.add(danny);
+		authorsDeDuped.add(danny2);
+		
+		assertEquals(1, authorsDeDuped.size());
+	}
 }

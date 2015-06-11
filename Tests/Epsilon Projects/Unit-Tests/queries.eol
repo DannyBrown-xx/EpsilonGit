@@ -19,3 +19,12 @@ if(Tag.all.size() > 0) {
 		("* " + tag.getTagName()).println();
 	}
 }
+
+"AUTHOR INFORMATION".println();
+"Number of authors: ".print(); Author.all.size().println();
+if(Author.all.size() > 0) {
+	"Author Details".println();
+	for(author in Author.all) {
+		("* " + author.getName() + "(" + author.getEmailAddress() + ")").println();
+	}
+} 

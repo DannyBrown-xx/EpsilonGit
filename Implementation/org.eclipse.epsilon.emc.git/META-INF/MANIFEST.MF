@@ -11,3 +11,5 @@ Require-Bundle: org.eclipse.ui,
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.epsilon.emc.git
+Bundle-ClassPath: libs/commons-lang3-3.4.jar,
+ .
