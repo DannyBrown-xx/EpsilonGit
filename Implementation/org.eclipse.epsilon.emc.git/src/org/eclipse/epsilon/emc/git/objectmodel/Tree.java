@@ -1,4 +1,4 @@
-package org.eclipse.epsilon.emc.git;
+package org.eclipse.epsilon.emc.git.objectmodel;
 
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.revwalk.RevTree;

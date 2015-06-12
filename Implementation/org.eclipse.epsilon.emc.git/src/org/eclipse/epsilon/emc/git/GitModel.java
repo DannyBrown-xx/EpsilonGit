@@ -10,6 +10,13 @@ import java.util.Set;
 
 import org.apache.commons.lang3.NotImplementedException;
 import org.eclipse.epsilon.common.util.StringProperties;
+import org.eclipse.epsilon.emc.git.objectmodel.Blob;
+import org.eclipse.epsilon.emc.git.objectmodel.Commit;
+import org.eclipse.epsilon.emc.git.objectmodel.Tag;
+import org.eclipse.epsilon.emc.git.objectmodel.Tree;
+import org.eclipse.epsilon.emc.git.people.Author;
+import org.eclipse.epsilon.emc.git.people.Committer;
+import org.eclipse.epsilon.emc.git.people.Person;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.exceptions.models.EolEnumerationValueNotFoundException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundException;
@@ -117,6 +124,11 @@ public class GitModel extends CachedModel {
 			return authorInstance.getEmailAddress();
 		}
 		
+		if(instance instanceof Committer) {
+			Committer committerInstance = (Committer)instance;
+			return committerInstance.getEmailAddress();
+		}
+		
 		return null;
 	}
 
@@ -166,6 +178,15 @@ public class GitModel extends CachedModel {
 			}
 		}
 		
+		if(instance instanceof Committer) {
+			Committer committerInstance = (Committer)instance;
+			try {
+				return getAllOfType("Committer").contains(committerInstance);
+			} catch (EolModelElementTypeNotFoundException e) {
+				return false;
+			}
+		}
+		
 		return false;
 	}
 
@@ -180,7 +201,9 @@ public class GitModel extends CachedModel {
 				Tag.class.getSimpleName().equals(type) ||
 				Blob.class.getSimpleName().equals(type) ||
 				Tree.class.getSimpleName().equals(type) ||
-				Author.class.getSimpleName().equals(type);
+				Person.class.getSimpleName().equals(type) ||
+				Author.class.getSimpleName().equals(type) ||
+				Committer.class.getSimpleName().equals(type);
 	}
 
 	@Override
@@ -215,6 +238,8 @@ public class GitModel extends CachedModel {
 				return getAllTags();
 			case "Author":
 				return getAllAuthors();
+			case "Committer":
+				return getAllCommitters();
 			default:
 				throw new EolModelElementTypeNotFoundException("GitModel", type);
 		}
@@ -223,8 +248,15 @@ public class GitModel extends CachedModel {
 	@Override
 	protected Collection getAllOfKindFromModel(String kind)
 			throws EolModelElementTypeNotFoundException {
-		//TODO: Question this (difference between type and kind..? guessing kind includes subclasses)
-		return getAllOfTypeFromModel(kind);
+		switch(kind) {
+			case "Person":
+				Set<Person> allPeople = new HashSet<Person>();
+				allPeople.addAll(getAllCommitters());
+				allPeople.addAll(getAllAuthors());
+				return allPeople;
+			default:
+				return getAllOfTypeFromModel(kind);
+		}
 	}
 
 	@Override
@@ -358,5 +390,18 @@ public class GitModel extends CachedModel {
 		} catch (EolModelElementTypeNotFoundException e) {
 			return null;
 		}
+	}
+	
+	private Collection<Committer> getAllCommitters() {
+		try {
+			LinkedList<Commit> commits = (LinkedList<Commit>) getAllOfKind("Commit");
+			Set<Committer> set = new HashSet<Committer>();
+			for(Commit commit : commits) {
+				set.add(new Committer(commit.getAuthorIdent().getName(), commit.getAuthorIdent().getEmailAddress()));
+			}
+			return set;
+		} catch (EolModelElementTypeNotFoundException e) {
+			return null;
+		}         
 	}
 }

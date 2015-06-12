@@ -1,13 +1,13 @@
-package org.eclipse.epsilon.emc.git;
+package org.eclipse.epsilon.emc.git.people;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
 
-public class Author {
+public abstract class Person {
 	private final String name;
 	private final String emailAddress;
 	
-	public Author(String name, String emailAddress) {
+	public Person(String name, String emailAddress) {
 		this.name = name;
 		this.emailAddress = emailAddress;
 	}
@@ -31,12 +31,12 @@ public class Author {
 
     @Override
     public boolean equals(Object obj) {
-       if (!(obj instanceof Author))
+       if (!(obj instanceof Person))
             return false;
         if (obj == this)
             return true;
 
-        Author rhs = (Author) obj;
+        Person rhs = (Person) obj;
         return new EqualsBuilder().
             append(name, rhs.name).
             append(emailAddress, rhs.emailAddress).

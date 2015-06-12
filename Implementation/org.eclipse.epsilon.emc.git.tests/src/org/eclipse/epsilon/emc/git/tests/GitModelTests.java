@@ -8,12 +8,13 @@ import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
 
-import org.eclipse.epsilon.emc.git.Author;
-import org.eclipse.epsilon.emc.git.Blob;
-import org.eclipse.epsilon.emc.git.Commit;
 import org.eclipse.epsilon.emc.git.GitModel;
-import org.eclipse.epsilon.emc.git.Tag;
-import org.eclipse.epsilon.emc.git.Tree;
+import org.eclipse.epsilon.emc.git.objectmodel.Blob;
+import org.eclipse.epsilon.emc.git.objectmodel.Commit;
+import org.eclipse.epsilon.emc.git.objectmodel.Tag;
+import org.eclipse.epsilon.emc.git.objectmodel.Tree;
+import org.eclipse.epsilon.emc.git.people.Author;
+import org.eclipse.epsilon.emc.git.people.Person;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.jgit.revwalk.RevCommit;
@@ -192,7 +193,7 @@ public class GitModelTests {
 		Author danny = new Author("Daniel Brown", "d.t.brown@outlook.com");
 		Author danny2 = new Author("Daniel Brown", "d.t.brown@outlook.com");
 		
-		Set<Author> authorsDeDuped = new HashSet<Author>();
+		Set<Person> authorsDeDuped = new HashSet<Person>();
 		authorsDeDuped.add(danny);
 		authorsDeDuped.add(danny2);
 		
