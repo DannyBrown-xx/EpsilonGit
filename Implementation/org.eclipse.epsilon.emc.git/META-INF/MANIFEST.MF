@@ -9,6 +9,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.jgit;bundle-version="3.4.0"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
-Export-Package: org.eclipse.epsilon.emc.git
+Export-Package: org.eclipse.epsilon.emc.git,
+ org.eclipse.epsilon.emc.git.objectmodel,
+ org.eclipse.epsilon.emc.git.people
 Bundle-ClassPath: libs/commons-lang3-3.4.jar,
  .
