@@ -8,7 +8,6 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
-import org.apache.commons.lang3.NotImplementedException;
 import org.eclipse.epsilon.common.util.StringProperties;
 import org.eclipse.epsilon.emc.git.objectmodel.Blob;
 import org.eclipse.epsilon.emc.git.objectmodel.Commit;
@@ -36,7 +35,6 @@ import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.treewalk.TreeWalk;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class GitModel extends CachedModel {
@@ -241,6 +239,10 @@ public class GitModel extends CachedModel {
 				return getAllAuthors();
 			case "Committer":
 				return getAllCommitters();
+			case "Blob":
+				return getAllBlobs();
+			case "Tree":
+				return getAllTrees();
 			default:
 				throw new EolModelElementTypeNotFoundException("GitModel", type);
 		}
@@ -359,13 +361,17 @@ public class GitModel extends CachedModel {
 		}
 	}
 	
-	private Collection<Blob> getAllBlobs() throws Exception {
-		throw new NotImplementedException("getAllBlobs() not implemented");
+	private Collection<Blob> getAllBlobs() {
+		//TODO: Implement
+		return null;
 	}
 	
 	//http://www.massapi.com/class/org/eclipse/jgit/treewalk/AbstractTreeIterator.html
 	private Collection<Tree> getAllTrees() {
-		TreeWalk walk = new TreeWalk(repository);
+		//TODO: Finish implementation
+		return null;
+		
+		/*TreeWalk walk = new TreeWalk(repository);
 		Collection<Tree> collection = new LinkedList<Tree>();
 		try {
 			while(walk.next()) {
@@ -377,7 +383,7 @@ public class GitModel extends CachedModel {
 			return collection;
 		} catch (IOException e) {
 			return null;
-		}
+		}*/
 	}
 	
 	private Collection<Author> getAllAuthors() {
