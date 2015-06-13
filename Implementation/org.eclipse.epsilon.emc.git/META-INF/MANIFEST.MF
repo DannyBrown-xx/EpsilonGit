@@ -7,7 +7,8 @@ Require-Bundle: org.eclipse.ui,
  org.eclipse.core.runtime,
  org.eclipse.epsilon.eol.engine,
  org.eclipse.jgit;bundle-version="3.4.0",
- org.apache.commons.lang3_3.1;bundle-version="3.1.0"
+ org.apache.commons.lang3_3.1;bundle-version="3.1.0",
+ org.apache.commons.collections_3.2.1;bundle-version="3.2.1"
 Bundle-RequiredExecutionEnvironment: JavaSE-1.8
 Bundle-ActivationPolicy: lazy
 Export-Package: org.eclipse.epsilon.emc.git,

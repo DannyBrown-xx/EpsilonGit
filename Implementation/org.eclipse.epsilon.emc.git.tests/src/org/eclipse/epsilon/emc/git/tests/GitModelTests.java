@@ -135,10 +135,22 @@ public class GitModelTests {
 		assertNotNull(blob);
 	}
 	
-	@Test(expected = IllegalArgumentException.class) 
+	@Test
 	public void getElementByIdInvalidIdHash() {
 		Commit commit = (Commit) linuxGitModel.getElementById("This isn't a valid @£$%%^&&*( hash");
 		assertNull(commit);
+	}
+	
+	@Test
+	public void getElementByIdValidPerson() {
+		Person p = (Person) emcJsonGitModel.getElementById("dimitris.kolovos@york.ac.uk");
+		assertEquals("Dimitris Kolovos", p.getName());
+	}
+	
+	@Test
+	public void getElementByIdNonExistantPerson() {
+		Person p = (Person) emcJsonGitModel.getElementById("not-a-real-contributor@fakemail.net");
+		assertNull(p);
 	}
 	
 	//endregion;

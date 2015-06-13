@@ -8,6 +8,7 @@ import java.util.LinkedList;
 import java.util.List;
 import java.util.Set;
 
+import org.apache.commons.collections.CollectionUtils;
 import org.eclipse.epsilon.common.util.StringProperties;
 import org.eclipse.epsilon.emc.git.objectmodel.Blob;
 import org.eclipse.epsilon.emc.git.objectmodel.Commit;
@@ -16,6 +17,7 @@ import org.eclipse.epsilon.emc.git.objectmodel.Tree;
 import org.eclipse.epsilon.emc.git.people.Author;
 import org.eclipse.epsilon.emc.git.people.Committer;
 import org.eclipse.epsilon.emc.git.people.Person;
+import org.eclipse.epsilon.emc.git.people.PersonFinderPredicate;
 import org.eclipse.epsilon.eol.exceptions.EolRuntimeException;
 import org.eclipse.epsilon.eol.exceptions.models.EolEnumerationValueNotFoundException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundException;
@@ -77,36 +79,41 @@ public class GitModel extends CachedModel {
 
 	@Override
 	public Object getElementById(String id) {
-		ObjectId elementId = ObjectId.fromString(id);
-		
-		//If element ID works ... 
-		
-		ObjectReader objectReader = repository.newObjectReader();
-		ObjectLoader objectLoader = null;
-		RevWalk revWalk = new RevWalk(repository);
-		try {
-			objectLoader = objectReader.open(elementId);
-			switch(objectLoader.getType()) {
-				case Constants.OBJ_BLOB:
-					Blob blob = new Blob(revWalk.lookupBlob(elementId));
-					revWalk.parseBody(blob);
-					return blob;
-				case Constants.OBJ_TREE:
-					Tree tree = new Tree(revWalk.lookupTree(elementId));
-					revWalk.parseBody(tree);
-					return tree;
-				case Constants.OBJ_COMMIT:
-					Commit commit = new Commit(revWalk.lookupCommit(elementId));
-					revWalk.parseBody(commit);
-					return commit;
-				case Constants.OBJ_TAG:
-					Tag tag = new Tag(revWalk.lookupTag(elementId));
-					revWalk.parseBody(tag);
-					return tag;
+		if(ObjectId.isId(id)) {
+			//The Id passed in is the object id of a git object.
+			ObjectId elementId = ObjectId.fromString(id);			
+			ObjectReader objectReader = repository.newObjectReader();
+			ObjectLoader objectLoader = null;
+			RevWalk revWalk = new RevWalk(repository);
+			try {
+				objectLoader = objectReader.open(elementId);
+				switch(objectLoader.getType()) {
+					case Constants.OBJ_BLOB:
+						Blob blob = new Blob(revWalk.lookupBlob(elementId));
+						revWalk.parseBody(blob);
+						return blob;
+					case Constants.OBJ_TREE:
+						Tree tree = new Tree(revWalk.lookupTree(elementId));
+						revWalk.parseBody(tree);
+						return tree;
+					case Constants.OBJ_COMMIT:
+						Commit commit = new Commit(revWalk.lookupCommit(elementId));
+						revWalk.parseBody(commit);
+						return commit;
+					case Constants.OBJ_TAG:
+						Tag tag = new Tag(revWalk.lookupTag(elementId));
+						revWalk.parseBody(tag);
+						return tag;
+				}
+			} 
+			catch (IOException e) {
+				return null;
 			}
-		} 
-		catch (IOException e) {
-			return null;
+		}
+		else {
+			//The Id passed in was not a git object id. It may well be a persons email address
+			Person p = (Person)CollectionUtils.find(getAllPeople(), new PersonFinderPredicate(id));
+			return p;
 		}
 		return null;
 	}
@@ -253,10 +260,7 @@ public class GitModel extends CachedModel {
 			throws EolModelElementTypeNotFoundException {
 		switch(kind) {
 			case "Person":
-				Set<Person> allPeople = new HashSet<Person>();
-				allPeople.addAll(getAllCommitters());
-				allPeople.addAll(getAllAuthors());
-				return allPeople;
+				getAllPeople();
 			default:
 				return getAllOfTypeFromModel(kind);
 		}
@@ -410,5 +414,12 @@ public class GitModel extends CachedModel {
 		} catch (EolModelElementTypeNotFoundException e) {
 			return null;
 		}         
+	}
+	
+	private Collection<Person> getAllPeople() {
+		Set<Person> allPeople = new HashSet<Person>();
+		allPeople.addAll(getAllCommitters());
+		allPeople.addAll(getAllAuthors());
+		return allPeople;
 	}
 }
