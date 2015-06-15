@@ -142,9 +142,9 @@ public class GitModelTests {
 	}
 	
 	@Test
-	public void getElementByIdValidPerson() {
+	public void getElementByIdValidPerson() throws EolModelElementTypeNotFoundException {
 		Person p = (Person) emcJsonGitModel.getElementById("dimitris.kolovos@york.ac.uk");
-		assertEquals("Dimitris Kolovos", p.getName());
+		assertEquals("kolovos", p.getName());
 	}
 	
 	@Test

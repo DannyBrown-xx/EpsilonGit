@@ -112,8 +112,7 @@ public class GitModel extends CachedModel {
 		}
 		else {
 			//The Id passed in was not a git object id. It may well be a persons email address
-			Person p = (Person)CollectionUtils.find(getAllPeople(), new PersonFinderPredicate(id));
-			return p;
+			return (Person)CollectionUtils.find(getAllPeople(), new PersonFinderPredicate(id));
 		}
 		return null;
 	}
@@ -260,7 +259,7 @@ public class GitModel extends CachedModel {
 			throws EolModelElementTypeNotFoundException {
 		switch(kind) {
 			case "Person":
-				getAllPeople();
+				return getAllPeople();
 			default:
 				return getAllOfTypeFromModel(kind);
 		}

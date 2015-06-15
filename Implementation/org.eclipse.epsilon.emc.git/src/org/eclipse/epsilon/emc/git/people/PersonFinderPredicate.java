@@ -14,6 +14,6 @@ public class PersonFinderPredicate implements Predicate {
     @Override
     public boolean evaluate(Object o) {
         Person p = (Person)o;
-        return p.getEmailAddress() == this.emailAddress;
+        return p.getEmailAddress().equals(this.emailAddress);
     }
 }
