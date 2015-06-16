@@ -17,30 +17,59 @@ import org.eclipse.epsilon.emc.git.people.Author;
 import org.eclipse.epsilon.emc.git.people.Person;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundException;
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
+import org.eclipse.jgit.api.Git;
+import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
 import org.junit.BeforeClass;
 import org.junit.Test;
 
-// -- Assumptions --
-// This JUnit test harness assumes you have `git clone` the following git repositories to
-// EpsilonGit/Tests/Repositories:
-// * https://github.com/epsilonlabs/emc-json.git
-// * https://github.com/torvalds/linux
-
 public class GitModelTests {
-	//Assumes working directory is project home
-	private static String TEST_GIT_REPOSITORIES_LOCATION = "../../Tests/Repositories/";
+	private static String TEST_GIT_REPOSITORIES_LOCATION = "../../Tests/Repositories/"; //Assumes working directory is project home
 	private static GitModel emcJsonGitModel;
 	private static GitModel linuxGitModel;
 	
+	//This method will clone the required git repositories and setup GitModels for use in the unit tests.
 	@BeforeClass
 	public static void setUpBeforeClass() throws Exception {
-		emcJsonGitModel = new GitModel(new File(TEST_GIT_REPOSITORIES_LOCATION + "emc-json/.git"));
+		File emcJsonRepoLocation = new File(TEST_GIT_REPOSITORIES_LOCATION + "emc-json");
+		File linuxRepoLocation = new File(TEST_GIT_REPOSITORIES_LOCATION + "linux");
+		
+		if(!emcJsonRepoLocation.exists()) {
+			DownloadRequiredTestRepository("https://github.com/epsilonlabs/emc-json.git", emcJsonRepoLocation);
+		}
+		
+		if(!linuxRepoLocation.exists()) {
+			DownloadRequiredTestRepository("https://github.com/torvalds/linux", linuxRepoLocation);
+		}
+		
+		File emcJsonObjectModelLocation = new File(TEST_GIT_REPOSITORIES_LOCATION + "emc-json/.git");
+		File linuxObjectModelLocation = new File(TEST_GIT_REPOSITORIES_LOCATION + "linux/.git");
+		
+		emcJsonGitModel = new GitModel(emcJsonObjectModelLocation);
 		emcJsonGitModel.load();
 		
-		linuxGitModel = new GitModel(new File(TEST_GIT_REPOSITORIES_LOCATION + "linux/.git"));
+		linuxGitModel = new GitModel(linuxObjectModelLocation);
 		linuxGitModel.load();
+	}
+	
+	public static void DownloadRequiredTestRepository(String remoteRepositoryLocation, File localDirectory) {
+		try {
+			Git result;
+			System.out.print("Cloning " + remoteRepositoryLocation +" to " + localDirectory.getCanonicalPath() + "...");
+
+			result = Git.cloneRepository()
+			        .setURI(remoteRepositoryLocation)
+			        .setDirectory(localDirectory)
+			        .setProgressMonitor(new TextProgressMonitor())
+			        .call();
+	        result.close();
+	        
+	        System.out.println("Done.\n\n");
+		} catch (GitAPIException | IOException e) {
+			System.err.println("FAILED (" + e.getMessage() + ")");
+		}
 	}
 	
 	//region load tests
