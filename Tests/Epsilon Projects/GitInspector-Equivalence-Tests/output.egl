@@ -1,3 +1,7 @@
+[%
+	var EGLTools = new Native("org.eclipse.epsilon.emc.git.tools.EGLTools");
+%]
+
 <!DOCTYPE html>
 <head>
 	<title>GitInspector-style Statistics | EpsilonGit</title>
@@ -58,8 +62,8 @@
 						<tbody>
 						[% for(author in Author.all.sortBy(a | a.getName())) { %]
 							  <tr>
-							    <td>[%= author.getName() %]</td>
-							    <td></td>
+							    <td>[%= EGLTools.escapeHTML(author.getName()) %]<br><i><small>[%= author.getEmailAddress() %]</small></i></td>
+							    <td>[%= author.getAllAuthoredCommits().size() %]</td>
 							    <td></td>
 							    <td></td>
 							    <td></td>
@@ -91,7 +95,7 @@
 						<tbody>
 						[% for(author in Author.all.sortBy(a | a.getName())) { %]
 							  <tr>
-							    <td>[%= author.getName() %]</td>
+							    <td>[%= EGLTools.escapeHTML(author.getName()) %]</td>
 							    <td>[%  %]</td>
 							    <td>[%  %]</td>
 							  </tr>
@@ -122,10 +126,10 @@
 				var numberCommitsData = [
 					[% for (author in Author.all) { %]
 				    {
-				        value: 423 + 123,
-				        color:'#'+Math.floor(Math.random()*16777215).toString(16),
-				        highlight: '#1A1A1A',
-				        label: "[%= author.getName() %]"
+				        value: [%= author.getAllAuthoredCommits().size() %],
+				        color: '[%= EGLTools.getAccentColour(author) %]',
+				        highlight: '[%= EGLTools.getDarkAccentColour(author) %]',
+				        label: '[%= EGLTools.escapeJSON(author.getName()) %]'
 				    },
 				    [% } %]
 				]
@@ -142,9 +146,9 @@
 				    [% for (author in Author.all) { %]
 				    {
 				        value: 423 + 123,
-				        color:'#'+Math.floor(Math.random()*16777215).toString(16),
-				        highlight: '#1A1A1A',
-				        label: "[%= author.getName() %]"
+				        color: '[%= EGLTools.getAccentColour(author) %]',
+				        highlight: '[%= EGLTools.getDarkAccentColour(author) %]',
+				        label: '[%= EGLTools.escapeJSON(author.getName()) %]'
 				    },
 				    [% } %]
 				]

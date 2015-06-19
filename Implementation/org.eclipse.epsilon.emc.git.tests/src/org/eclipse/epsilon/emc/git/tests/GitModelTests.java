@@ -231,8 +231,8 @@ public class GitModelTests {
 	//endregion;
 	@Test
 	public void authorSet() {
-		Author danny = new Author("Daniel Brown", "d.t.brown@outlook.com");
-		Author danny2 = new Author("Daniel Brown", "d.t.brown@outlook.com");
+		Author danny = new Author("Daniel Brown", "d.t.brown@outlook.com", emcJsonGitModel);
+		Author danny2 = new Author("Daniel Brown", "d.t.brown@outlook.com", emcJsonGitModel);
 		
 		Set<Person> authorsDeDuped = new HashSet<Person>();
 		authorsDeDuped.add(danny);

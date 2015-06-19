@@ -1,0 +1,13 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<?eclipse version="3.4"?>
+<plugin>
+   <extension
+         point="org.eclipse.epsilon.common.dt.tool">
+      <tool
+            class="org.eclipse.epsilon.emc.git.tools.EGLTools"
+            defaultName="org.eclipse.epsilon.emc.git.tools.EGLTools"
+            description="Simple tools required by EGL to make nice output">
+      </tool>
+   </extension>
+
+</plugin>

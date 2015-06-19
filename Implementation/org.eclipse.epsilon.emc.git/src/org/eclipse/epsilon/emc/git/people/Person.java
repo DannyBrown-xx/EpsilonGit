@@ -2,14 +2,17 @@ package org.eclipse.epsilon.emc.git.people;
 
 import org.apache.commons.lang3.builder.HashCodeBuilder;
 import org.apache.commons.lang3.builder.EqualsBuilder;
+import org.eclipse.epsilon.emc.git.GitModel;
 
 public abstract class Person {
 	private final String name;
 	private final String emailAddress;
+	protected final GitModel owner;
 	
-	public Person(String name, String emailAddress) {
+	public Person(String name, String emailAddress, GitModel owner) {
 		this.name = name;
 		this.emailAddress = emailAddress;
+		this.owner = owner;
 	}
 	
 	public String getName() {

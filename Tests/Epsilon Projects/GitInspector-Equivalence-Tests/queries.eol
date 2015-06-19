@@ -1,15 +1,17 @@
-"The following historical commit information, by author, was found in the repository:".println();
+"The following historical commit information, by author, was found in the CS Blogs Web App repository:".println();
 "Author\tCommits\tInsertions\tDeletions\t% of Changes\t".println();
 
-var totalRepositoryNumberChanges = getNumberChanges();
+//var totalRepositoryNumberChanges = getNumberChanges();
 
 for(author in Author.all.sortBy(a | a.getName())) {
 	author.getName().print();
+	(" (" + author.getEmailAddress() + ")").print();
 	"\t".print();
 	
-	author.getCommits().size().print();
-	"\t".print();
+	author.getAllAuthoredCommits().size().print();
+	"\t".println();
 	
+	/*
 	var totalInsertions = author.getCommits().totalInsertions();
 	totalInsertions.print();
 	"\t".print();
@@ -20,5 +22,5 @@ for(author in Author.all.sortBy(a | a.getName())) {
 	
 	var totalAuthorNumberChanges = totalInsertions + totalDeletions;
 	var percentageOfChanges = (totalRepositoryNumberChanges / totalAuthorNumberChanges) * 100;
-	percentageOfChanges.println();
+	percentageOfChanges.println();*/
 }
