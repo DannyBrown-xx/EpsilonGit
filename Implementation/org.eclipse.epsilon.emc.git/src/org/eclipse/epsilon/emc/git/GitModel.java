@@ -2,6 +2,7 @@ package org.eclipse.epsilon.emc.git;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
 import java.util.LinkedList;
@@ -229,8 +230,46 @@ public class GitModel extends CachedModel {
 
 	@Override
 	protected Collection allContentsFromModel() {
-		// TODO Auto-generated method stub
-		return null;
+		//TODO: Question: Should I return null values or empty lists on failure? Question: Does method does right thing?
+		try {
+			//Using getAllOfType rather than getAllCommits() etc to utilize caching
+			Collection<Object> allContents = new LinkedList<Object>();
+
+			Collection<Commit> allCommits = getAllOfType("Commit");
+			if(allCommits != null) {
+				allContents.addAll(allCommits);
+			}
+			
+			Collection<Tree> allTrees = getAllOfType("Tree");
+			if(allTrees != null) {
+				allContents.addAll(allTrees);
+			}
+			
+			Collection<Blob> allBlobs = getAllOfType("Blob");
+			if(allBlobs != null) {
+				allContents.addAll(allBlobs);
+			}
+			
+			Collection<Tag> allTags = getAllOfType("Tag");
+			if(allTags != null) {
+				allContents.addAll(allTags);
+			}
+			
+			Collection<Author> allAuthors = getAllOfType("Author");
+			if(allAuthors != null) {
+				allContents.addAll(allAuthors);
+			}
+			
+			Collection<Committer> allCommitters = getAllOfType("Committer");
+			if(allCommitters != null) {
+				allContents.addAll(allCommitters);
+			}
+			
+			return allContents;
+			
+		} catch (EolModelElementTypeNotFoundException e) {
+			return null;
+		}
 	}
 
 	@Override
@@ -322,11 +361,20 @@ public class GitModel extends CachedModel {
 	}
 
 	@Override
-	protected Collection getAllTypeNamesOf(Object instance) {
-		// TODO Auto-generated method stub
-		return null;
+	protected Collection<String> getAllTypeNamesOf(Object instance) {
+		//TODO: Question: Am I doing the right thing here? E.g. returning string name of parent class & class itself.
+		if(instance.getClass().getSimpleName().equals(Author.class.getSimpleName()) || 
+		   instance.getClass().getSimpleName().equals(Committer.class.getSimpleName())) {
+			return Arrays.asList(instance.getClass().getSimpleName(), Person.class.getSimpleName());
+		}
+		else {
+			return Arrays.asList(instance.getClass().getSimpleName());
+		}
 	}
 	
+	//
+	// -- Helper methods to support CachedModel methods --
+	//
 	private Collection<Commit> getAllCommits() {
 		RevWalk revWalk = new RevWalk(repository);
 		try {
@@ -369,8 +417,8 @@ public class GitModel extends CachedModel {
 		return null;
 	}
 	
-	//http://www.massapi.com/class/org/eclipse/jgit/treewalk/AbstractTreeIterator.html
 	private Collection<Tree> getAllTrees() {
+		//http://www.massapi.com/class/org/eclipse/jgit/treewalk/AbstractTreeIterator.html
 		//TODO: Finish implementation
 		return null;
 		
