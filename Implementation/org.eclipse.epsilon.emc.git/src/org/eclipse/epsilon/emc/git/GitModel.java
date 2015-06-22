@@ -407,7 +407,7 @@ public class GitModel extends CachedModel {
 			LinkedList<Commit> commits = (LinkedList<Commit>) getAllOfKind("Commit");
 			Set<Committer> set = new HashSet<Committer>();
 			for(Commit commit : commits) {
-				set.add(new Committer(commit.getAuthorIdent().getName(), commit.getAuthorIdent().getEmailAddress(), this));
+				set.add(new Committer(commit.getCommitterIdent().getName(), commit.getCommitterIdent().getEmailAddress(), this));
 			}
 			return set;
 		} catch (EolModelElementTypeNotFoundException e) {

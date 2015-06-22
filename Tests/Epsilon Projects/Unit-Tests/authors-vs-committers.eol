@@ -1,0 +1,28 @@
+
+
+var onlyAuthors = Author.all.excludingAll(Committer.all).sortBy(a | a.getName());
+if(onlyAuthors.size() > 0) {
+	("The following " + onlyAuthors.size() + " authors are not committers: ").println();
+	for(author in onlyAuthors) {
+		("* " + author.getName() + " (" + author.getEmailAddress() + ")").println();
+	} 
+}
+else {
+	"All authors are also comitters".println();
+}
+
+"".println();
+"------".println();
+"".println();
+
+var onlyCommitters = Committer.all.excludingAll(Author.all).sortBy(a | a.getName());
+if(onlyCommitters.size() > 0) {
+	("The following " + onlyCommitters.size() + " committers are not authors: ").println();
+	for(committer in onlyCommitters) {
+		("* " + committer.getName() + " (" + committer.getEmailAddress() + ")").println();
+	}
+}
+else {
+	"All committers are also authors".println();
+}
+
