@@ -66,13 +66,13 @@ public class GitModelConfigurationDialog extends
 			return;
 		}
 		else {
-			fileText.setText(properties.getProperty(GitModel.RepositoryLocationViaDT));
+			fileText.setText(properties.getProperty(GitModel.PROPERTY_LOCATION));
 		}
 	}
 	
 	@Override
 	protected void storeProperties() {
 		super.storeProperties();
-		properties.put(GitModel.RepositoryLocationViaDT, fileText.getText());
+		properties.put(GitModel.PROPERTY_LOCATION, fileText.getText());
 	}
 }
