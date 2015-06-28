@@ -6,25 +6,38 @@
 if(Commit.all.size() > 0) {
 	"Commit log:".println();
 	for(commit in Commit.all) {
-		("* " + commit.getFullMessage()).println();
+		//("* " + commit.getFullMessage()).println();
 	}
-	"\n\n".print();
 }
+"\n\n".print();
 
 "TAG INFORMATION".println();
 "Number of Tags: ".print(); Tag.all.size().println();
 if(Tag.all.size() > 0) {
 	"Tag Information:".println();
 	for(tag in Tag.all) {
-		("* " + tag.getTagName()).println();
+		//("* " + tag.getTagName()).println();
 	}
 }
+"\n\n".print();
 
 "AUTHOR INFORMATION".println();
 "Number of authors: ".print(); Author.all.size().println();
 if(Author.all.size() > 0) {
-	"Author Details".println();
+	"Author Details:".println();
 	for(author in Author.all.sortBy(a | a.getName())) {
-		("* " + author.getName() + " (" + author.getEmailAddress() + ")").println();
+		//("* " + author.getName() + " (" + author.getEmailAddress() + ")").println();
 	}
 } 
+"\n\n".print();
+
+
+"COMMITTERS INFORMATION".println();
+"Number of authors: ".print(); Committer.all.size().println();
+if(Committer.all.size() > 0) {
+	"Committers Details:".println();
+	for(committer in Committer.all.sortBy(a | a.getName())) {
+		//("* " + committer.getName() + " (" + committer.getEmailAddress() + ")").println();
+	}
+} 
+"\n\n".print();
