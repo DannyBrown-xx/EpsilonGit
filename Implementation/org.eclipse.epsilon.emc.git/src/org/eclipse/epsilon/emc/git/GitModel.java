@@ -46,7 +46,7 @@ public class GitModel extends CachedModel {
 	private Git git;
 	private Repository repository;
 	
-	public static String RepositoryLocationViaDT = "Repository Location Hash Key";
+	public static String PROPERTY_LOCATION = "Repository Location Hash Key";
 	
 	public GitModel() {
 		//A default constructor is required for now...
@@ -145,7 +145,8 @@ public class GitModel extends CachedModel {
 	}
 
 	/**
-	 * Determines if a Java object is part of this GitModel. (Only RevTree, RevBlob, RevCommit and RevTag can be)
+	 * Determines if a Java object is part of this GitModel. (Only classes on emc.git.objectmodel and emc.git.people
+	 * 														 packages can be)
 	 * 
 	 * 		e.g. Is this commit part of the model this GitModel represents?
 	 * 			 Does this git repository contain this tag?
@@ -230,43 +231,17 @@ public class GitModel extends CachedModel {
 
 	@Override
 	protected Collection allContentsFromModel() {
-		//TODO: Question: Should I return null values or empty lists on failure? Question: Does method does right thing?
 		try {
 			//Using getAllOfType rather than getAllCommits() etc to utilize caching
 			Collection<Object> allContents = new LinkedList<Object>();
-
-			Collection<Commit> allCommits = getAllOfType("Commit");
-			if(allCommits != null) {
-				allContents.addAll(allCommits);
-			}
-			
-			Collection<Tree> allTrees = getAllOfType("Tree");
-			if(allTrees != null) {
-				allContents.addAll(allTrees);
-			}
-			
-			Collection<Blob> allBlobs = getAllOfType("Blob");
-			if(allBlobs != null) {
-				allContents.addAll(allBlobs);
-			}
-			
-			Collection<Tag> allTags = getAllOfType("Tag");
-			if(allTags != null) {
-				allContents.addAll(allTags);
-			}
-			
-			Collection<Author> allAuthors = getAllOfType("Author");
-			if(allAuthors != null) {
-				allContents.addAll(allAuthors);
-			}
-			
-			Collection<Committer> allCommitters = getAllOfType("Committer");
-			if(allCommitters != null) {
-				allContents.addAll(allCommitters);
-			}
+			allContents.addAll(getAllOfType("Commit"));
+			allContents.addAll(getAllOfType("Tree"));
+			allContents.addAll(getAllOfType("Blob"));
+			allContents.addAll(getAllOfType("Tag"));
+			allContents.addAll(getAllOfType("Author"));
+			allContents.addAll(getAllOfType("Committer"));
 			
 			return allContents;
-			
 		} catch (EolModelElementTypeNotFoundException e) {
 			return null;
 		}
@@ -317,7 +292,7 @@ public class GitModel extends CachedModel {
 	public void load(StringProperties properties, IRelativePathResolver resolver)
 			throws EolModelLoadingException {
 		super.load(properties, resolver);
-		repositoryLocation = new File(properties.getProperty(GitModel.RepositoryLocationViaDT));
+		repositoryLocation = new File(properties.getProperty(GitModel.PROPERTY_LOCATION));
 		loadModel();
 	}
 	
@@ -362,7 +337,6 @@ public class GitModel extends CachedModel {
 
 	@Override
 	protected Collection<String> getAllTypeNamesOf(Object instance) {
-		//TODO: Question: Am I doing the right thing here? E.g. returning string name of parent class & class itself.
 		if(instance.getClass().getSimpleName().equals(Author.class.getSimpleName()) || 
 		   instance.getClass().getSimpleName().equals(Committer.class.getSimpleName())) {
 			return Arrays.asList(instance.getClass().getSimpleName(), Person.class.getSimpleName());
