@@ -4,6 +4,7 @@ import static org.junit.Assert.*;
 
 import java.io.File;
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.Set;
@@ -19,6 +20,7 @@ import org.eclipse.epsilon.eol.exceptions.models.EolModelElementTypeNotFoundExce
 import org.eclipse.epsilon.eol.exceptions.models.EolModelLoadingException;
 import org.eclipse.jgit.api.Git;
 import org.eclipse.jgit.api.errors.GitAPIException;
+import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.lib.TextProgressMonitor;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.treewalk.TreeWalk;
@@ -239,5 +241,12 @@ public class GitModelTests {
 		authorsDeDuped.add(danny2);
 		
 		assertEquals(1, authorsDeDuped.size());
+	}
+	
+	@Test
+	public void getDiffParentCommit() {
+		Commit commit = (Commit)emcJsonGitModel.getElementById("079fa68889e1c25649cf02341d79d0b0c4d5bffe");
+		ArrayList<DiffEntry> diffs = (ArrayList<DiffEntry>) commit.getChangesFromParents();
+		assertEquals(11, diffs.size());
 	}
 }

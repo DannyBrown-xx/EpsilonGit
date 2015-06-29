@@ -63,6 +63,10 @@ public class GitModel extends CachedModel {
 		return repository;
 	}
 	
+	public Git getJGitPorcelain() {
+		return git;	
+	}
+	
 	//
 	// -- CachedModel methods --
 	//
@@ -98,7 +102,7 @@ public class GitModel extends CachedModel {
 						revWalk.parseBody(tree);
 						return tree;
 					case Constants.OBJ_COMMIT:
-						Commit commit = new Commit(revWalk.lookupCommit(elementId));
+						Commit commit = new Commit(revWalk.lookupCommit(elementId), this);
 						revWalk.parseBody(commit);
 						return commit;
 					case Constants.OBJ_TAG:
@@ -356,7 +360,7 @@ public class GitModel extends CachedModel {
 			Iterable<RevCommit> allCommitsIterable = git.log().all().call();
 			Collection<Commit> collection = new LinkedList<Commit>();
 			for(RevCommit commit : allCommitsIterable) {
-				Commit c = new Commit(commit.getId());
+				Commit c = new Commit(commit.getId(), this);
 				revWalk.parseBody(c);
 				collection.add(c);
 			}
