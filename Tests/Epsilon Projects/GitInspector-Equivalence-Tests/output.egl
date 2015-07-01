@@ -46,7 +46,7 @@
 	<main>
 		<section id="commit-information" class="container-fluid">
 			<h2>Authors</h2>
-			<p>The following historical commit information, by author, was found in the repository.</p>
+			<p>The following historical commit information, by author, was found in the repository. (Note: This excludes merge commits)</p>
 			<div class="table-graph-container" class="row">
 				<div class="col-md-8">
 					<table id="commit-information-table" class="table table-striped table-bordered table-hover">
@@ -60,12 +60,21 @@
 						  </tr>
 						</thead>
 						<tbody>
-						[% for(author in Author.all.sortBy(a | a.getName())) { %]
+						[% for(author in Author.all.sortBy(a | a.getName())) { 
+								var commitsByAuthor = author.getAllAuthoredCommits().reject(a | a.isMergeCommit());
+								var totalInsertions : Integer;
+								var totalDeletions : Integer;
+								for(commit in commitsByAuthor) {
+									var differenceCounts = commit.getDifferenceCountFromParent();
+									totalInsertions = totalInsertions + differenceCounts.getLinesAdded();
+									totalDeletions = totalDeletions + differenceCounts.getLinesRemoved();
+								}
+						%]
 							  <tr>
 							    <td>[%= EGLTools.escapeHTML(author.getName()) %]<br><i><small>[%= author.getEmailAddress() %]</small></i></td>
-							    <td>[%= author.getAllAuthoredCommits().size() %]</td>
-							    <td></td>
-							    <td></td>
+							    <td>[%= commitsByAuthor.size() %]</td>
+							    <td>[%= totalInsertions %]</td>
+							    <td>[%= totalDeletions %]</td>
 							    <td></td>
 							  </tr>
 						[% } %]

@@ -9,18 +9,25 @@ for(author in Author.all.sortBy(a | a.getName())) {
 	"\t".print();
 	
 	author.getAllAuthoredCommits().size().print();
-	"\t".println();
+	"\t".print();
 	
-	/*
-	var totalInsertions = author.getCommits().totalInsertions();
+	var commitsByAuthor = author.getAllAuthoredCommits().reject(a | a.isMergeCommit());
+		
+	var totalInsertions : Integer;
+	var totalDeletions : Integer;
+	for(commit in commitsByAuthor) {
+		var differenceCounts = commit.getDifferenceCountFromParent();
+		totalInsertions = totalInsertions + differenceCounts.getLinesAdded();
+		totalDeletions = totalDeletions + differenceCounts.getLinesRemoved();
+	}	
 	totalInsertions.print();
 	"\t".print();
 	
-	var totalDeletions = author.getCommits().totalDeletions();
 	totalDeletions.print();
 	"\t".print();
 	
 	var totalAuthorNumberChanges = totalInsertions + totalDeletions;
-	var percentageOfChanges = (totalRepositoryNumberChanges / totalAuthorNumberChanges) * 100;
-	percentageOfChanges.println();*/
+	//var percentageOfChanges = (totalRepositoryNumberChanges / totalAuthorNumberChanges) * 100;
+	//percentageOfChanges.println();
+	0.println();
 }
