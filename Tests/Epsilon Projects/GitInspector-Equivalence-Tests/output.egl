@@ -1,5 +1,15 @@
 [%
 	var EGLTools = new Native("org.eclipse.epsilon.emc.git.tools.EGLTools");
+	
+	//Work out totals
+	var totalRepositoryAdditions : Real;
+	var totalRepositoryRemovals : Real;
+	for(commit in Commit.all.reject(a | a.isMergeCommit())) {
+		var differenceCounts = commit.getDifferenceCountFromParent();
+		totalRepositoryAdditions = totalRepositoryAdditions + differenceCounts.getLinesAdded();
+		totalRepositoryRemovals = totalRepositoryRemovals + differenceCounts.getLinesRemoved();
+	}
+	var totalRepositoryChanges : Real = totalRepositoryAdditions + totalRepositoryRemovals;
 %]
 
 <!DOCTYPE html>
@@ -60,22 +70,29 @@
 						  </tr>
 						</thead>
 						<tbody>
-						[% for(author in Author.all.sortBy(a | a.getName())) { 
+						[%						
+						 for(author in Author.all.sortBy(a | a.getName())) { 
 								var commitsByAuthor = author.getAllAuthoredCommits().reject(a | a.isMergeCommit());
-								var totalInsertions : Integer;
-								var totalDeletions : Integer;
+								var totalCommitInsertions : Real;
+								var totalCommitDeletions : Real;
 								for(commit in commitsByAuthor) {
 									var differenceCounts = commit.getDifferenceCountFromParent();
-									totalInsertions = totalInsertions + differenceCounts.getLinesAdded();
-									totalDeletions = totalDeletions + differenceCounts.getLinesRemoved();
+									totalCommitInsertions = totalCommitInsertions + differenceCounts.getLinesAdded();
+									totalCommitDeletions = totalCommitDeletions + differenceCounts.getLinesRemoved();
 								}
+								var totalCommitChanges : Real = totalCommitInsertions + totalCommitDeletions;
 						%]
 							  <tr>
 							    <td>[%= EGLTools.escapeHTML(author.getName()) %]<br><i><small>[%= author.getEmailAddress() %]</small></i></td>
 							    <td>[%= commitsByAuthor.size() %]</td>
-							    <td>[%= totalInsertions %]</td>
-							    <td>[%= totalDeletions %]</td>
-							    <td></td>
+							    <td>[%= totalCommitInsertions.asInteger() %]</td>
+							    <td>[%= totalCommitDeletions.asInteger() %]</td>
+							    <td>[% if(not (totalCommitChanges == 0)) { %]
+							    	[%= ((totalCommitChanges / totalRepositoryChanges) * 100).format("%.2f") %]%
+							    	[% } else {%]
+							    	0%
+							    	[% } %]
+						    	</td>
 							  </tr>
 						[% } %]
 						</tbody>
