@@ -1,0 +1,19 @@
+var datesToNumberCommits : Map;
+for(commit in Commit.all.sortBy(c | c.getCommitCalendarDate())) {
+	var commitDate = commit.getCommitCalendarDate();
+
+	if(datesToNumberCommits.containsKey(commitDate)) {
+		datesToNumberCommits.put(commitDate, datesToNumberCommits.get(commitDate) + 1);
+	}
+	else {
+		datesToNumberCommits.put(commitDate, 1);
+	}
+}
+
+"The following number of commits were made to the repository per day:".println();
+for(date in datesToNumberCommits.keySet().sortBy(k | k)) {
+	(date.getDay() + "/" + date.getMonth() + "/" + date.getYear()).print();
+	" - ".print();
+	datesToNumberCommits.get(date).print();
+	" commits".println();
+}

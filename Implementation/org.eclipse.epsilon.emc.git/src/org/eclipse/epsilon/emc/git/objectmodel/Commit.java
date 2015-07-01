@@ -2,9 +2,11 @@ package org.eclipse.epsilon.emc.git.objectmodel;
 
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
+import java.util.Calendar;
 import java.util.Collection;
 import java.util.LinkedList;
 
+import org.eclipse.epsilon.emc.git.GitCalendar;
 import org.eclipse.epsilon.emc.git.GitModel;
 import org.eclipse.epsilon.emc.git.diff.DifferenceCount;
 import org.eclipse.jgit.api.errors.GitAPIException;
@@ -38,6 +40,31 @@ public class Commit extends RevCommit {
 	
 	public boolean isMergeCommit() {
 		return getParentCount() > 1;
+	}
+	
+	
+	// - Nicer time stuff for models, DateTimes in Java are just a cluster... - //
+	public GitCalendar getCommitCalendar() {
+		GitCalendar c = new GitCalendar();
+		c.setTimeInMillis(getCommitTime() * 1000L);
+		return c;
+	}
+	
+	public GitCalendar getCommitCalendarDate() {
+		GitCalendar c = getCommitCalendar();
+		c.set(Calendar.HOUR_OF_DAY, 0);
+		c.set(Calendar.MINUTE, 0);
+		c.set(Calendar.SECOND, 0);
+		c.set(Calendar.MILLISECOND, 0);
+		return c;
+	}
+	
+	public GitCalendar getCommitCalendarTime() {
+		GitCalendar c = getCommitCalendar();
+		c.set(Calendar.YEAR, 0);
+		c.set(Calendar.DAY_OF_MONTH, 0);
+		c.set(Calendar.MONTH, 0);
+		return c;
 	}
 	
 	public DifferenceCount getDifferenceCountFromParent() {
