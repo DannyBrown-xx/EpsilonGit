@@ -1,19 +1,30 @@
-var datesToNumberCommits : Map;
-for(commit in Commit.all.sortBy(c | c.getCommitCalendarDate())) {
-	var commitDate = commit.getCommitCalendarDate();
+"The following number of commits happened per day across the whole repository:".println();
+printDatesToCommits(Commit.all);
+"\n\n".print();
 
-	if(datesToNumberCommits.containsKey(commitDate)) {
-		datesToNumberCommits.put(commitDate, datesToNumberCommits.get(commitDate) + 1);
-	}
-	else {
-		datesToNumberCommits.put(commitDate, 1);
-	}
+for(committer in Committer.all) {
+	(committer.getName() + " (" + committer.getEmailAddress() + ") committed this many times per day:").println();
+	printDatesToCommits(committer.getAllCommittedCommits());
+	"\n\n".print();
 }
 
-"The following number of commits were made to the repository per day:".println();
-for(date in datesToNumberCommits.keySet().sortBy(k | k)) {
-	(date.getDay() + "/" + date.getMonth() + "/" + date.getYear()).print();
-	" - ".print();
-	datesToNumberCommits.get(date).print();
-	" commits".println();
+operation printDatesToCommits(commitsList) {  
+	var datesToNumberCommits : Map;
+	for(commit in commitsList.sortBy(c | c.getCommitCalendarDate())) {
+		var commitDate = commit.getCommitCalendarDate();
+	
+		if(datesToNumberCommits.containsKey(commitDate)) {
+			datesToNumberCommits.put(commitDate, datesToNumberCommits.get(commitDate) + 1);
+		}
+		else {
+			datesToNumberCommits.put(commitDate, 1);
+		}
+	}
+	
+	for(date in datesToNumberCommits.keySet().sortBy(k | k)) {
+		(date.getDay() + "/" + date.getMonth() + "/" + date.getYear()).print();
+		" - ".print();
+		datesToNumberCommits.get(date).print();
+		" commits".println();
+	}
 }
