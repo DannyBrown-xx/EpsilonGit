@@ -73,24 +73,24 @@
 						[%						
 						 for(author in Author.all.sortBy(a | a.getName())) { 
 								var commitsByAuthor = author.getAllAuthoredCommits().reject(a | a.isMergeCommit());
-								var totalCommitInsertions : Real;
-								var totalCommitDeletions : Real;
+								var totalAuthorInsertions : Real;
+								var totalAuthorDeletions : Real;
 								for(commit in commitsByAuthor) {
 									var differenceCounts = commit.getDifferenceCountFromParent();
-									totalCommitInsertions = totalCommitInsertions + differenceCounts.getLinesAdded();
-									totalCommitDeletions = totalCommitDeletions + differenceCounts.getLinesRemoved();
+									totalAuthorInsertions = totalAuthorInsertions + differenceCounts.getLinesAdded();
+									totalAuthorDeletions = totalAuthorDeletions + differenceCounts.getLinesRemoved();
 								}
-								var totalCommitChanges : Real = totalCommitInsertions + totalCommitDeletions;
+								var totalAuthorChanges : Real = totalAuthorInsertions + totalAuthorDeletions;
 						%]
 							  <tr>
 							    <td>[%= EGLTools.escapeHTML(author.getName()) %]<br><i><small>[%= author.getEmailAddress() %]</small></i></td>
 							    <td>[%= commitsByAuthor.size() %]</td>
-							    <td>[%= totalCommitInsertions.asInteger() %]</td>
-							    <td>[%= totalCommitDeletions.asInteger() %]</td>
-							    <td>[% if(not (totalCommitChanges == 0)) { %]
-							    	[%= ((totalCommitChanges / totalRepositoryChanges) * 100).format("%.2f") %]%
-							    	[% } else {%]
+							    <td>[%= totalAuthorInsertions.asInteger() %]</td>
+							    <td>[%= totalAuthorDeletions.asInteger() %]</td>
+							    <td>[% if(totalAuthorChanges == 0) { %]
 							    	0%
+							    	[% } else {%]
+							    	[%= ((totalAuthorChanges / totalRepositoryChanges) * 100).format("%.2f") %]%
 							    	[% } %]
 						    	</td>
 							  </tr>

@@ -246,12 +246,14 @@ public class GitModelTests {
 	public void getDiffParentCommit() {
 		Commit commit = (Commit)emcJsonGitModel.getElementById("079fa68889e1c25649cf02341d79d0b0c4d5bffe");
 		DifferenceCount dc = commit.getDifferenceCountFromParent();
-		System.out.println("Lines Added " + dc.LinesAdded);
-		System.out.println("Lines Removed " + dc.LinesRemoved);
-		System.out.println("Files Added " + dc.FilesAdded);
-		System.out.println("Files Removed " + dc.FilesRemoved);
-		System.out.println("Files Modified " + dc.FilesModified);
-		System.out.println("Files Copied " + dc.FilesCopied);
-		System.out.println("Files Renamed " + dc.FilesRenamed);
+		//TODO: Implement assertion
+		
+		System.out.println("Lines Added " + dc.getLinesAdded());
+		System.out.println("Lines Removed " + dc.getLinesRemoved());
+		System.out.println("Files Added " + dc.getFilesAdded());
+		System.out.println("Files Removed " + dc.getFilesRemoved());
+		System.out.println("Files Modified " + dc.getFilesModified());
+		System.out.println("Files Copied " + dc.getFilesCopied());
+		System.out.println("Files Renamed " + dc.getFilesRenamed());
 	}
 }

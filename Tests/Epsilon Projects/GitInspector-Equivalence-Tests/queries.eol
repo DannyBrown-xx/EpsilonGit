@@ -1,33 +1,44 @@
-"The following historical commit information, by author, was found in the CS Blogs Web App repository:".println();
-"Author\tCommits\tInsertions\tDeletions\t% of Changes\t".println();
+"The following historical commit information, by author, was found in this repository:\n".println();
+"Author".format("%-60s | ").print();
+"Commits".format("%-13s | ").print();
+"Insertions".format("%-13s | ").print();
+"Deletions".format("%-13s | ").print();
+"% of Changes".format("%-13s |").println();
+"------------------------------------------------------------------------------------------------------------------------------".println();
 
-//var totalRepositoryNumberChanges = getNumberChanges();
-
-for(author in Author.all.sortBy(a | a.getName())) {
-	author.getName().print();
-	(" (" + author.getEmailAddress() + ")").print();
-	"\t".print();
+//Work out totals
+var totalRepositoryAdditions : Real;
+var totalRepositoryRemovals : Real;
+for(commit in Commit.all.reject(a | a.isMergeCommit())) {
+	var differenceCounts = commit.getDifferenceCountFromParent();
+	totalRepositoryAdditions = totalRepositoryAdditions + differenceCounts.getLinesAdded();
+	totalRepositoryRemovals = totalRepositoryRemovals + differenceCounts.getLinesRemoved();
+}
+var totalRepositoryChanges : Real = totalRepositoryAdditions + totalRepositoryRemovals;
 	
-	author.getAllAuthoredCommits().size().print();
-	"\t".print();
+for(author in Author.all.sortBy(a | a.getName())) {
+	(author.getName() +" (" + author.getEmailAddress() + ")").format("%-60s | ").print();	
+	author.getAllAuthoredCommits().size().asInteger().format("%-13d | ").print();
 	
 	var commitsByAuthor = author.getAllAuthoredCommits().reject(a | a.isMergeCommit());
 		
-	var totalInsertions : Integer;
-	var totalDeletions : Integer;
+	var totalAuthorInsertions : Real;
+	var totalAuthorDeletions : Real;
 	for(commit in commitsByAuthor) {
 		var differenceCounts = commit.getDifferenceCountFromParent();
-		totalInsertions = totalInsertions + differenceCounts.getLinesAdded();
-		totalDeletions = totalDeletions + differenceCounts.getLinesRemoved();
-	}	
-	totalInsertions.print();
-	"\t".print();
+		totalAuthorInsertions = totalAuthorInsertions + differenceCounts.getLinesAdded();
+		totalAuthorDeletions = totalAuthorDeletions + differenceCounts.getLinesRemoved();
+	}
+	var totalAuthorChanges : Real = totalAuthorInsertions + totalAuthorDeletions;
 	
-	totalDeletions.print();
-	"\t".print();
+	totalAuthorInsertions.asInteger().format("%-13d | ").print();
 	
-	var totalAuthorNumberChanges = totalInsertions + totalDeletions;
-	//var percentageOfChanges = (totalRepositoryNumberChanges / totalAuthorNumberChanges) * 100;
-	//percentageOfChanges.println();
-	0.println();
+	totalAuthorDeletions.asInteger().format("%-13d | ").print();
+	
+	if(totalAuthorChanges == 0) {
+		"0%".format("%-13s |").println();
+	}
+	else {
+		(((totalAuthorChanges / totalRepositoryChanges) * 100).format("%.2f") + "%").format("%-13s |").println();
+	}
 }
