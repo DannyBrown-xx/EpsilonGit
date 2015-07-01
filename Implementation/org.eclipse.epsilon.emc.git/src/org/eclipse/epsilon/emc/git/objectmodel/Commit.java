@@ -36,6 +36,10 @@ public class Commit extends RevCommit {
 		return getParentCount() == 0;
 	}
 	
+	public boolean isMergeCommit() {
+		return getParentCount() > 1;
+	}
+	
 	public DifferenceCount getDifferenceCountFromParent() {
 		try {
 			//Get this commits tree, for comparisons
