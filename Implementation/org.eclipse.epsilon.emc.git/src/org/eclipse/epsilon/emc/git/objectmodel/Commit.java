@@ -4,17 +4,17 @@ import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.util.Collection;
 import java.util.LinkedList;
-import java.util.List;
 
 import org.eclipse.epsilon.emc.git.GitModel;
 import org.eclipse.epsilon.emc.git.diff.DifferenceCount;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffFormatter;
+import org.eclipse.jgit.diff.Edit;
+import org.eclipse.jgit.diff.EditList;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.patch.FileHeader;
-import org.eclipse.jgit.patch.HunkHeader;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.treewalk.CanonicalTreeParser;
@@ -77,31 +77,21 @@ public class Commit extends RevCommit {
 			for(DiffEntry diffEntry : allDiffs) {
 				switch(diffEntry.getChangeType()) {
 					case ADD:
-					{
 						filesAdded++;
-						LineChanges lineChanges = getLineChanges(diffEntry, df);
-						linesAdded += lineChanges.Additions;
-						linesRemoved += lineChanges.Removals;
-					}
+						linesAdded += getLineChanges(diffEntry, df).linesAdded;
 						break;
 					case COPY:
-					{
 						filesCopied++;
-						LineChanges lineChanges = getLineChanges(diffEntry, df);
-						linesAdded += lineChanges.Additions;
-						linesRemoved += lineChanges.Removals;
-					}
 						break;
 					case DELETE:
 						filesRemoved++;
+						linesRemoved += getLineChanges(diffEntry, df).linesRemoved;
 						break;
 					case MODIFY:
-					{
 						filesModified++;
-						LineChanges lineChanges = getLineChanges(diffEntry, df);
-						linesAdded += lineChanges.Additions;
-						linesRemoved += lineChanges.Removals;
-					}
+						DiffLineChanges dlc = getLineChanges(diffEntry, df);
+						linesAdded += dlc.linesAdded;
+						linesRemoved += dlc.linesRemoved;
 						break;
 					case RENAME:
 						filesRenamed++;
@@ -117,25 +107,39 @@ public class Commit extends RevCommit {
 		}
 	}
 	
-	private class LineChanges {
-		int Additions = 0;
-		int Removals = 0;
+	private class DiffLineChanges {
+		public int linesAdded;
+		public int linesRemoved;
 	}
 	
-	private LineChanges getLineChanges(DiffEntry diffEntry, DiffFormatter diffFormatter) {
+	private DiffLineChanges getLineChanges(DiffEntry diffEntry, DiffFormatter diffFormatter) {
 		FileHeader fileHeader = null;
 		  	try {
 			fileHeader = diffFormatter.toFileHeader(diffEntry);
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
-			e.printStackTrace();
+			return null;
 		}
 	  	
-		LineChanges lineChanges = new LineChanges();
-	  	List<? extends HunkHeader> hunks = fileHeader.getHunks();
-		for(HunkHeader hunk : hunks ) {
-			lineChanges.Additions += hunk.getNewLineCount();
-		}
-		return lineChanges;
+		DiffLineChanges dlc = new DiffLineChanges();
+		  	
+	  	EditList editList = fileHeader.toEditList();
+	  	for(Edit e : editList) {
+	  		switch(e.getType()) {
+				case DELETE:
+					dlc.linesRemoved += e.getLengthA();
+					break;
+				case EMPTY:
+					//Describes nothing
+					break;
+				case INSERT:
+					dlc.linesAdded += e.getLengthB();
+					break;
+				case REPLACE:
+					dlc.linesRemoved += e.getLengthA();
+					dlc.linesAdded += e.getLengthB();
+					break;
+	  		}
+	  	}
+		return dlc;
 	}
 }
