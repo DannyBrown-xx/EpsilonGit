@@ -378,14 +378,14 @@ public class GitModel extends CachedModel {
 			Collection<Tag> collection = new LinkedList<Tag>();
 			for(Ref ref : tagListAsRefs) {
 				Tag t = new Tag(revWalk.lookupTag(ref.getObjectId()));
-				revWalk.parseBody(t);
+				try {
+					revWalk.parseBody(t);
+				} catch (IOException e) {
+				}
 				collection.add(t);
 			}
 			return collection;
 		} catch (GitAPIException e) {
-			return null;
-		}
-		catch (IOException e) {
 			return null;
 		}
 	}
