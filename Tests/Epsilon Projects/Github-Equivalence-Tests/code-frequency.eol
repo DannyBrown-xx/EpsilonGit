@@ -1,0 +1,58 @@
+"Week".format("%-30s | ").print();
+"Commits".format("%-13s | ").print();
+"Insertions".format("%-13s | ").print();
+"Deletions".format("%-13s | ").println();
+"--------------------------------------------------------------------------------".println();
+
+
+var startOfWeek;
+var endOfWeek;
+var numberCommits = 0;
+var numberAdditions = 0;
+var numberRemovals = 0;
+
+for(commit in Commit.all.reject(c | c.isMergeCommit()).sortBy(c | c.getCommitCalendarDate())) {
+	
+	var commitDate = commit.getCommitCalendarDate();
+	
+	if(endOfWeek == null) {
+		//This is the first commit. Lets set up our weeks...
+	
+		//Weeks start on whatever the day was of the first commit
+		//startOfWeek = commitDate;
+		
+		//Weeks start on a Monday. We grab the monday before this first commmit.
+		//startOfWeek = commitDate.getPreviousDay("Monday");
+		
+		//Week start on a Sunday. We grab the sunday before this first commit. (this is how Github works! madness!)
+		startOfWeek = commitDate.getPreviousDay("Sunday");
+					
+		endOfWeek = startOfWeek.addDays(6);
+	}
+	
+	if(commitDate.compareTo(endOfWeek) > 0) {
+		//This commit belongs in the next week...
+		//TODO: Finish adding code which deals with 0 commit weeks
+		(formatDate(startOfWeek) + " - " + formatDate(endOfWeek)).format("%-30s | ").print();
+
+		numberCommits.format("%-13s | ").print();
+		numberAdditions.format("%-13s | ").print();
+		numberRemovals.format("%-13s | ").println();
+		
+		endOfWeek = commitDate.addDays(6);
+		startOfWeek = commitDate;
+		numberCommits = 0;
+		numberAdditions = 0;
+		numberRemovals = 0;
+	}
+	
+	// Add to this weeks totals
+	var differenceCount = commit.getDifferenceCountFromParent();
+	numberCommits = numberCommits + 1;	
+	numberAdditions = numberAdditions + differenceCount.getLinesAdded();
+	numberRemovals = numberRemovals + differenceCount.getLinesRemoved();
+}
+
+operation formatDate(date) {
+	return (date.getDay() + "/" + date.getMonth() + "/" + date.getYear());
+}

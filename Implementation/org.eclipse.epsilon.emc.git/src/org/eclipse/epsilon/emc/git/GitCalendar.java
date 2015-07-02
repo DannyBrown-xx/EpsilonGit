@@ -33,4 +33,39 @@ public class GitCalendar extends GregorianCalendar {
 	public int getMilliseconds() {
 		return get(Calendar.MILLISECOND);
 	}
+	
+	public GitCalendar addDays(int numberOfDays) {
+		GitCalendar cal = (GitCalendar) this.clone();
+		cal.add(Calendar.DAY_OF_MONTH, 7);
+		return cal;
+	}
+	
+	public GitCalendar getPreviousDay(String dayOfWeek) {
+		switch(dayOfWeek.toLowerCase()) {
+			case "monday":
+				return dateOfLast(Calendar.MONDAY);
+			case "tuesday":
+				return dateOfLast(Calendar.TUESDAY);
+			case "wednesday":
+				return dateOfLast(Calendar.WEDNESDAY);
+			case "thursday":
+				return dateOfLast(Calendar.THURSDAY);
+			case "friday":
+				return dateOfLast(Calendar.FRIDAY);
+			case "saturday":
+				return dateOfLast(Calendar.SATURDAY);
+			case "sunday":
+				return dateOfLast(Calendar.SUNDAY);
+			default:
+				throw new IllegalArgumentException("dayOfWeek must be a valid day. E.g. \"Monday\" or \"Tuesday\"");
+		}
+	}
+
+	private GitCalendar dateOfLast(int day) {
+		GitCalendar lastDay = (GitCalendar) this.clone();
+		while (lastDay.get(Calendar.DAY_OF_WEEK) > day) {
+			lastDay.add(Calendar.DATE, -1); // Subtract 1 day until same as day.
+		}
+		return lastDay;
+	}
 }
