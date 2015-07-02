@@ -60,12 +60,38 @@ public class GitCalendar extends GregorianCalendar {
 				throw new IllegalArgumentException("dayOfWeek must be a valid day. E.g. \"Monday\" or \"Tuesday\"");
 		}
 	}
+	
+	public String getDayOfWeek() {
+		switch(getDayOfWeekValue()) {
+			case 1:
+				return "Saturday";
+			case 2:
+				return "Sunday";
+			case 3:
+				return "Monday";
+			case 4:
+				return "Tuesday";
+			case 5:
+				return "Wednesday";
+			case 6:
+				return "Thursday";
+			case 7:
+				return "Friday";
+			default:
+				return null; //This will never happen
+		}
+	}
+	
+	public int getDayOfWeekValue() {
+		return this.get(Calendar.DAY_OF_WEEK);
+	}
 
 	private GitCalendar dateOfLast(int day) {
 		GitCalendar lastDay = (GitCalendar) this.clone();
 		while (lastDay.get(Calendar.DAY_OF_WEEK) > day) {
 			lastDay.add(Calendar.DATE, -1); // Subtract 1 day until same as day.
 		}
+		
 		return lastDay;
 	}
 }

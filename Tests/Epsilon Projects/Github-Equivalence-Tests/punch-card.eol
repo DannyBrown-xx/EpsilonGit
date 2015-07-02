@@ -1,0 +1,27 @@
+var currentDay;
+var commitsInHour : Map;
+for(commit in Commit.all.sortBy(c | c.getCommitCalendar().getDayOfWeekValue())) {
+	var commitCalendar = commit.getCommitCalendar();
+	var commitDay = commitCalendar.getDayOfWeek();
+	if(not (commitDay == currentDay)) {
+		if(not(currentDay == null)) {
+			//This commit occured in the next type of day. Print out current days info.
+			currentDay.println();
+			commitsInHour.println();
+			"".println();
+		}
+		
+		//Reset
+		currentDay = commitDay;
+		commitsInHour.clear();
+	}
+	
+	//Get hour of commit and add to list
+	var hourOfCommit = commitCalendar.getHours();
+	if(commitsInHour.containsKey(hourOfCommit)) {
+		commitsInHour.put(hourOfCommit, commitsInHour.get(hourOfCommit) + 1);
+	}
+	else {
+		commitsInHour.put(hourOfCommit, 1);
+	}
+}
