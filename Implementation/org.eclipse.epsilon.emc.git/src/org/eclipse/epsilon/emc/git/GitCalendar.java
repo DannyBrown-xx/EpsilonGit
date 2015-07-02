@@ -36,7 +36,7 @@ public class GitCalendar extends GregorianCalendar {
 	
 	public GitCalendar addDays(int numberOfDays) {
 		GitCalendar cal = (GitCalendar) this.clone();
-		cal.add(Calendar.DAY_OF_MONTH, 7);
+		cal.add(Calendar.DAY_OF_MONTH, numberOfDays);
 		return cal;
 	}
 	
