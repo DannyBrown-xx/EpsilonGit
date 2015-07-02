@@ -30,17 +30,20 @@ for(commit in Commit.all.reject(c | c.isMergeCommit()).sortBy(c | c.getCommitCal
 		endOfWeek = startOfWeek.addDays(6);
 	}
 	
-	if(commitDate.compareTo(endOfWeek) > 0) {
-		//This commit belongs in the next week...
-		//TODO: Finish adding code which deals with 0 commit weeks
+	while(commitDate.compareTo(endOfWeek) > 0) {
+		//This commit belongs in a later week...
+		//First print current week data
 		(formatDate(startOfWeek) + " - " + formatDate(endOfWeek)).format("%-30s | ").print();
 
 		numberCommits.format("%-13s | ").print();
 		numberAdditions.format("%-13s | ").print();
 		numberRemovals.format("%-13s | ").println();
 		
-		endOfWeek = commitDate.addDays(6);
-		startOfWeek = commitDate;
+		//Iterate to next week
+		startOfWeek = endOfWeek.addDays(1);
+		endOfWeek = startOfWeek.addDays(6);	
+		
+		//Reset counts
 		numberCommits = 0;
 		numberAdditions = 0;
 		numberRemovals = 0;
