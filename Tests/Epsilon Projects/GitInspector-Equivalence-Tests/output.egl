@@ -6,8 +6,8 @@
 	var totalRepositoryRemovals : Real;
 	for(commit in Commit.all.reject(a | a.isMergeCommit())) {
 		var differenceCounts = commit.getDifferenceCountFromParent();
-		totalRepositoryAdditions = totalRepositoryAdditions + differenceCounts.getLinesAdded();
-		totalRepositoryRemovals = totalRepositoryRemovals + differenceCounts.getLinesRemoved();
+		totalRepositoryAdditions += differenceCounts.getLinesAdded();
+		totalRepositoryRemovals += differenceCounts.getLinesRemoved();
 	}
 	var totalRepositoryChanges : Real = totalRepositoryAdditions + totalRepositoryRemovals;
 %]
@@ -77,8 +77,8 @@
 								var totalAuthorDeletions : Real;
 								for(commit in commitsByAuthor) {
 									var differenceCounts = commit.getDifferenceCountFromParent();
-									totalAuthorInsertions = totalAuthorInsertions + differenceCounts.getLinesAdded();
-									totalAuthorDeletions = totalAuthorDeletions + differenceCounts.getLinesRemoved();
+									totalAuthorInsertions += differenceCounts.getLinesAdded();
+									totalAuthorDeletions += differenceCounts.getLinesRemoved();
 								}
 								var totalAuthorChanges : Real = totalAuthorInsertions + totalAuthorDeletions;
 						%]

@@ -52,8 +52,8 @@ for(commit in Commit.all.reject(c | c.isMergeCommit()).sortBy(c | c.getCommitCal
 	// Add to this weeks totals
 	var differenceCount = commit.getDifferenceCountFromParent();
 	numberCommits = numberCommits + 1;	
-	numberAdditions = numberAdditions + differenceCount.getLinesAdded();
-	numberRemovals = numberRemovals + differenceCount.getLinesRemoved();
+	numberAdditions += differenceCount.getLinesAdded();
+	numberRemovals += differenceCount.getLinesRemoved();
 }
 
 operation formatDate(date) {
