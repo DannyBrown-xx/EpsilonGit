@@ -290,8 +290,8 @@ public class GitModel extends CachedModel {
 	protected Object createInstanceInModel(String type)
 			throws EolModelElementTypeNotFoundException,
 			EolNotInstantiableModelElementTypeException {
-		// TODO Auto-generated method stub
-		return null;
+		//Nothing is instantiable
+		throw new EolNotInstantiableModelElementTypeException("GitModel", type);
 	}
 	
 	@Override
@@ -335,8 +335,7 @@ public class GitModel extends CachedModel {
 	@Override
 	protected boolean deleteElementInModel(Object instance)
 			throws EolRuntimeException {
-		// TODO Auto-generated method stub
-		return false;
+		throw new EolRuntimeException("Cannot delete elements. GitModels are read-only for now.");
 	}
 
 	@Override
