@@ -2,6 +2,7 @@ package org.eclipse.epsilon.emc.git;
 
 import java.io.File;
 import java.io.IOException;
+import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
 import java.util.HashSet;
@@ -11,6 +12,8 @@ import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.eclipse.epsilon.common.util.StringProperties;
+import org.eclipse.epsilon.emc.git.filesystem.FileFinderPredicate;
+import org.eclipse.epsilon.emc.git.filesystem.GitFile;
 import org.eclipse.epsilon.emc.git.objectmodel.Blob;
 import org.eclipse.epsilon.emc.git.objectmodel.Commit;
 import org.eclipse.epsilon.emc.git.objectmodel.Tag;
@@ -290,14 +293,18 @@ public class GitModel extends CachedModel {
 		// TODO Auto-generated method stub
 		return null;
 	}
+	
+	@Override
+	public void load(StringProperties properties) throws EolModelLoadingException {
+		repositoryLocation = new File(properties.getProperty(GitModel.PROPERTY_LOCATION));
+		loadModel();
+	}
 
 	@Override
 	//Method called when attempting loading from configuration dialog
-	public void load(StringProperties properties, IRelativePathResolver resolver)
-			throws EolModelLoadingException {
+	public void load(StringProperties properties, IRelativePathResolver resolver) throws EolModelLoadingException {
 		super.load(properties, resolver);
-		repositoryLocation = new File(properties.getProperty(GitModel.PROPERTY_LOCATION));
-		loadModel();
+		this.load(properties);
 	}
 	
 	@Override

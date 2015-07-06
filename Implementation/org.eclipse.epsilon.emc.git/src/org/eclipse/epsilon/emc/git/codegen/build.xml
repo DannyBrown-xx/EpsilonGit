@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="git-stats-generator" default="main" description="This generator will produce some html files with general statistics for your git repositories">
+	<property name="src" value="" description="The .git object database the git repository is built from" />
+	
+	<target name="main">
+		<epsilon.git.loadModel name="myRepo" src="${src}"/>
+		<epsilon.egl src="/Users/danielbrown/Documents/EpsilonGit/Tests/Epsilon Projects/GitInspector-Equivalence-Tests/output.egl">
+			<model ref="myRepo"/>
+		</epsilon.egl>
+	</target>
+</project>
