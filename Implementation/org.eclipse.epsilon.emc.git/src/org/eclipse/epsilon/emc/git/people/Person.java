@@ -5,14 +5,20 @@ import org.apache.commons.lang3.builder.EqualsBuilder;
 import org.eclipse.epsilon.emc.git.GitModel;
 
 public abstract class Person {
+	public final String id;
 	private final String name;
 	private final String emailAddress;
 	protected final GitModel owner;
 	
 	public Person(String name, String emailAddress, GitModel owner) {
+		id = "Person:" + hashCode();
 		this.name = name;
 		this.emailAddress = emailAddress;
 		this.owner = owner;
+	}
+	
+	public String getId() {
+		return id;
 	}
 	
 	public String getName() {

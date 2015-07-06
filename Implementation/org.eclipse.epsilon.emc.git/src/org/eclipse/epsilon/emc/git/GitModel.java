@@ -2,12 +2,13 @@ package org.eclipse.epsilon.emc.git;
 
 import java.io.File;
 import java.io.IOException;
-import java.nio.file.Paths;
 import java.util.Arrays;
 import java.util.Collection;
+import java.util.HashMap;
 import java.util.HashSet;
 import java.util.LinkedList;
 import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
@@ -39,8 +40,10 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
+import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
+import org.eclipse.jgit.treewalk.TreeWalk;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class GitModel extends CachedModel {
@@ -120,7 +123,18 @@ public class GitModel extends CachedModel {
 		}
 		else {
 			//The Id passed in was not a git object id. It may well be a persons email address
-			return (Person)CollectionUtils.find(getAllPeople(), new PersonFinderPredicate(id));
+			if(id.startsWith("Person:")) {
+				return (Person)CollectionUtils.find(getAllPeople(), new PersonFinderPredicate(id));
+			}
+			else if(id.startsWith("Author:")) {
+				return (Author)CollectionUtils.find(getAllPeople(), new PersonFinderPredicate(id));
+			}
+			else if(id.startsWith("Committer:")) {
+				return (Committer)CollectionUtils.find(getAllPeople(), new PersonFinderPredicate(id));
+			}
+			else if (id.startsWith("File:")) {
+				return (File)CollectionUtils.find(getAllFiles(), new FileFinderPredicate(id));
+			}
 		}
 		return null;
 	}
@@ -134,12 +148,17 @@ public class GitModel extends CachedModel {
 		
 		if(instance instanceof Author) {
 			Author authorInstance = (Author)instance;
-			return authorInstance.getEmailAddress();
+			return authorInstance.getId();
 		}
 		
 		if(instance instanceof Committer) {
 			Committer committerInstance = (Committer)instance;
-			return committerInstance.getEmailAddress();
+			return committerInstance.getId();
+		}
+		
+		if(instance instanceof GitFile) {
+			GitFile file = (GitFile)instance;
+			return file.getAbsolutePath();
 		}
 		
 		return null;
@@ -201,6 +220,15 @@ public class GitModel extends CachedModel {
 			}
 		}
 		
+		if(instance instanceof GitFile) {
+			GitFile fileInstance = (GitFile)instance;
+			try {
+				return getAllOfType("GitFile").contains(fileInstance);
+			} catch(EolModelElementTypeNotFoundException e) {
+				return false;
+			}
+		}
+		
 		return false;
 	}
 
@@ -217,7 +245,8 @@ public class GitModel extends CachedModel {
 				Tree.class.getSimpleName().equals(type) ||
 				Person.class.getSimpleName().equals(type) ||
 				Author.class.getSimpleName().equals(type) ||
-				Committer.class.getSimpleName().equals(type);
+				Committer.class.getSimpleName().equals(type) ||
+				GitFile.class.getSimpleName().equals(type);
 	}
 
 	@Override
@@ -247,6 +276,7 @@ public class GitModel extends CachedModel {
 			allContents.addAll(getAllOfType("Tag"));
 			allContents.addAll(getAllOfType("Author"));
 			allContents.addAll(getAllOfType("Committer"));
+			allContents.addAll(getAllOfType("GitFile"));
 			
 			return allContents;
 		} catch (EolModelElementTypeNotFoundException e) {
@@ -270,6 +300,8 @@ public class GitModel extends CachedModel {
 				return getAllBlobs();
 			case "Tree":
 				return getAllTrees();
+			case "GitFile":
+				return getAllFiles();
 			default:
 				throw new EolModelElementTypeNotFoundException("GitModel", type);
 		}
@@ -453,4 +485,41 @@ public class GitModel extends CachedModel {
 		allPeople.addAll(getAllAuthors());
 		return allPeople;
 	}
+
+		
+	private Collection getAllFiles() {
+		Map<String, GitFile> map = new HashMap<String, GitFile>();
+		try {
+			for(Commit commit : (LinkedList<Commit>)getAllOfKind("Commit")) {
+				TreeWalk walk = new TreeWalk(repository);
+				
+				RevTree revTree = commit.getTree();
+				walk.addTree(revTree);
+				walk.setRecursive(true);
+				
+				while(walk.next()) {
+					String fileName = walk.getPathString();
+					if (map.containsKey(fileName)) {
+						GitFile gitFile = map.get(fileName);
+						gitFile.addRelatedCommit(commit);
+						if(commit.isHead()) {
+							gitFile.setIsInWorkingDirectory(true);
+						}
+						map.put(fileName, gitFile);
+					}
+					else {
+						GitFile gitFile = new GitFile(fileName);
+						if(commit.isHead()) {
+							gitFile.setIsInWorkingDirectory(true);
+						}
+						gitFile.addRelatedCommit(commit);
+						map.put(fileName, gitFile);
+					}
+				}
+			}
+		} catch (EolModelElementTypeNotFoundException | IOException e) {
+			return null;
+		}
+		return map.values();
+	} 
 }

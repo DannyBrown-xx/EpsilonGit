@@ -169,4 +169,9 @@ public class Commit extends RevCommit {
 	  	}
 		return dlc;
 	}
+
+	public boolean isHead() {
+		// TODO Auto-generated method stub
+		return false;
+	}
 }

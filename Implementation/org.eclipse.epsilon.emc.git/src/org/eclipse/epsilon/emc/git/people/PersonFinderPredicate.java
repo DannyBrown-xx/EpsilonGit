@@ -4,16 +4,16 @@ import org.apache.commons.collections.Predicate;
 
 public class PersonFinderPredicate implements Predicate {
 
-    private String emailAddress; 
+    private String id; 
 
-    public PersonFinderPredicate(String emailAddress) {
+    public PersonFinderPredicate(String id) {
         super();
-        this.emailAddress = emailAddress;
+        this.id = id;
     }
 
     @Override
     public boolean evaluate(Object o) {
         Person p = (Person)o;
-        return p.getEmailAddress().equals(this.emailAddress);
+        return p.getId().equals(this.id);
     }
 }
