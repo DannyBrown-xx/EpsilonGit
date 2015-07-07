@@ -33,7 +33,7 @@ if(Author.all.size() > 0) {
 
 
 "COMMITTERS INFORMATION".println();
-"Number of authors: ".print(); Committer.all.size().println();
+"Number of committers: ".print(); Committer.all.size().println();
 if(Committer.all.size() > 0) {
 	"Committers Details:".println();
 	for(committer in Committer.all.sortBy(a | a.getName())) {
@@ -41,3 +41,36 @@ if(Committer.all.size() > 0) {
 	}
 } 
 "\n\n".print();
+
+"FILE INFORMATION".println();
+"Number of files: ".print(); GitFile.all.size().println();
+if(GitFile.all.size() > 0) {
+	for(file in GitFile.all.sortBy(a | a.getAbsolutePath())) {
+		("* " + file.toString()).println();
+		"Added at:".println(); 
+		for(commit in file.getCommitsWhereAdded()) {
+			("  - " + commit.getName()).println();
+		}
+		"Modified by: ".println();
+		for(commit in file.getCommitsWhereModified()) {
+			("  - " + commit.getName()).println();
+		}
+		
+		"Removed by: ".println();
+		for(commit in file.getCommitsWhereDeleted()) {
+			("  - " + commit.getName()).println();
+		}
+		
+		"Renamed by: ".println();
+		for(commit in file.getCommitsWhereRenamed()) {
+			("  - " + commit.getName()).println();		
+		}
+		
+		"Copied by: ".println();
+		for(commit in file.getCommitsWhereCopied()) {
+			("  - " + commit.getName()).println();		
+		}
+		
+		"".println();
+	}
+}

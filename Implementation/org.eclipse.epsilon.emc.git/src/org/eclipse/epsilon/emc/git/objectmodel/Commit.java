@@ -8,12 +8,14 @@ import java.util.LinkedList;
 
 import org.eclipse.epsilon.emc.git.GitCalendar;
 import org.eclipse.epsilon.emc.git.GitModel;
-import org.eclipse.epsilon.emc.git.diff.DifferenceCount;
+import org.eclipse.epsilon.emc.git.diff.CommitDifference;
+import org.eclipse.epsilon.emc.git.diff.FileDifference;
 import org.eclipse.jgit.api.errors.GitAPIException;
 import org.eclipse.jgit.diff.DiffEntry;
 import org.eclipse.jgit.diff.DiffFormatter;
 import org.eclipse.jgit.diff.Edit;
 import org.eclipse.jgit.diff.EditList;
+import org.eclipse.jgit.errors.IncorrectObjectTypeException;
 import org.eclipse.jgit.lib.AnyObjectId;
 import org.eclipse.jgit.lib.ObjectReader;
 import org.eclipse.jgit.patch.FileHeader;
@@ -38,11 +40,15 @@ public class Commit extends RevCommit {
 		return getParentCount() == 0;
 	}
 	
+	public boolean isHead() {
+		// TODO Implement
+		return false;
+	}
+	
 	public boolean isMergeCommit() {
 		return getParentCount() > 1;
 	}
-	
-	
+		
 	// - Nicer time stuff for models, DateTimes in Java are just a cluster... - //
 	public GitCalendar getCommitCalendar() {
 		GitCalendar c = new GitCalendar();
@@ -67,71 +73,85 @@ public class Commit extends RevCommit {
 		return c;
 	}
 	
-	public DifferenceCount getDifferenceCountFromParent() {
+	// - Methods to get differences from parent commits - //
+	
+	public CommitDifference getDifferenceFromParent() {
 		try {
-			//Get this commits tree, for comparisons
-			ObjectReader reader = owner.getJGitRepository().newObjectReader();
-			RevWalk revWalk = new RevWalk(owner.getJGitRepository());
-			
-			CanonicalTreeParser thisCommitsTree = new CanonicalTreeParser();
-			thisCommitsTree.reset(reader, this.getTree().getId());
-		
-			//Each commit can have multiple parents (e.g. in a merge). Get differences from
-			//all of them by comparing trees
-			Collection<DiffEntry> allDiffs = new LinkedList<DiffEntry>();
-			
-			for(RevCommit revCommit : getParents()) {
-				CanonicalTreeParser parentTree = new CanonicalTreeParser();
-				revWalk.parseBody(revCommit);
-				parentTree.reset(reader, revCommit.getTree().getId());
-			
-				Collection<DiffEntry> diffs = owner.getJGitPorcelain()
-										.diff()
-										.setNewTree(thisCommitsTree)
-										.setOldTree(parentTree)
-										.call();
-				allDiffs.addAll(diffs);
-			}
-			
-			//Diff formatting tools
-			ByteArrayOutputStream out = new ByteArrayOutputStream();
-	        DiffFormatter df = new DiffFormatter(out);
-	        df.setRepository(owner.getJGitRepository());
-	        
-	        int linesAdded = 0, linesRemoved = 0, filesAdded = 0, filesRemoved = 0, 
-	        	filesRenamed = 0, filesModified = 0, filesCopied = 0;
-	        
-			for(DiffEntry diffEntry : allDiffs) {
-				switch(diffEntry.getChangeType()) {
-					case ADD:
-						filesAdded++;
-						linesAdded += getLineChanges(diffEntry, df).linesAdded;
-						break;
-					case COPY:
-						filesCopied++;
-						break;
-					case DELETE:
-						filesRemoved++;
-						linesRemoved += getLineChanges(diffEntry, df).linesRemoved;
-						break;
-					case MODIFY:
-						filesModified++;
-						DiffLineChanges dlc = getLineChanges(diffEntry, df);
-						linesAdded += dlc.linesAdded;
-						linesRemoved += dlc.linesRemoved;
-						break;
-					case RENAME:
-						filesRenamed++;
-						break;
-				}
-			}
-			
-			DifferenceCount dc = new DifferenceCount(linesAdded, linesRemoved, filesAdded, filesRemoved, filesRenamed, filesCopied, filesModified);
-			return dc;
+			Collection<DiffEntry> diffEntries = getDiffEntriesFromParents();
+			return collateDiffEntries(diffEntries);
 		} 
 		catch (IOException | GitAPIException e) {
 			return null;
 		}
+	}
+	
+	private CommitDifference collateDiffEntries(Collection<DiffEntry> diffEntries) {
+		//Diff formatting tools
+		ByteArrayOutputStream out = new ByteArrayOutputStream();
+        DiffFormatter df = new DiffFormatter(out);
+        df.setRepository(owner.getJGitRepository());
+        
+        //CommitDifference holds all information about differences in this commit
+        CommitDifference differences = new CommitDifference();
+        
+		for(DiffEntry diffEntry : diffEntries) {
+			FileDifference fd = new FileDifference();
+			fd.fileName = diffEntry.getNewPath();
+			
+			//TODO: Think about improvements to rename and copy
+			switch(diffEntry.getChangeType()) {
+				case ADD:
+					fd.lineAdditions = getLineChanges(diffEntry, df).linesAdded;
+					differences.addedFileDifferences.add(fd);
+					break;
+				case COPY:
+					//TODO: does a copy add lines? discuss
+					differences.copiedFileDifferences.add(fd);
+					break;
+				case DELETE:
+					fd.lineRemovals = getLineChanges(diffEntry, df).linesRemoved;
+					differences.removedFileDifferences.add(fd);
+					break;
+				case MODIFY:
+					DiffLineChanges dlc = getLineChanges(diffEntry, df);
+					fd.lineAdditions = dlc.linesAdded;
+					fd.lineRemovals = dlc.linesRemoved;
+					differences.modifiedFileDifferences.add(fd);
+					break;
+				case RENAME:
+					differences.renamedFileDifferences.add(fd);
+					break;
+			}
+		}
+		return differences;
+	}
+	
+	private Collection<DiffEntry> getDiffEntriesFromParents() throws IncorrectObjectTypeException, IOException, GitAPIException {
+		//Get this commits tree, for comparisons
+		ObjectReader reader = owner.getJGitRepository().newObjectReader();
+		RevWalk revWalk = new RevWalk(owner.getJGitRepository());
+		
+		CanonicalTreeParser thisCommitsTree = new CanonicalTreeParser();
+		thisCommitsTree.reset(reader, this.getTree().getId());
+	
+		//Each commit can have multiple parents (e.g. in a merge). Get differences from
+		//all of them by comparing trees
+		Collection<DiffEntry> allDiffs = new LinkedList<DiffEntry>();
+		
+		for(RevCommit revCommit : getParents()) {
+			CanonicalTreeParser parentTree = new CanonicalTreeParser();
+			revWalk.parseBody(revCommit);
+			parentTree.reset(reader, revCommit.getTree().getId());
+		
+			Collection<DiffEntry> diffs = owner.getJGitPorcelain()
+									.diff()
+									.setNewTree(thisCommitsTree)
+									.setOldTree(parentTree)
+									.call();
+			allDiffs.addAll(diffs);
+		}
+		
+		return allDiffs;
 	}
 	
 	private class DiffLineChanges {
@@ -168,10 +188,5 @@ public class Commit extends RevCommit {
 	  		}
 	  	}
 		return dlc;
-	}
-
-	public boolean isHead() {
-		// TODO Auto-generated method stub
-		return false;
 	}
 }

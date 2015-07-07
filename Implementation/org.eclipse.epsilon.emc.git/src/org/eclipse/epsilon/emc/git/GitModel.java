@@ -13,6 +13,8 @@ import java.util.Set;
 
 import org.apache.commons.collections.CollectionUtils;
 import org.eclipse.epsilon.common.util.StringProperties;
+import org.eclipse.epsilon.emc.git.diff.CommitDifference;
+import org.eclipse.epsilon.emc.git.diff.FileDifference;
 import org.eclipse.epsilon.emc.git.filesystem.FileFinderPredicate;
 import org.eclipse.epsilon.emc.git.filesystem.GitFile;
 import org.eclipse.epsilon.emc.git.objectmodel.Blob;
@@ -40,10 +42,8 @@ import org.eclipse.jgit.lib.Ref;
 import org.eclipse.jgit.lib.Repository;
 import org.eclipse.jgit.revwalk.RevCommit;
 import org.eclipse.jgit.revwalk.RevObject;
-import org.eclipse.jgit.revwalk.RevTree;
 import org.eclipse.jgit.revwalk.RevWalk;
 import org.eclipse.jgit.storage.file.FileRepositoryBuilder;
-import org.eclipse.jgit.treewalk.TreeWalk;
 
 @SuppressWarnings({ "unchecked", "rawtypes" })
 public class GitModel extends CachedModel {
@@ -325,18 +325,13 @@ public class GitModel extends CachedModel {
 		//Nothing is instantiable
 		throw new EolNotInstantiableModelElementTypeException("GitModel", type);
 	}
-	
-	@Override
-	public void load(StringProperties properties) throws EolModelLoadingException {
-		repositoryLocation = new File(properties.getProperty(GitModel.PROPERTY_LOCATION));
-		loadModel();
-	}
 
 	@Override
 	//Method called when attempting loading from configuration dialog
 	public void load(StringProperties properties, IRelativePathResolver resolver) throws EolModelLoadingException {
 		super.load(properties, resolver);
-		this.load(properties);
+		repositoryLocation = new File(properties.getProperty(GitModel.PROPERTY_LOCATION));
+		loadModel();
 	}
 	
 	@Override
@@ -490,35 +485,77 @@ public class GitModel extends CachedModel {
 	private Collection getAllFiles() {
 		Map<String, GitFile> map = new HashMap<String, GitFile>();
 		try {
-			for(Commit commit : (LinkedList<Commit>)getAllOfKind("Commit")) {
-				TreeWalk walk = new TreeWalk(repository);
+			for(Commit commit : (LinkedList<Commit>) getAllOfKind("Commit")) {
+				CommitDifference commitDiff = commit.getDifferenceFromParent();
 				
-				RevTree revTree = commit.getTree();
-				walk.addTree(revTree);
-				walk.setRecursive(true);
-				
-				while(walk.next()) {
-					String fileName = walk.getPathString();
-					if (map.containsKey(fileName)) {
-						GitFile gitFile = map.get(fileName);
-						gitFile.addRelatedCommit(commit);
-						if(commit.isHead()) {
-							gitFile.setIsInWorkingDirectory(true);
-						}
-						map.put(fileName, gitFile);
+				for(FileDifference difference : commitDiff.addedFileDifferences) {
+					if(map.containsKey(difference.fileName)) {
+						GitFile file = map.get(difference.fileName);
+						file.addCommitWhereAdded(commit);
+						map.put(difference.fileName, file);
 					}
 					else {
-						GitFile gitFile = new GitFile(fileName);
-						if(commit.isHead()) {
-							gitFile.setIsInWorkingDirectory(true);
-						}
-						gitFile.addRelatedCommit(commit);
-						map.put(fileName, gitFile);
+						GitFile file = new GitFile(difference.fileName);
+						file.addCommitWhereAdded(commit);
+						map.put(difference.fileName, file);
+					}
+				}
+				
+				for(FileDifference difference : commitDiff.removedFileDifferences) {
+					if(map.containsKey(difference.fileName)) {
+						GitFile file = map.get(difference.fileName);
+						file.addCommitWhereDeleted(commit);
+						map.put(difference.fileName, file);
+					}
+					else {
+						GitFile file = new GitFile(difference.fileName);
+						file.addCommitWhereDeleted(commit);
+						map.put(difference.fileName, file);
+					}
+				}
+				
+				for(FileDifference difference : commitDiff.modifiedFileDifferences) {
+					if(map.containsKey(difference.fileName)) {
+						GitFile file = map.get(difference.fileName);
+						file.addCommitWhereModified(commit);
+						map.put(difference.fileName, file);
+					}
+					else {
+						GitFile file = new GitFile(difference.fileName);
+						file.addCommitWhereModified(commit);
+						map.put(difference.fileName, file);
+					}
+				}
+				
+				for(FileDifference difference : commitDiff.renamedFileDifferences) {
+					if(map.containsKey(difference.fileName)) {
+						GitFile file = map.get(difference.fileName);
+						file.addCommitWhereRenamed(commit);
+						map.put(difference.fileName, file);
+					}
+					else {
+						GitFile file = new GitFile(difference.fileName);
+						file.addCommitWhereRenamed(commit);
+						map.put(difference.fileName, file);
+					}
+				}
+				
+				for(FileDifference difference : commitDiff.copiedFileDifferences) {
+					if(map.containsKey(difference.fileName)) {
+						GitFile file = map.get(difference.fileName);
+						file.addCommitWhereCopied(commit);
+						map.put(difference.fileName, file);
+					}
+					else {
+						GitFile file = new GitFile(difference.fileName);
+						file.addCommitWhereCopied(commit);
+						map.put(difference.fileName, file);
 					}
 				}
 			}
-		} catch (EolModelElementTypeNotFoundException | IOException e) {
-			return null;
+		} catch (EolModelElementTypeNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
 		}
 		return map.values();
 	} 

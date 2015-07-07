@@ -9,7 +9,6 @@ import java.util.LinkedList;
 import java.util.Set;
 
 import org.eclipse.epsilon.emc.git.GitModel;
-import org.eclipse.epsilon.emc.git.diff.DifferenceCount;
 import org.eclipse.epsilon.emc.git.objectmodel.Blob;
 import org.eclipse.epsilon.emc.git.objectmodel.Commit;
 import org.eclipse.epsilon.emc.git.objectmodel.Tag;
@@ -240,20 +239,5 @@ public class GitModelTests {
 		authorsDeDuped.add(danny2);
 		
 		assertEquals(1, authorsDeDuped.size());
-	}
-	
-	@Test
-	public void getDiffParentCommit() {
-		Commit commit = (Commit)emcJsonGitModel.getElementById("079fa68889e1c25649cf02341d79d0b0c4d5bffe");
-		DifferenceCount dc = commit.getDifferenceCountFromParent();
-		//TODO: Implement assertion
-		
-		System.out.println("Lines Added " + dc.getLinesAdded());
-		System.out.println("Lines Removed " + dc.getLinesRemoved());
-		System.out.println("Files Added " + dc.getFilesAdded());
-		System.out.println("Files Removed " + dc.getFilesRemoved());
-		System.out.println("Files Modified " + dc.getFilesModified());
-		System.out.println("Files Copied " + dc.getFilesCopied());
-		System.out.println("Files Renamed " + dc.getFilesRenamed());
 	}
 }
