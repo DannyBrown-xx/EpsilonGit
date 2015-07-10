@@ -109,6 +109,7 @@ public class Commit extends RevCommit {
 					differences.copiedFileDifferences.add(fd);
 					break;
 				case DELETE:
+					fd.fileName = diffEntry.getOldPath();
 					fd.lineRemovals = getLineChanges(diffEntry, df).linesRemoved;
 					differences.removedFileDifferences.add(fd);
 					break;

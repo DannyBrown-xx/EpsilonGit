@@ -47,30 +47,45 @@ if(Committer.all.size() > 0) {
 if(GitFile.all.size() > 0) {
 	for(file in GitFile.all.sortBy(a | a.getAbsolutePath())) {
 		("* " + file.toString()).println();
-		"Added at:".println(); 
-		for(commit in file.getCommitsWhereAdded()) {
-			("  - " + commit.getName()).println();
-		}
-		"Modified by: ".println();
-		for(commit in file.getCommitsWhereModified()) {
-			("  - " + commit.getName()).println();
-		}
-		
-		"Removed by: ".println();
-		for(commit in file.getCommitsWhereDeleted()) {
-			("  - " + commit.getName()).println();
+				var commitsWhereAdded = file.getCommitsWhereAdded();
+		if(commitsWhereAdded.size() > 0) {
+			("Added (" + commitsWhereAdded.size() + " times) at:").println(); 
+			for(commit in commitsWhereAdded.sortBy(c | c.getCommitCalendar())) {
+				("  - " + commit.getName()).println();
+			}
 		}
 		
-		"Renamed by: ".println();
-		for(commit in file.getCommitsWhereRenamed()) {
-			("  - " + commit.getName()).println();		
+		var commitsWhereModified = file.getCommitsWhereModified();
+		if(commitsWhereModified.size() > 0) {
+			("Modified (" + commitsWhereModified.size() + " times) at:").println(); 
+			for(commit in commitsWhereModified.sortBy(c | c.getCommitCalendar())) {
+				("  - " + commit.getName()).println();
+			}
 		}
 		
-		"Copied by: ".println();
-		for(commit in file.getCommitsWhereCopied()) {
-			("  - " + commit.getName()).println();		
+		var commitsWhereDeleted = file.getCommitsWhereDeleted();
+		if(commitsWhereDeleted.size() > 0) {
+			("Deleted (" + commitsWhereDeleted.size() + " times) at:").println(); 
+			for(commit in commitsWhereDeleted.sortBy(c | c.getCommitCalendar())) {
+				("  - " + commit.getName()).println();
+			}
 		}
 		
+		var commitsWhereRenamed = file.getCommitsWhereRenamed();
+		if(commitsWhereRenamed.size() > 0) {
+			("Renamed to (" + commitsWhereRenamed.size() + " times) at:").println(); 
+			for(commit in commitsWhereRenamed.sortBy(c | c.getCommitCalendar())) {
+				("  - " + commit.getName()).println();
+			}
+		}
+		
+		var commitsWhereCopied = file.getCommitsWhereCopied();
+		if(commitsWhereCopied.size() > 0) {
+			("Copied to (" + commitsWhereCopied.size() + " times) at:").println(); 
+			for(commit in commitsWhereCopied.sortBy(c | c.getCommitCalendar())) {
+				("  - " + commit.getName()).println();
+			}
+		}
 		"".println();
 	}
 }
