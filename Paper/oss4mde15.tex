@@ -1,0 +1,91 @@
+\documentclass[runningheads,a4paper]{llncs}
+\usepackage{amssymb}
+\setcounter{tocdepth}{3}
+\usepackage{graphicx}
+\usepackage{multirow}
+\usepackage{booktabs}
+\usepackage{algorithm2e}
+
+\renewcommand\dblfloatpagefraction{.99}
+\renewcommand\dbltopfraction{.99}
+\renewcommand\floatpagefraction{.99}
+\renewcommand\topfraction{.99}
+\renewcommand\bottomfraction{.99}
+\renewcommand\textfraction{.01}
+
+\usepackage{url, listings, color}
+%\urldef{\mailsa}\path|{alfred.hofmann, ursula.barth, ingrid.haas, frank.holzwarth,|
+%\urldef{\mailsb}\path|anna.kramer, leonie.kunz, christine.reiss, nicole.sator,|
+%\urldef{\mailsc}\path|erika.siebert-cole, peter.strasser, lncs}@springer.com|    
+\newcommand{\keywords}[1]{\par\addvspace\baselineskip
+\noindent\keywordname\enspace\ignorespaces#1}
+
+\definecolor{mygray}{rgb}{0.95,0.95,0.95}
+\lstset{frame=none,
+  backgroundcolor=\color{mygray},
+  language=Octave,
+  aboveskip=3mm,
+  belowskip=3mm,
+  showstringspaces=false,
+  columns=flexible,
+  basicstyle={\small\ttfamily},
+  xleftmargin=15pt,
+  numbers=left,
+  breaklines=true,
+  breakatwhitespace=false,
+  tabsize=2,
+}
+
+\begin{document}
+
+\title{A Comparative Analysis of Eclipse Modelling Git Repositories}
+\author{Daniel Brown\and Dimitrios S. Kolovos}
+\institute{Department of Computer Science, University of York, United Kingdom \\ \{dtb508,dimitris.kolovos\}@york.ac.uk}
+\maketitle
+
+\begin{abstract}
+
+\end{abstract}
+
+\section{Introduction}
+
+\section{Background}
+
+\section{Querying Git Repositories with Epsilon}
+Presentation of the EMC Git driver.
+
+\section{Analysis of Eclipse Modelling Git Repositories}
+Compute and present statistics related to the size/activity in the Git repositories of the main Eclipse modelling repositories:
+
+\begin{itemize}
+  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.jet.git (JET2)
+  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.acceleo.git (Acceleo)
+  \item https://github.com/eclipse/xtext.git (Xtext)
+  \item git://git.eclipse.org/gitroot/epsilon/org.eclipse.epsilon.git (Epsilon)
+  \item git://git.eclipse.org/gitroot/mmt/org.eclipse.atl.git (ATL)
+  \item https://git.eclipse.org/r/sirius/org.eclipse.sirius (Sirius)
+  \item git://git.eclipse.org/gitroot/mmt/org.eclipse.qvto.git (QVTo)
+  \item https://git.eclipse.org/r/emf/org.eclipse.emf (EMF)
+  \item https://git.eclipse.org/r/incquery/org.eclipse.incquery (IncQuery)
+  \item https://git.eclipse.org/r/gmf-tooling/org.eclipse.gmf-tooling (GMF Tooling)
+  \item git://git.eclipse.org/gitroot/gmf-runtime/org.eclipse.gmf-runtime.git (GMF Runtime)
+  \item git://git.eclipse.org/gitroot/gmf-notation/org.eclipse.gmf.notation.git  (GMF Notation)
+  \item https://git.eclipse.org/r/ocl/org.eclipse.ocl (OCL)
+  \item https://git.eclipse.org/r/henshin/org.eclipse.emft.henshin (Henshin)
+  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.xpand.git (Xpand)
+  \item https://git.eclipse.org/r/papyrus/org.eclipse.papyrus (Papyrus)
+  \item git://git.eclipse.org/gitroot/uml2/org.eclipse.uml2.git (UML2)
+\end{itemize}
+
+Possible statistics (can be computed for the lifetime of the repositories or for the last 3 years)
+\begin{itemize}
+  \item Total lines of code
+  \item Lines of code per file extension 
+  \item Number of active committers (e.g. with commits in the last 30 days)
+  \item Median number of files/lines changed per commit (smaller commits are generally better)
+  \item \ldots
+\end{itemize}
+
+\section{Conclusions and Further Work}
+
+\end{document}
