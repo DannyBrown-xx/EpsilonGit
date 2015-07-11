@@ -18,6 +18,7 @@ import org.eclipse.epsilon.emc.git.diff.FileDifference;
 import org.eclipse.epsilon.emc.git.filesystem.FileFinderPredicate;
 import org.eclipse.epsilon.emc.git.filesystem.GitFile;
 import org.eclipse.epsilon.emc.git.objectmodel.Blob;
+import org.eclipse.epsilon.emc.git.objectmodel.Branch;
 import org.eclipse.epsilon.emc.git.objectmodel.Commit;
 import org.eclipse.epsilon.emc.git.objectmodel.Tag;
 import org.eclipse.epsilon.emc.git.objectmodel.Tree;
@@ -386,6 +387,20 @@ public class GitModel extends CachedModel {
 	//
 	// -- Helper methods to support CachedModel methods --
 	//
+	private Collection<Branch> getAllBranches() {
+		List<Ref> allBranches;
+		try {
+			allBranches = git.branchList().call();
+			Collection<Branch> collection = new LinkedList<Branch>();
+			for(Ref ref : allBranches) {
+				collection.add(new Branch(ref));
+			}
+			return collection;
+		} catch (GitAPIException e) {
+			return null;
+		}
+	}
+	
 	private Collection<Commit> getAllCommits() {
 		RevWalk revWalk = new RevWalk(repository);
 		try {
@@ -480,8 +495,7 @@ public class GitModel extends CachedModel {
 		allPeople.addAll(getAllAuthors());
 		return allPeople;
 	}
-
-		
+	
 	private Collection getAllFiles() {
 		Map<String, GitFile> map = new HashMap<String, GitFile>();
 		try {
