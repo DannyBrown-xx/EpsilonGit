@@ -13,10 +13,7 @@
 \renewcommand\bottomfraction{.99}
 \renewcommand\textfraction{.01}
 
-\usepackage{url, listings, color}
-%\urldef{\mailsa}\path|{alfred.hofmann, ursula.barth, ingrid.haas, frank.holzwarth,|
-%\urldef{\mailsb}\path|anna.kramer, leonie.kunz, christine.reiss, nicole.sator,|
-%\urldef{\mailsc}\path|erika.siebert-cole, peter.strasser, lncs}@springer.com|    
+\usepackage{url, listings, color} 
 \newcommand{\keywords}[1]{\par\addvspace\baselineskip
 \noindent\keywordname\enspace\ignorespaces#1}
 
@@ -48,8 +45,14 @@
 \end{abstract}
 
 \section{Introduction}
+Git is one of the most popular version control systems available \cite{gitpopularity} and, as well as many privately hosted instances, powers the well-known social programming website GitHub \cite{gitpowersgithub}. Despite gits popularity there are few systems available for analysing a git repository or querying it for useful metrics such as most popular commit time, largest commit, most active contributor or something more complex.
+
+The systems that do exist to analyse Git repositories, namely GitInspector \cite{gitinspector} and Github, don't allow for custom queries to be written by the user. Meaning, for example, you cannot ask the question "What day of the week is Daniel most likely to author a commit of over 100 lines" or "Which contributor has had the highest percentage of their committed lines changed by someone else". 
+
+EpsilonGit allows users to write these custom queries by letting them interact with a git object database as a model using the Epsilon platform and its associated domain specific modelling languages.
 
 \section{Background}
+During the literature review it was found that 
 
 \section{Querying Git Repositories with Epsilon}
 Presentation of the EMC Git driver.
@@ -87,5 +90,8 @@ Possible statistics (can be computed for the lifetime of the repositories or for
 \end{itemize}
 
 \section{Conclusions and Further Work}
+
+\bibliographystyle{splncs03}
+\bibliography{references}
 
 \end{document}
