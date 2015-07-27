@@ -51,3 +51,19 @@ Tests/Repositories/not-a-git-repository/.DS_Store
 
 runtime-EclipseApplication/
 Tests/Epsilon Projects/GitInspector-Equivalence-Tests/output.html
+
+*.aux
+
+*.log
+
+*.nav
+
+*.out
+
+*.snm
+
+*.gz
+
+*.toc
+
+*.pdf
