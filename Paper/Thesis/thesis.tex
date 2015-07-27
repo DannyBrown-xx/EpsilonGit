@@ -1,6 +1,8 @@
 \documentclass[11pt]{book}
 \usepackage{graphicx}
-\usepackage[margin=1in,bindingoffset=.2in]{geometry} 
+\usepackage[margin=1in,bindingoffset=.2in]{geometry}
+\usepackage[backend=biber, style=ieee]{biblatex}
+\addbibresource{references.bib}
 
 \begin{document}
 \begin{titlepage}
@@ -19,13 +21,23 @@
 		\vspace{1.5cm}
 		\Large A thesis submitted in partial fulfilment for the degree of \\ \textit{Master of Science in Advanced Computer Science}\\
 		\vspace{5cm}
-		\small XX,XXX words as counted by the `detex these.tex | wc -d` unix commands
+		\small XX,XXX words as counted by the `detex thesis.tex | wc -d` unix commands
 	\end{center}
 	\restoregeometry
 \end{titlepage}
 
 \chapter*{\centering Abstract}
 \addcontentsline{toc}{chapter}{Abstract}
+\begin{center}
+	\parbox{350pt}{
+Git is one of the most popular version control systems available \cite{gitpopularity} and, as well as many privately hosted instances, powers the well-known social programming website GitHub \cite{gitpowersgithub}.
+
+Despite Gits popularity there are few systems available for analysing a git repository or querying it for useful metrics such as most popular commit time, largest commit, most active contributor or something more complex.
+
+The systems that do exist to analyse Git repositories, namely GitInspector \cite{gitinspector} and Github, don't allow for custom queries to be written by the user. Meaning, for example, you cannot ask the question "What day of the week is Daniel most likely to author a commit of over 100 lines" or "Which contributor has had the highest percentage of their committed lines changed by someone else". 
+
+This project presents a tool, called EpsilonGit, which allow users to write these custom queries by letting them interact with a git object database as a model using the Epsilon platform and its associated domain specific modelling languages.}
+\end{center}
 
 
 \tableofcontents
@@ -43,5 +55,7 @@
 \chapter{Evaluation}
 
 \chapter{Reflection}
+
+\printbibliography
 
 \end{document}

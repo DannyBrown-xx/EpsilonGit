@@ -67,3 +67,11 @@ Tests/Epsilon Projects/GitInspector-Equivalence-Tests/output.html
 *.toc
 
 *.pdf
+
+*.bcf
+
+*.bbl
+
+*.blg
+
+*.xml
