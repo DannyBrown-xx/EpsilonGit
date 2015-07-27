@@ -36,7 +36,8 @@ Despite Gits popularity there are few systems available for analysing a git repo
 
 The systems that do exist to analyse Git repositories, namely GitInspector \cite{gitinspector} and Github, don't allow for custom queries to be written by the user. Meaning, for example, you cannot ask the question "What day of the week is Daniel most likely to author a commit of over 100 lines" or "Which contributor has had the highest percentage of their committed lines changed by someone else". 
 
-This project presents a tool, called EpsilonGit, which allow users to write these custom queries by letting them interact with a git object database as a model using the Epsilon platform and its associated domain specific modelling languages.}
+This project presents a tool, called EpsilonGit, which allow users to write these custom queries by letting them interact with a git object database as a model using the Epsilon platform and its associated domain specific modelling languages. This model-based solution is then compared with existing technologies on the parameters of code complexity, speed, and extensibility by the user.
+}
 \end{center}
 
 
@@ -44,7 +45,27 @@ This project presents a tool, called EpsilonGit, which allow users to write thes
 
 \chapter{Introduction and Background}
 \section{Introduction}
+% Rough outline of git 
+	% (e.g. its a distributed VCS... so people have code locally to be modelled, people use it for x functions (e.g. commit, branch, put their name to code) )
+	% Why would someone what to query and analyse their git repository?
+	% Some cool questions that could be asked
+% Rough outline of modelling
+	% What is modelling?
+	% Why is it _possibly_ suitable for this project?
+	
+% Motivation
+	% Improve companies, open source projects and individuals understanding of their code and workflows
+	% Encourage people to use and invest in Modelling, particularly using epsilon
+	% Release it to the world and see what innovative and cool information people could get from their git repositories. With open data and software all kinds of weird shit can be done the original creator wouldn't have thought of.
+	
+% Aims and objectives
+	% Develop a solution which covers all of the most common parts of git (e.g. Object Model, Branches, Authors and Committers)
+	% Develop a solution which has as fast or faster runtime for the same output as GitInspector / Github / GitSQL
+	% Develop a solution which requires less code, and code of lower complexity for the same output as other solutions
+	% Develop a solution which, at the same times, provides high level simple nice clean interaction whilst allowing access to low level stuff for those who also want that interaction
+
 \section{Background}
+% Explanation of Git Object Model
 
 \chapter{Design}
 
@@ -53,8 +74,18 @@ This project presents a tool, called EpsilonGit, which allow users to write thes
 \chapter{Testing}
 
 \chapter{Evaluation}
+\section{Future Work}
+% Currently read only, would be interesting to see if being able to author commits etc via epsilon could be useful. Or even the ability to change names on commits etc via http://stacktoheap.com/blog/2013/01/06/using-mailmap-to-fix-authors-list-in-git/
+% Make it would with subversion, mercurial etc
+% Transform from git to svn/mercurial or vice versa via ETL
+% Lots of low hanging fruit regarding performance
 
 \chapter{Reflection}
+% Working on project whilst other 'real life' stuff happens
+% Working on coming back to a project after a long time 
+% TDD was great, agile working seemed to work well.
+% Java code is pretty reasonable, took a little while to get into but previous C# knowledge helped
+% Example EOL/EGX code works well, but might be better if more declarative 
 
 \printbibliography
 
