@@ -40,10 +40,24 @@ This project presents a tool, called EpsilonGit, which allow users to write thes
 }
 \end{center}
 
-
 \tableofcontents
 
 \chapter{Introduction and Background}
+
+\section{Acknowledgement}
+I would like to take this opportunity to thank Dr. Dimitris Kolovos who not only provided support and encouragement throughout the course of this project, but also came up with the original idea of using model driven engineering to interact with git and added features into the Epsilon suite to support some of the work I was doing.
+
+A special thank-you is extended to my parents, siblings and girlfriend who have supported me throughout the trials and tribulations of my time at York by visiting both myself and the National Railway Museum an inordinate amount of times. The same gratitude is required of my friends both from at home in Dunstable and The University of Hull, where I completed my Bachelors degree. %The museum bit is an inside joke. I'll keep it in for a laugh
+
+\section{Statement of Ethics}
+Ethics in research is of paramount importance and therefore this project has been carried out with them in mind at every step. 
+
+All literature, ideas and code that has been used in the formation of this project has been correctly referenced and credit has been given where it is due.
+
+The data that my project interacts with is a local copy of a git database. The user must source this data on their own, and therefore the project doesn't have to deal with any authentication or security. EpsilonGit only gives people a different view on data they already have.
+
+No other significant ethical issues related to this project could be identified.
+
 \section{Introduction}
 % Rough outline of git 
 	% (e.g. its a distributed VCS... so people have code locally to be modelled, people use it for x functions (e.g. commit, branch, put their name to code) )
@@ -64,21 +78,94 @@ This project presents a tool, called EpsilonGit, which allow users to write thes
 	% Develop a solution which requires less code, and code of lower complexity for the same output as other solutions
 	% Develop a solution which, at the same times, provides high level simple nice clean interaction whilst allowing access to low level stuff for those who also want that interaction
 
+% Report Structure
+	% A paragraph or two explaining the overall flow of this document, and calling out the names of each chapter. Not repeating the table of contents, but instead highlighting important sections in prose.
+
 \section{Background}
-% Explanation of Git Object Model
+% More in-depth Explanation of Git Object Model
+% More in-depth explanation of modelling
+	% What is a model?
+	% How do we interact with models?
+	% etc?
+% Discussion of epsilon
+% Discussion of the epsilon driver framework and what integrating with epsilon gets us (e.g. ability to make HTML from models, use of EOL Language, ability to run in and out of eclipse, etc)
+
+\chapter{Literature Review}
+% Intro paragraph "This chapter looks at the existing literature... etc"
+% Section on literature about Git and the git object model
+	% Conclusions drawn from the literature
+		% A well known model, with some interesting idiosyncacies. Fits modelling well.
+
+% Section on literature pertaining to accessing git information
+	% e.g. http://www.researchgate.net/publication/279058070_Gitana_a_SQL-based_Git_Repository_Inspector
+	% Some info on gitinspector
+	% Conclusions drawn from the literature
+		% Primarily, there isnt many projects doing this. The SQL one has some drawbacks, etc.
+	
+% Section on literature pertaining to analysing and querying git. (there is very little if not none)
+	% Conclusions drawn from the literature
+		% primarily, its novel
+
+% Section on interacting with object models, or version control software via models. Perhaps the HTML DOM? 
+
+\chapter{Methodology}
+% Used agile TDD based approach, discuss why this was chosen and
+
+\chapter{Requirements}
+% Statement of Needs
+% Stakeholder Identification (whos interested in project and their roles)
+	% requirements of these stakeholders
+% Breakdown of functional (features) and non-functional (speed, UX) requirements
+% Use case diagram
 
 \chapter{Design}
+% Making architecture fit between JGit and Epsilon
+% Experimentation and changes necessary as things changed (for example learning more about jGit, epsilon and Java or subclassing jGit types to provide better names in EOL code and hide some of the underlying implementation)
+% Language
+	% Explain how expected EOL code was developed before driver was, so driver could achieve what was wanted  
 
 \chapter{Implementation}
+% Environment used
+	% Epsilon Eclipse Interim (why interim?)
+	% Latest version of Git
+% Libraries used
+	% JGit
+	% Apache Commons Lang
+	% etc.
+% Projects
+	% .git.dt (for creating new Models from git)
+	% .git (main functionality of driver)
+	% .git.test (tdd stuff)
+	% .git.tools (some useful EOL tools for Git stuff)
+% Lots of stuff about implementation decisions here
+% Summary of what do to to get the system running on your own machine
 
 \chapter{Testing}
+% Explain use of TDD, both unit tests, integration and use of EOL files that it would be hoped would work with
+% Automated testing
+% Use of CI
+% Testing against requirements
+% Summary (did all test pass?)
 
 \chapter{Evaluation}
+% Does it at least fulfil all of the analysis and querying required by the two systems its competing with (github and gitinspector?)
+% Case Study vs GitInspector
+	% Comparison of lines of code and code complexity required for the same output
+	% Comparison of Run Time on same hardware
+
+\chapter{Conclusion}
+% Project Review (Cronological rundown of what happened)
+% Is this a feasible way of dealing with git analysis and querying?
+	% Why? Why not?
+% Whats missing?
+% A success?
+
+
 \section{Future Work}
 % Currently read only, would be interesting to see if being able to author commits etc via epsilon could be useful. Or even the ability to change names on commits etc via http://stacktoheap.com/blog/2013/01/06/using-mailmap-to-fix-authors-list-in-git/
 % Make it would with subversion, mercurial etc
-% Transform from git to svn/mercurial or vice versa via ETL
-% Lots of low hanging fruit regarding performance
+% Transform from git to svn/mercurial or vice versa via ETL (lots of people would want to make this transition)
+% Lots of low hanging fruit regarding performance (e.g. computing properties each time instead of storing them in memory once they've been worked out once)
 
 \chapter{Reflection}
 % Working on project whilst other 'real life' stuff happens
@@ -86,6 +173,7 @@ This project presents a tool, called EpsilonGit, which allow users to write thes
 % TDD was great, agile working seemed to work well.
 % Java code is pretty reasonable, took a little while to get into but previous C# knowledge helped
 % Example EOL/EGX code works well, but might be better if more declarative 
+% This is one of only a few large projects I've worked on, so it was good experience
 
 \printbibliography
 
