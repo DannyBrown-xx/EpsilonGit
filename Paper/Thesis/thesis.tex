@@ -3,6 +3,7 @@
 \usepackage[margin=1in,bindingoffset=.2in]{geometry}
 \usepackage[backend=biber, style=ieee]{biblatex}
 \addbibresource{references.bib}
+\usepackage[parfill]{parskip}
 
 \begin{document}
 \begin{titlepage}
@@ -58,19 +59,45 @@ The data that my project interacts with is a local copy of a git database. The u
 
 No other significant ethical issues related to this project could be identified.
 
+\clearpage
+
 \section{Introduction}
 % Rough outline of git 
 	% (e.g. its a distributed VCS... so people have code locally to be modelled, people use it for x functions (e.g. commit, branch, put their name to code) )
 	% Why would someone what to query and analyse their git repository?
 	% Some cool questions that could be asked
+	
+Git is a free and open source distributed version control system \cite{gitintro} that is designed to allow users to manage changes to files, often source files in a software project. This enables developers to "roll back" to a previous version of a file, see the difference between a file at two different times or determine which team member authored a line of code. 
+
+Version control best practices suggest that a developer should be committing code a little at a time and quite often \cite{gitbestpractices}, this makes it a good place to analyse to determine an individual developer or teams working practices in retrospect.
+
+A project manager may want to analyse a git repository to answer questions such as "How large is the average commit size?", "What time of the day are most commits made?" and "Which of my developers is committing the most code that is later replaced?". The answers to these questions may allow improvements in both quality of code and workplace practices.
+
 % Rough outline of modelling
 	% What is modelling?
 	% Why is it _possibly_ suitable for this project?
+Model Driven Engineering is an approach to tackle the complexity of data, and how it is interacted with, through the use of high level abstractions called models \cite{modeldrivenengineering} and a set of Domain-specific modelling languages and Transformation engines and generators.   
 	
+Due to the large array of features provided by git and the widespread use of hashes and graph data structures in the underlying system it is often considered to be complex \cite{gitcomplex}\cite{githard}\cite{gitmixedmetaphors}.
+
+In this paper it is proposed that a model driven engineering solution to querying and analysing git repositories is a good solution as it removes much of the complexity associated with git.
+
 % Motivation
 	% Improve companies, open source projects and individuals understanding of their code and workflows
 	% Encourage people to use and invest in Modelling, particularly using epsilon
 	% Release it to the world and see what innovative and cool information people could get from their git repositories. With open data and software all kinds of weird shit can be done the original creator wouldn't have thought of.
+\subsection{Motivation}
+The Joel Test \cite{joeltest} is often cited as a simple list of best practices for software development. Rule number 1 is to use version control software in order to aid teamwork, maintain a canonical history of source code and reduce the likelihood of losing any work. The positive impact that version control has means that many open source, individual and commercial projects use version control -- one of the most popular being git \cite{gitpopularity}. 
+
+Although many projects use git there are very few tools for querying and analysing the metadata and other information contained within git repositories. Those that are available lack the ability to add user-designed custom queries. 
+
+Through developing a system in which users can write their own custom queries in an easy-to-use and abstract fashion it is thought that teams may be able to learn more about their own workflows and where improvements can be made -- this could be particularly useful to teams using agile methodologies which lack the rigid structure of older methods such as Waterfall.
+
+The software produced as part of this project should also make it easier to determine if git best practices \cite{gitbestpractices} are being followed. In addition to best practices some teams set project wide best practices for commit messages \cite{erlanggitcommitmessages}, users should be able to write validators to ensure these are being used.
+
+As well as helping teams understand their git repositories this project also aims to encourage Software Engineers to learn about and invest in Model-Driven Engineering. It is the the hope of the author that combining MDE with a technology as prevalent as git may help to widen its appeal. In particular it would be great if this attracted more people to the open source Epsilon MDE platform \cite{epsilonhomepage}.
+
+One of the %TODO:
 	
 % Aims and objectives
 	% Develop a solution which covers all of the most common parts of git (e.g. Object Model, Branches, Authors and Committers)
