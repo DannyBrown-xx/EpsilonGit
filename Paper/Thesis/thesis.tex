@@ -44,7 +44,7 @@ This project presents a tool, called EpsilonGit, which allow users to write thes
 \tableofcontents
 
 \chapter{Introduction and Background}
-
+\label{introandbackground}
 \section{Acknowledgement}
 I would like to take this opportunity to thank Dr. Dimitris Kolovos who not only provided support and encouragement throughout the course of this project, but also came up with the original idea of using model driven engineering to interact with git and added features into the Epsilon suite to support some of the work I was doing.
 
@@ -61,7 +61,7 @@ No other significant ethical issues related to this project could be identified.
 
 \clearpage
 
-\section{Introduction}
+\section{Introduction and Background}
 % Rough outline of git 
 	% (e.g. its a distributed VCS... so people have code locally to be modelled, people use it for x functions (e.g. commit, branch, put their name to code) )
 	% Why would someone what to query and analyse their git repository?
@@ -82,11 +82,16 @@ Due to the large array of features provided by git and the widespread use of has
 
 In this paper it is proposed that a model driven engineering solution to querying and analysing git repositories is a good solution as it removes much of the complexity associated with git.
 
+% Discussion of epsilon
+% Discussion of the epsilon driver framework and what integrating with epsilon gets us (e.g. ability to make HTML from models, use of EOL Language, ability to run in and out of eclipse, etc)
+
+Epsilon is a family of languages and tools for code generation, model-to-model transformation, model validation, comparison, migration and refactoring \cite{epsilonhomepage}. Whilst Epsilon comes with support for interacting with EMF, XML and several other types of model formats out-of-the-box it also has a system called the Epsilon Model Connectivity layer which allows developers to implement drivers for other types of models, in this case git.
+
+\section{Motivation}
 % Motivation
 	% Improve companies, open source projects and individuals understanding of their code and workflows
 	% Encourage people to use and invest in Modelling, particularly using epsilon
 	% Release it to the world and see what innovative and cool information people could get from their git repositories. With open data and software all kinds of weird shit can be done the original creator wouldn't have thought of.
-\subsection{Motivation}
 The Joel Test \cite{joeltest} is often cited as a simple list of best practices for software development. Rule number 1 is to use version control software in order to aid teamwork, maintain a canonical history of source code and reduce the likelihood of losing any work. The positive impact that version control has means that many open source, individual and commercial projects use version control -- one of the most popular being git \cite{gitpopularity}. 
 
 Although many projects use git there are very few tools for querying and analysing the metadata and other information contained within git repositories. Those that are available lack the ability to add user-designed custom queries. 
@@ -97,27 +102,44 @@ The software produced as part of this project should also make it easier to dete
 
 As well as helping teams understand their git repositories this project also aims to encourage Software Engineers to learn about and invest in Model-Driven Engineering. It is the the hope of the author that combining MDE with a technology as prevalent as git may help to widen its appeal. In particular it would be great if this attracted more people to the open source Epsilon MDE platform \cite{epsilonhomepage}.
 
-One of the %TODO:
-	
-% Aims and objectives
+One of the more interesting aspects of the project will be opening up a world of newly accessible data to people and seeing what interesting analysis they can come up with that the author alone wouldn't have thought of.
+
+\section{Aims and objectives}
+\label{aimsandobjectives} 
+%Aims and objectives
 	% Develop a solution which covers all of the most common parts of git (e.g. Object Model, Branches, Authors and Committers)
 	% Develop a solution which has as fast or faster runtime for the same output as GitInspector / Github / GitSQL
 	% Develop a solution which requires less code, and code of lower complexity for the same output as other solutions
 	% Develop a solution which, at the same times, provides high level simple nice clean interaction whilst allowing access to low level stuff for those who also want that interaction
+This project aims to implement an Epsilon Model Connectivity (EMC) driver to enable querying and analysis of git repositories from the domain-specific programming languages of the Epsilon Eclipse framework.
 
+The objectives of the project are as follows:
+
+\begin{enumerate}
+	\item (Functional) Develop a EMC solution for interacting with the most commons parts of Git (Object Model, Branches and Author \& Committer Information) through Epsilon Eclipse
+	\item (Non-Functional) Optimise the solution so that it produces the same output as GitInspector in the same amount of time or less 
+	\item (Non-Functional) The solution should allow developers to write queries with identical output to GitInspector and GitHub with less code, and code of less compexity
+	\item (Non-functional) The solution should provide access to all low-level properties of the covered areas of git whilst providing higher-level methods to speed up development of user-written queries
+\end{enumerate}
+
+\section{Report Structure}
 % Report Structure
 	% A paragraph or two explaining the overall flow of this document, and calling out the names of each chapter. Not repeating the table of contents, but instead highlighting important sections in prose.
 
-\section{Background}
-% More in-depth Explanation of Git Object Model
-% More in-depth explanation of modelling
-	% What is a model?
-	% How do we interact with models?
-	% etc?
-% Discussion of epsilon
-% Discussion of the epsilon driver framework and what integrating with epsilon gets us (e.g. ability to make HTML from models, use of EOL Language, ability to run in and out of eclipse, etc)
+This paper covers the entire process of development of EpsilonGit.
+
+Chapter 2 covers a literature review undertaken before work was carried out, model driven engineering and the git object model are discussed in detail. Using the information ascertained in the literature review chapter 3 discusses the requirements of this project. Chapter 4 discusses several software engineering methodologies that could be followed during the course of development and a decision is made.
+
+Chapter 5 explains the processes undertaken during the design stage, including the interaction between JGit and the Epsilon Model Connectivity layer. The actual implementation details of EpsilonGit are discussed at length in Chapter 6. Chapter 7 rounds up the practical portion of the report by explaining how several types of testing were used together to form a complete testing framework for the EMC driver.
+
+Chapter 8 evaluates the work undertaken against the aims and objectives which were set out in section \ref{aimsandobjectives}. Conclusions from the work are drawn in Chapter 9 and potential future work ideas are provided to the reader. Finally, Chapter 10 reflects on the project as a whole and the author himself.  
 
 \chapter{Literature Review}
+\label{litreview}
+This chapter looks at the existing literature in the relation to the Git Object Model, Model Driven Engineering techniques, Previous attempts at analysing git repositories and techniques for interacting with object models -- such as the HTML Document Object Model -- which are similar to Git.
+
+
+
 % Intro paragraph "This chapter looks at the existing literature... etc"
 % Section on literature about Git and the git object model
 	% Conclusions drawn from the literature
@@ -132,11 +154,14 @@ One of the %TODO:
 % Section on literature pertaining to analysing and querying git. (there is very little if not none)
 	% Conclusions drawn from the literature
 		% primarily, its novel
+		
+		% More in-depth Explanation of Git Object Model
+% More in-depth explanation of modelling
+	% What is a model?
+	% How do we interact with models?
+	% etc?
 
 % Section on interacting with object models, or version control software via models. Perhaps the HTML DOM? 
-
-\chapter{Methodology}
-% Used agile TDD based approach, discuss why this was chosen and
 
 \chapter{Requirements}
 % Statement of Needs
@@ -144,6 +169,9 @@ One of the %TODO:
 	% requirements of these stakeholders
 % Breakdown of functional (features) and non-functional (speed, UX) requirements
 % Use case diagram
+
+\chapter{Methodology}
+% Used agile TDD based approach, discuss why this was chosen and
 
 \chapter{Design}
 % Making architecture fit between JGit and Epsilon
