@@ -66,8 +66,6 @@ Tests/Epsilon Projects/GitInspector-Equivalence-Tests/output.html
 
 *.toc
 
-*.pdf
-
 *.bcf
 
 *.bbl
@@ -75,3 +73,7 @@ Tests/Epsilon Projects/GitInspector-Equivalence-Tests/output.html
 *.blg
 
 *.xml
+
+Paper/Thesis/thesis.pdf
+
+Paper/Presentation/presentation.pdf

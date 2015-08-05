@@ -155,7 +155,6 @@ Although there are many methodologies for using version control systems all of t
 
 \begin{table}[h]
 \centering
-\label{basic-git-commands}
 \begin{tabular}{| l | p{9cm} |}
 \hline
 \textbf{Command} & \textbf{Action} \\ \hline
@@ -165,6 +164,7 @@ git commit [message] & Stores current changes to history with a message to infor
 git push & Sends local changes to a remote repository \\ \hline
 \end{tabular}
 \caption{Basic Git Commmands}
+\label{tab:basic-git-commands}
 \end{table}
 
 The git community has developed several different workflows to interact with git for different types of projects and requirements of those projects \cite{gitcomparingworkflows}. 4 such examples are: 
@@ -173,11 +173,37 @@ The git community has developed several different workflows to interact with git
 	\item Centralized Workflow; which works in much the same way as a CVS would
 	\item Feature Branch workflow which requires engineers to create a new branch for each feature they are working on before merging back into a main branch which is considered the production ready code
 	\item The Gitflow Workflow; which is a mixture of the two previous workflows
-	\item Forking Workflow; Commonly used by open source projects. A contributor 
+	\item Forking Workflow; Commonly used by open source projects. A contributor makes changes in his own local repository and then requests that they be 'pulled' into the main public repository
 \end{enumerate}
 
+The many different ways of using git suggest that different analytics may also be required.
+
+\clearpage
 
 \section{The Git Object Model}
+The core of git is a content-addressable filesystem which can store any object and assign it a hashcode by which it can be identified \cite{progit}. There are 4 main types of object stored in this system, known as the git object model, which are shown in Figure \ref{fig:gitobjectmodeldiagram}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{images/gitobjectmodel}
+	\caption{Grids used to test Env\_Follow and Env\_Sweep}
+	\label{fig:gitobjectmodeldiagram}
+\end{figure} 
+
+Each of these objects will now be discussed in more detail.
+
+\subsection{Blob}
+In git a blob is an array of bytes, which can be text or binary data, that is stored in the content-addressable file system. Blobs should not be confused with files as they are just content with no metadata such as filename, in fact if two files are added to git with exactly the same content, and therefore hashcode, they share a blob.
+
+\subsection{Tree}
+A tree object in git can be thought of as analogous to a directory in a UNIX file system. For each file in the tree a tuple is stored of the name of file, the hashcode of the blob which contains its content, and a numeric file type code \cite{gitmagic}.
+
+A tree can also contain the names and hashcodes of other trees, allowing for a hierarchical file system, as shown in Figure \ref{fig:gitobjectmodeldiagram}. 
+
+\subsection{Commit}
+The object 
+
+\subsection{Tag}
 
 % Intro paragraph "This chapter looks at the existing literature... etc"
 % Section on literature about Git and the git object model
