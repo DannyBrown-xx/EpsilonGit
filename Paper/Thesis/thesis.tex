@@ -186,7 +186,7 @@ The core of git is a content-addressable filesystem which can store any object a
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=0.7\textwidth]{images/gitobjectmodel}
-	\caption{Grids used to test Env\_Follow and Env\_Sweep}
+	\caption{The relationships between Git Objects}
 	\label{fig:gitobjectmodeldiagram}
 \end{figure} 
 
@@ -201,9 +201,18 @@ A tree object in git can be thought of as analogous to a directory in a UNIX fil
 A tree can also contain the names and hashcodes of other trees, allowing for a hierarchical file system, as shown in Figure \ref{fig:gitobjectmodeldiagram}. 
 
 \subsection{Commit}
-The object 
+The commit object type stores information about a snapshot of the blobs and trees in the git repository at a particular time. The information includes the name and email address of the author of changes, the name and email address of the person who made the commit, the UNIX timestamp of the time the commit was made, and a message to explain why changes have been made.
+
+A commit points at one-and-only-one root tree, which contains all the other trees and blobs that form part of that snapshot.
 
 \subsection{Tag}
+Tags specify points in history as being important. Typically people use this functionality to mark release points (v1.0, and so on) \cite{gitdocstags}. They contain the hashcode of the 1-and-only-1 commit they point to, a name (such as "v1.0") and a message explaining why the tagged commit is important \cite{gitforcomputerscientists}.
+
+\section{Git Concepts}
+Whilst the git object model is reasonably simple it enables some 
+
+\subsection{Branching \& Merging}
+\subsection{Forking}
 
 % Intro paragraph "This chapter looks at the existing literature... etc"
 % Section on literature about Git and the git object model
