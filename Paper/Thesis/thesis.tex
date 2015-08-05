@@ -145,11 +145,37 @@ Git is a version control system originally developed by Linus Torvalds, known fo
 
 There are two main types of VCS, Centralised Version Control Software and Distributed Version Control Software. Centralised version control systems rely on a central server which contains the canonical source repository whilst distributed systems downloads a complete clone of the repository with a full commit history, meaning each client has a first class repository\cite{whydistributed}.
 
-Distributed version control software has several advantages over centralised systems. Firstly they allow any developer to have write access to a repository, rather than having to submit a patch to someone with committer privileges, which lowers the barrier to entry on open source projects \cite{distributedimpactoss}. Secondly they allow cheap local branching and merging as well as reduced redundant file storage thanks to the use of \cite{distributedimpactoss}. 
+Distributed version control software has several advantages over centralised systems. Firstly they allow any developer to have write access to a repository, rather than having to submit a patch to someone with committer privileges, which lowers the barrier to entry on open source projects \cite{distributedimpactoss}. Secondly they allow cheap local branching and merging as well as reduced redundant file storage thanks to the use of changesets rather than individual file revisions \cite{distributedimpactoss}. 
 
 Whilst distributed version control systems \cite{whydistributed}, and in particular git \cite{gitpopularity}, have become more popular than centralised version systems there are still some proponents of CVS thanks to the fact that you don't have to download potentially very large repositories with very large histories \cite{cvsvsvcs}.
 
 Git uses the distributed model, meaning each computer on which a repository is used has a complete copy of its history. This makes it a good candidate for analysis as any team member will be able to be involved in the process rather than just the central repository administrator.
+
+Although there are many methodologies for using version control systems all of them contain the same basic commands which form the majority of a users interaction with their VCS. In Git these commands are \cite{gitrefbasic}: 
+
+\begin{table}[h]
+\centering
+\label{basic-git-commands}
+\begin{tabular}{| l | p{9cm} |}
+\hline
+\textbf{Command} & \textbf{Action} \\ \hline
+git clone [remote repository location] & Downloads a repository and all its history from a specified remote location \\ \hline
+git add [file] & Adds a file to the git index so that its changes will be tracked \\ \hline
+git commit [message] & Stores current changes to history with a message to inform other engineers why changes were made \\ \hline
+git push & Sends local changes to a remote repository \\ \hline
+\end{tabular}
+\caption{Basic Git Commmands}
+\end{table}
+
+The git community has developed several different workflows to interact with git for different types of projects and requirements of those projects \cite{gitcomparingworkflows}. 4 such examples are: 
+
+\begin{enumerate}
+	\item Centralized Workflow; which works in much the same way as a CVS would
+	\item Feature Branch workflow which requires engineers to create a new branch for each feature they are working on before merging back into a main branch which is considered the production ready code
+	\item The Gitflow Workflow; which is a mixture of the two previous workflows
+	\item Forking Workflow; Commonly used by open source projects. A contributor 
+\end{enumerate}
+
 
 \section{The Git Object Model}
 
