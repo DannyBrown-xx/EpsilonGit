@@ -138,8 +138,20 @@ Chapter 8 evaluates the work undertaken against the aims and objectives which we
 \label{litreview}
 This chapter looks at the existing literature in the relation to the Git Object Model, Model Driven Engineering techniques, Previous attempts at analysing git repositories and techniques for interacting with object models -- such as the HTML Document Object Model -- which are similar to Git.
 
-\section{Git and The Git Object Model}
-Git is a distributed version control system originally developed by Linus Torvalds, known for developing the Linux Kernel, with the goals of being fast and efficient with large projects \cite{progit}.
+\section{Git and Version Control Systems}
+Version control systems (VCS) allow Software Engineers to keep a history of changes made to the files they work with. Diomidis Spinellis of Athens University of Economics and Business states that adopting a VCS can be the most important tooling improvement a Software Engineering team can make \cite{toolsofthetrade}.
+
+Git is a version control system originally developed by Linus Torvalds, known for developing the Linux Kernel, with the goals of being fast and efficient with large projects \cite{progit}.
+
+There are two main types of VCS, Centralised Version Control Software and Distributed Version Control Software. Centralised version control systems rely on a central server which contains the canonical source repository whilst distributed systems downloads a complete clone of the repository with a full commit history, meaning each client has a first class repository\cite{whydistributed}.
+
+Distributed version control software has several advantages over centralised systems. Firstly they allow any developer to have write access to a repository, rather than having to submit a patch to someone with committer privileges, which lowers the barrier to entry on open source projects \cite{distributedimpactoss}. Secondly they allow cheap local branching and merging as well as reduced redundant file storage thanks to the use of \cite{distributedimpactoss}. 
+
+Whilst distributed version control systems \cite{whydistributed}, and in particular git \cite{gitpopularity}, have become more popular than centralised version systems there are still some proponents of CVS thanks to the fact that you don't have to download potentially very large repositories with very large histories \cite{cvsvsvcs}.
+
+Git uses the distributed model, meaning each computer on which a repository is used has a complete copy of its history. This makes it a good candidate for analysis as any team member will be able to be involved in the process rather than just the central repository administrator.
+
+\section{The Git Object Model}
 
 % Intro paragraph "This chapter looks at the existing literature... etc"
 % Section on literature about Git and the git object model
