@@ -135,10 +135,16 @@ Chapter 5 explains the processes undertaken during the design stage, including t
 Chapter 8 evaluates the work undertaken against the aims and objectives which were set out in section \ref{aimsandobjectives}. Conclusions from the work are drawn in Chapter 9 and potential future work ideas are provided to the reader. Finally, Chapter 10 reflects on the project as a whole and the author himself.  
 
 \chapter{Literature Review}
+% Intro paragraph "This chapter looks at the existing literature... etc"
+% Section on literature about Git and the git object model
+	% Conclusions drawn from the literature
+		% A well known model, with some interesting idiosyncacies. Fits modelling well.
+		
 \label{litreview}
 This chapter looks at the existing literature in the relation to the Git Object Model, Model Driven Engineering techniques, Previous attempts at analysing git repositories and techniques for interacting with object models -- such as the HTML Document Object Model -- which are similar to Git.
 
 \section{Git and Version Control Systems}
+\label{sec:git}
 Version control systems (VCS) allow Software Engineers to keep a history of changes made to the files they work with. Diomidis Spinellis of Athens University of Economics and Business states that adopting a VCS can be the most important tooling improvement a Software Engineering team can make \cite{toolsofthetrade}.
 
 Git is a version control system originally developed by Linus Torvalds, known for developing the Linux Kernel, with the goals of being fast and efficient with large projects \cite{progit}.
@@ -209,15 +215,22 @@ A commit points at one-and-only-one root tree, which contains all the other tree
 Tags specify points in history as being important. Typically people use this functionality to mark release points (v1.0, and so on) \cite{gitdocstags}. They contain the hashcode of the 1-and-only-1 commit they point to, a name (such as "v1.0") and a message explaining why the tagged commit is important \cite{gitforcomputerscientists}.
 
 \section{Git Concepts}
-Whilst the git object model is reasonably simple it enables some 
+Whilst the git object model is reasonably simple it enables some relatively powerful functionality.
 
 \subsection{Branching \& Merging}
-\subsection{Forking}
+All of the git workflows described in section \ref{sec:git} make use of branching. Branches in git allow changes to be made on a separate named track diverged from the main (master) set of changes. This allows for example, in the case of a web browser, a new HTML element to be developed in a branch called 'new-html-element' whilst bug fixes can be made on the main branch. This avoids the complication of multiple different people working on multiple different features on one branch and breaking each others code and focus.
 
-% Intro paragraph "This chapter looks at the existing literature... etc"
-% Section on literature about Git and the git object model
-	% Conclusions drawn from the literature
-		% A well known model, with some interesting idiosyncacies. Fits modelling well.
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/basicbranching}
+	\caption{A Simple Branching Scenario \cite{gitbasicbranching}}
+	\label{fig:gitbranching}
+\end{figure} 
+
+Once work on a branch is complete its changes can be merged into the main branch, or any other branch. When this is done a commit is made, called a 'merge commit' to keep track of the event, in Figure \ref{fig:gitbranching} 'C2' is a merge commit.
+
+\subsection{Forking}
+Forking isn't a command in git, or indeed an object type, but rather a concept about how to copy and add to repositories. In the forking workflow \cite{forkingworkflow} a repository is cloned, and committed to as if it was a branch, before pushing changes 'upstream' to the original repository. Often pull requests are required for contributors who do not have direct write access to the original repository.
 
 \section{Existing Git Analysis Tools}
 % Section on literature pertaining to accessing git information
