@@ -303,11 +303,16 @@ There is some discussion in the literature \cite{basictheorymde} as to the exact
 
 The author finds that the best way to think of a model is a higher-level abstraction than an object in object-oriented programming language.
 
-Domain Specific Modelling Languages % enable x
+A model itself is defined by a metamodel, and a metamodel can be defined by itself \cite{metamodelling}. 
 
-Transformation engines and generators % let you do x y and z which is super cool
+Domain Specific Modelling Languages are specialised languages that enable a user to interact with models in a specific and often highly abstract way, developers use DSMLs to build applications using elements of the type system captured by metamodels and express design intent declaratively rather than imperatively \cite{modeldrivenengineering}. %TODO: Discuss with dimistris
+
+Transformation engines and generators let the user generate artefacts, such as HTML documentation or source code form their models. As an example a source code generator could be used on a model of a school to create Java class files for every type of person at the school and initialisation code for object instances for each of the students.
+
+MDE platforms, such as Epsilon, often consist of many DSMLs and Generators.
 
 \section{Epsilon}
+\subsection{Epsilon Model Connectivity}
 % About the platform
 % EOL, EGX, Etc.
 
