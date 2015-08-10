@@ -4,6 +4,37 @@
 \usepackage[backend=biber, style=ieee]{biblatex}
 \addbibresource{references.bib}
 \usepackage[parfill]{parskip}
+\usepackage{courier,textcomp,amsmath,listings, color}
+\newcommand{\code}[1]{\texttt{#1}}
+
+% CODE HIGHLIGHTING COLOURS SET UP
+% Set up for C#, Credit: http://tex.stackexchange.com/questions/124953/syntax-highlighting-in-listings-for-c-that-it-looks-like-in-visual-studio
+%\setmonofont{Consolas} %to be used with XeLaTeX or LuaLaTeX
+\definecolor{bluekeywords}{rgb}{0,0,1}
+\definecolor{greencomments}{rgb}{0,0.5,0}
+\definecolor{redstrings}{rgb}{0.64,0.08,0.08}
+\definecolor{xmlcomments}{rgb}{0.5,0.5,0.5}
+\definecolor{types}{rgb}{0.17,0.57,0.68}
+
+\lstset
+{
+  language=Ruby,
+  captionpos=b,
+  %numbers=left,
+  %numberstyle=\tiny,
+  frame=lines,
+  showspaces=false,
+  showtabs=false,
+  breaklines=true,
+  showstringspaces=false,
+  breakatwhitespace=true,
+  escapeinside={(*@}{@*)},
+  commentstyle=\color{greencomments},
+  morekeywords={partial, var, value, get, set},
+  keywordstyle=\color{bluekeywords},
+  stringstyle=\color{redstrings},
+  basicstyle=\ttfamily\small,
+}
 
 \begin{document}
 \begin{titlepage}
@@ -312,15 +343,65 @@ Transformation engines and generators let the user generate artefacts, such as H
 MDE platforms, such as Epsilon, often consist of many DSMLs and Generators.
 
 \section{Epsilon}
-\subsection{Epsilon Model Connectivity}
 % About the platform
 % EOL, EGX, Etc.
+Epsilon, standing for Extensible Platform of Integrated Languages for mOdel maNagement, is a platform for building consistent and interoperable task-specific languages for model management tasks such as model transformation, code generation, model comparison, merging, refactoring and validation \cite{theepsilonbook}. 
+
+The Epsilon Platform can be run as an Eclipse Application or imported into another application as a .jar library file.
+
+Epsilon has a set of domain specific languages and generators for many different tasks based on a core language called Epsilon Object Language or EOL. 
+
+\begin{lstlisting}[caption=An example of EOL code, label=lst:exampleEolCode]
+People.all.select(p | p.age > 20 and 
+  (p.career = "Computer Scientist" or p.career = "Lecturer"))
+\end{lstlisting}
+
+Out-of-the-box Epsilon supports models described in Eclipse Modelling Framework (EMF), XML and CSV formats, but additional model types can be added to Epsilon by use of the Epsilon Model Connectivity Layer.
+
+\subsection{Epsilon Model Connectivity}
+The Epsilon Model Connectivity layer enables developers to build plug-ins for Epsilon in order to allow it to access a new type of model through all of its inbuilt domain specific languages and generators \cite{theepsilonbook}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.8\textwidth]{images/epsilon-architecture}
+	\caption{Epsilon Architecture \cite{emcdocs}}
+	\label{fig:emc}
+\end{figure}
+
+In Figure \ref{fig:emc} it can be seen that implementing the Epsilon Model Connectivity layer allows all the 'task specific languages' to access the models information via EOL. It can also be seen that Epsilons 'built-in' model types are built using the same technology.
+
+The functionality required of an EMC layer is described through the abstract classes which must be implemented in Java, a graphical overview of which can be seen in Figure \ref{fig:imodelinterface}. The \code{IModel} interface describes the formal parameters for functions to control basics such as storing and loading the model, accessing model elements and optionally writing changes to model elements.
+
+
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.55\textwidth]{images/imodel-interface}
+	\caption{The IModel Interface \cite{theepsilonbook}}
+	\label{fig:imodelinterface}
+\end{figure}
+
+
 
 \section{Querying and Analysis using MDE}
 % Has this kind of shit been done before? By Whom, for what? What can be learned?
+%TODO: Ask Dimitris about this 
 
 \chapter{Requirements}
+\section{Problem Statement}
 % Statement of Needs
+A problem statement outlines the basic issue which the project is trying to solve. An abstract outline of the requirements of the product which could solve this problem will be discussed. This information can then be used to determine stakeholders of the process and guide the requirement solicitation process \cite{problemstatement}.
+
+The problem statement is heavily influenced by the initial project proposal written by the project supervisor \cite{initialproposal}.
+
+\section{Stakeholder Identification}
+
+\section{Use-case Diagram}
+
+\section{Required Features}
+\subsection{Functional Requirements}
+\subsection{Non-Functional Requirements}
+
 % Stakeholder Identification (whos interested in project and their roles)
 	% requirements of these stakeholders
 % Breakdown of functional (features) and non-functional (speed, UX) requirements
