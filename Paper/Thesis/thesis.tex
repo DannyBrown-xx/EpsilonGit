@@ -53,7 +53,7 @@
 		\vspace{1.5cm}
 		\Large A thesis submitted in partial fulfilment for the degree of \\ \textit{Master of Science in Advanced Computer Science}\\
 		\vspace{5cm}
-		\small 4,260 words as counted by Texpad.app
+		\small 4,417 words as counted by Texpad.app
 	\end{center}
 	\restoregeometry
 \end{titlepage}
@@ -72,16 +72,14 @@ This project presents a tool, called EpsilonGit, which allow users to write thes
 }
 \end{center}
 
-\tableofcontents
+\clearpage
 
-\chapter{Introduction and Background}
-\label{introandbackground}
-\section{Acknowledgement}
+\section*{Acknowledgement}
 I would like to take this opportunity to thank Dr. Dimitris Kolovos who not only provided support and encouragement throughout the course of this project, but also came up with the original idea of using model driven engineering to interact with git and added features into the Epsilon suite to support some of the work I was doing.
 
 A special thank-you is extended to my parents, siblings and girlfriend who have supported me throughout the trials and tribulations of my time at York by visiting both myself and the National Railway Museum an inordinate amount of times. The same gratitude is required of my friends both from at home in Dunstable and The University of Hull, where I completed my Bachelors degree. %The museum bit is an inside joke. I'll keep it in for a laugh
 
-\section{Statement of Ethics}
+\section*{Statement of Ethics}
 Ethics in research is of paramount importance and therefore this project has been carried out with them in mind at every step. 
 
 All literature, ideas and code that has been used in the formation of this project has been correctly referenced and credit has been given where it is due.
@@ -90,8 +88,10 @@ The data that my project interacts with is a local copy of a git database. The u
 
 No other significant ethical issues related to this project could be identified.
 
-\clearpage
+\tableofcontents
 
+\chapter{Introduction}
+\label{introandbackground}
 \section{Introduction and Background}
 % Rough outline of git 
 	% (e.g. its a distributed VCS... so people have code locally to be modelled, people use it for x functions (e.g. commit, branch, put their name to code) )
@@ -103,6 +103,11 @@ Git is a free and open source distributed version control system \cite{gitintro}
 Version control best practices suggest that a developer should be committing code a little at a time and quite often \cite{gitbestpractices}, this makes it a good place to analyse to determine an individual developer or teams working practices in retrospect.
 
 A project manager may want to analyse a git repository to answer questions such as "How large is the average commit size?", "What time of the day are most commits made?" and "Which of my developers is committing the most code that is later replaced?". The answers to these questions may allow improvements in both quality of code and workplace practices.
+
+Mining Software Repositories (MSR) for information to improve Software Engineering practices is a hot area of research right now with an annual dedicated conference \cite{msr2015}. MSR is the process of analysing the rich data available in these repositories to uncover interesting and actionable information about software systems \cite{theroadagainformsr} including identifying pre-existing patterns, %TODO: Start here
+ -- this project aims to aid that discovery. 
+
+Whilst MSR is a popular research topic a recent paper enumerating the tools used by MSR researchers found that many MSR researchers are using general purpose data mining tools rather than bespoke specialised MSR tools \cite{toolsinminingsoftwarerepositories}.
 
 % Rough outline of modelling
 	% What is modelling?
@@ -147,13 +152,16 @@ This project aims to implement an Epsilon Model Connectivity (EMC) driver to ena
 The objectives of the project are as follows:
 
 \begin{enumerate}
-	\item (Functional) Develop a EMC solution for interacting with the most commons parts of Git (Object Model, Branches and Author \& Committer Information) through Epsilon Eclipse
-	\item (Non-Functional) Optimise the solution so that it produces the same output as GitInspector in the same amount of time or less 
-	\item (Non-Functional) The solution should allow developers to write queries with identical output to GitInspector and GitHub with less code, and code of less compexity
-	\item (Non-functional) The solution should provide access to all low-level properties of the covered areas of git whilst providing higher-level methods to speed up development of user-written queries
+	\item Develop a EMC solution for interacting with the most commons parts of Git (Object Model, Branches and Author \& Committer Information) through Epsilon Eclipse
+	\item Optimise the solution so that it produces the same output as GitInspector in the same amount of time or less 
+	\item The solution should allow developers to write queries with identical output to GitInspector and GitHub with less code, and code of less compexity
+	\item The solution should provide access to all low-level properties of the covered areas of git whilst providing higher-level methods to speed up development of user-written queries
 \end{enumerate}
 
 A secondary aim of the project is to attract more users to the Epsilon Platform and model driven engineering in general using git prevalence in Software Engineering as a draw.
+
+\section{Constraints}
+%TODO: This
 
 \section{Report Structure}
 % Report Structure
@@ -438,13 +446,16 @@ Both the Project Supervisor and the author of this project are invested in as go
 The Project Supervisor, Dr. Kolovos, is the lead developer and project maintainer of Epsilon. This position means that he is well suited to representing the interests of Epsilon users and developers. As outlined in the problem statement in section \ref{problemstatement} Dr. Kolovos initially proposed this project, with the intention of being a user himself, and is therefore also a good spokesperson for project managers, users of git repositories and end users of code repositories analysed.
 
 \section{Use cases}
-\subsection{User case diagram}
+Uses cases are descriptions of interaction scenarios between a system to be designed and users of the system \cite{usecase}. Figure \ref{fig:usecasediagram} shows the relationships between 
+
 \begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{images/use-case-diagram}
-	\caption{EpsilonGit Use case diagram}
+	\caption{EpsilonGit use case diagram}
 	\label{fig:usecasediagram}
 \end{figure}
+
+\section{Key Capabilities}
 
 \section{Stakeholder Requirements}
 %Things users need
