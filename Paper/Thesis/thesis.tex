@@ -120,7 +120,9 @@ The proposition of this project is that a model driven engineering solution to q
 % Discussion of epsilon
 % Discussion of the epsilon driver framework and what integrating with epsilon gets us (e.g. ability to make HTML from models, use of EOL Language, ability to run in and out of eclipse, etc)
 
-Epsilon is a family of languages and tools for code generation, model-to-model transformation, model validation, comparison, migration and refactoring \cite{epsilonhomepage}. Whilst Epsilon comes with support for interacting with EMF, XML and several other types of model formats out-of-the-box it also has a system called the Epsilon Model Connectivity layer which allows developers to implement drivers for other types of models, in this case git.
+Epsilon is a family of languages and tools for code generation, model-to-model transformation, model validation, comparison, migration and refactoring \cite{epsilonhomepage}. Whilst Epsilon comes with support for interacting with EMF, XML and several other types of model formats out-of-the-box it also has a system called the Epsilon Model Connectivity layer which allows developers to implement drivers for other types of models and structured artefacts.
+
+Epsilon was originally developed with a focus on software engineering models (e.g. UML models), due to its modularity and extensibility it has also been used on non-model artefacts such as spreadsheets, XML documents and relational data. This project aims to bring git access capabilities to the Epsilon Platform.
 
 The project being introduced here, EpsilonGit, will be deemed a success if it displays the following characteristics: is as fast, or faster, as competing solutions for identical queries; allows users to write custom queries in more concise and less complex code than interacting with git directly, and has coverage of the most common parts of gits features.
 
@@ -139,7 +141,7 @@ The reasons that there are few good tools for querying git repositories are vari
 git log --format='\%aN <\%aE>' | awk '{arr[\$0]++} END{for (i in arr){print arr[i], i;}}' | sort -rn | cut -d\ -f2-
 \end{lstlisting}
 
-Through developing a system in which users can write their own custom queries in an easy-to-use and abstract fashion it is thought that teams may be able to learn more about their own workflows and where improvements can be made -- this could be particularly useful to teams using agile methodologies which lack the rigid structure of older methods such as Waterfall.
+Through developing a system in which users can write their own custom queries in an easy-to-use and abstract fashion it is anticipated that teams will be able to learn more about their own workflows and where improvements can be made -- this could be particularly useful to teams using agile methodologies which lack the rigid structure of older methods such as Waterfall.
 
 The software produced as part of this project should also make it easier to determine if git best practices \cite{gitbestpractices} are being followed. In addition to best practices some teams set project wide best practices for commit messages \cite{erlanggitcommitmessages}, users should be able to write validators to ensure these are being used.
 
@@ -208,7 +210,7 @@ There are two main types of VCS, Centralised Version Control Software and Distri
 
 Distributed version control software has several advantages over centralised systems. Firstly they allow any developer to have write access to a repository, rather than having to submit a patch to someone with committer privileges, which lowers the barrier to entry on open source projects \cite{distributedimpactoss}. Secondly they allow cheap local branching and merging as well as reduced redundant file storage thanks to the use of changesets rather than individual file revisions \cite{distributedimpactoss}. 
 
-Whilst distributed version control systems \cite{whydistributed}, and in particular git \cite{gitpopularity}, have become more popular than centralised version systems there are still some proponents of CVS thanks to the fact that you don't have to download potentially very large repositories with very large histories \cite{cvsvsvcs}.
+Whilst distributed version control systems \cite{whydistributed}, and in particular git \cite{gitpopularity}, have become more popular than centralised version systems there are still some proponents of CVS thanks to the fact that engineers don't have to download potentially very large repositories with very large histories \cite{cvsvsvcs}.
 
 Git uses the distributed model, meaning each computer on which a repository is used has a complete copy of its history. This makes it a good candidate for analysis as any team member will be able to be involved in the process rather than just the central repository administrator.
 
