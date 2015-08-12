@@ -104,8 +104,7 @@ Version control best practices suggest that a developer should be committing cod
 
 A project manager may want to analyse a git repository to answer questions such as "How large is the average commit size?", "What time of the day are most commits made?" and "Which of my developers is committing the most code that is later replaced?". The answers to these questions may allow improvements in both quality of code and workplace practices.
 
-Mining Software Repositories (MSR) for information to improve Software Engineering practices is a hot area of research right now with an annual dedicated conference \cite{msr2015}. MSR is the process of analysing the rich data available in these repositories to uncover interesting and actionable information about software systems \cite{theroadagainformsr} including identifying pre-existing patterns, %TODO: Start here
- -- this project aims to aid that discovery. 
+Mining Software Repositories (MSR) for information to improve Software Engineering practices is a hot area of research right now with an annual dedicated conference \cite{msr2015}. MSR is the process of analysing the rich data available in these repositories to uncover interesting and actionable information about software systems \cite{theroadagainformsr} including identifying pre-existing patterns in code, and automatically linking code to bug reports -- this project aims to aid that discovery. Answering semantically challenging questions such as "Does the git fork flow enable more people to contribute to this project?" could be achieved, potentially changing the shape and attitudes of organisations.
 
 Whilst MSR is a popular research topic a recent paper enumerating the tools used by MSR researchers found that many MSR researchers are using general purpose data mining tools rather than bespoke specialised MSR tools \cite{toolsinminingsoftwarerepositories}.
 
@@ -116,12 +115,14 @@ Model Driven Engineering is an approach to tackle the complexity of data, and ho
 	
 Due to the large array of features provided by git and the widespread use of hashes and graph data structures in the underlying system it is often considered to be complex \cite{gitcomplex}\cite{githard}\cite{gitmixedmetaphors}.
 
-In this paper it is proposed that a model driven engineering solution to querying and analysing git repositories is a good solution as it removes much of the complexity associated with git.
+The proposition of this project is that a model driven engineering solution to querying and analysing git repositories can deliver substantial productivity and quality improvements over existing approaches as it removes much of the complexity associated with git.
 
 % Discussion of epsilon
 % Discussion of the epsilon driver framework and what integrating with epsilon gets us (e.g. ability to make HTML from models, use of EOL Language, ability to run in and out of eclipse, etc)
 
 Epsilon is a family of languages and tools for code generation, model-to-model transformation, model validation, comparison, migration and refactoring \cite{epsilonhomepage}. Whilst Epsilon comes with support for interacting with EMF, XML and several other types of model formats out-of-the-box it also has a system called the Epsilon Model Connectivity layer which allows developers to implement drivers for other types of models, in this case git.
+
+The project being introduced here, EpsilonGit, will be deemed a success if it displays the following characteristics: is as fast, or faster, as competing solutions for identical queries; allows users to write custom queries in more concise and less complex code than interacting with git directly, and has coverage of the most common parts of gits features.
 
 \section{Motivation}
 % Motivation
@@ -131,6 +132,12 @@ Epsilon is a family of languages and tools for code generation, model-to-model t
 The Joel Test \cite{joeltest} is often cited as a simple list of best practices for software development. Rule number 1 is to use version control software in order to aid teamwork, maintain a canonical history of source code and reduce the likelihood of losing any work. The positive impact that version control has means that many open source, individual and commercial projects use version control -- one of the most popular being git \cite{gitpopularity}. 
 
 Although many projects use git there are very few tools for querying and analysing the metadata and other information contained within git repositories. Those that are available lack the ability to add user-designed custom queries. 
+
+The reasons that there are few good tools for querying git repositories are varied. Firstly, Mining Software Repositories is a relatively new field --  meaning both that no one has built these tools yet and the Software Engineering community at large doesn't know of the benefits. Secondly the git API isn't the easiest to work with. Understanding the git command line requires knowledge of many Unix commands and is just one of the reasons Git is often said to be complicated \cite{gitcomplex}\cite{githard}\cite{gitmixedmetaphors}. Listing \ref{lst:gitbash} shows that to list authors by number of commits you need to have knowledge of Bash, Awk, Sort, Cut and Git itself.\\ 
+
+\begin{lstlisting}[caption=List Authors by Number of Commits in Git Bash, label=lst:gitbash]
+git log --format='\%aN <\%aE>' | awk '{arr[\$0]++} END{for (i in arr){print arr[i], i;}}' | sort -rn | cut -d\ -f2-
+\end{lstlisting}
 
 Through developing a system in which users can write their own custom queries in an easy-to-use and abstract fashion it is thought that teams may be able to learn more about their own workflows and where improvements can be made -- this could be particularly useful to teams using agile methodologies which lack the rigid structure of older methods such as Waterfall.
 
@@ -161,7 +168,14 @@ The objectives of the project are as follows:
 A secondary aim of the project is to attract more users to the Epsilon Platform and model driven engineering in general using git prevalence in Software Engineering as a draw.
 
 \section{Constraints}
-%TODO: This
+There are several constraints which could have an effect on the outcome of this project. 
+
+\begin{enumerate}
+	\item This project is to be completed in the 4 months between the end of the taught portion of a Masters degree and the following September. In that time the author also has to interview for opportunities of employment so even less time can be allocated to EpsilonGit.
+	\item This project is also the first full-fledged academic paper of the author and therefore his knowledge of this area is limited
+\end{enumerate}
+
+The author hopes to overcome these issues to provide a valid and novel piece of research.
 
 \section{Report Structure}
 % Report Structure
