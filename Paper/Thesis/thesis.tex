@@ -362,7 +362,7 @@ The author finds that the best way to think of a model is a higher-level abstrac
 
 A model itself is defined by a metamodel, and a metamodel can be defined by itself \cite{metamodelling}. 
 
-Domain Specific Modelling Languages are specialised languages that enable a user to interact with models in a specific and often highly abstract way, developers use DSMLs to build applications using elements of the type system captured by metamodels and express design intent declaratively rather than imperatively \cite{modeldrivenengineering}. %TODO: Discuss with dimistris
+Domain Specific Modelling Languages are specialised languages that enable a user to interact with models in a specific and often highly abstract way, developers use DSMLs to build applications using elements of the type system captured by metamodels and express design intent declaratively rather than imperatively \cite{modeldrivenengineering}.
 
 Transformation engines and generators let the user generate artefacts, such as HTML documentation or source code form their models. As an example a source code generator could be used on a model of a school to create Java class files for every type of person at the school and initialisation code for object instances for each of the students.
 
@@ -490,10 +490,34 @@ Stakeholder requirements refer to the requirements of the people identified in s
 
 Stakeholders have an interest in both the functional and the non-functional requirements of the system. A functional requirement is the requirement of the function of a piece of software \cite{functionalrequirements}, for example "it must be able to add two numbers together", a non-functional requirement is one pertaining to operating cost, performance, reliability, maintainability portability and anything else which doesn't relate directly to the functionality of the program \cite{nonfunctionalrequirements}.
 
+Requirements are laid out in the following style:
+
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
+A short code to identify the requirement. Type-Function-Number format. E.g. ST-NF-1 would be the first non functional requirement for stakeholders. & A description of what the requirement entails  & What will have to be true for a requirement to have been successfully met. Should be S.M.A.R.T \cite{SMART} \\ \hline
+\end{tabular}
+\caption{Requirements Style}
+\label{tab:requirementsstyle}
+\end{table}
+
+\subsection{Functional Requirements}
+\begin{table}[h]
+\centering
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
+\end{tabular}
+\caption{Functional Stakeholder Requirements}
+\label{tab:functionalstakeholderrequirements}
+\end{table}
+
+\subsection{Non-Functional Requirements}
+
 \section{System Requirements}
 %Things that need to be done in software to enable what users need
-
-\section{Required Features}
 \subsection{Functional Requirements}
 \subsection{Non-Functional Requirements}
 
