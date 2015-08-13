@@ -431,11 +431,13 @@ The aim of this project is to support such complex high-level queries on Git rep
 Such an advanced query facility would enable the development of advanced Git repository analytics and visualisation services (e.g. using Epsilon's EGL as a server-side scripting language).}
 
 \section{Stakeholder Identification}
+\label{stakeholders}
 A stakeholder is a person or organisation who influences a system’s requirements or who is impacted by that system \cite{stakeholders}, because the stakeholders influence the requirements they must be identified before requirements are written in order for the requirements to take them into account and be correct.
 
 Direct stakeholders are people whom interact with the computer system directly as a user, whilst indirect stakeholders are those who are otherwise affected \cite{directvsindirectstakeholders}, both will be discussed in detail.
 
 \subsection{Direct Stakeholders}
+\label{directstakeholders}
 \subsubsection{Git Analysts}
 Project managers, team leads or individuals who want to use the software solution to analyse their git repositories using built-in queries or those developed by other people. The main "users" of the system.
 
@@ -462,7 +464,7 @@ Both the Project Supervisor and the author of this project are invested in as go
 The Project Supervisor, Dr. Kolovos, is the lead developer and project maintainer of Epsilon. This position means that he is well suited to representing the interests of Epsilon users and developers. As outlined in the problem statement in section \ref{problemstatement} Dr. Kolovos initially proposed this project, with the intention of being a user himself, and is therefore also a good spokesperson for project managers, users of git repositories and end users of code repositories analysed.
 
 \section{Use cases}
-Uses cases are descriptions of interaction scenarios between a system to be designed and users of the system \cite{usecase}. Figure \ref{fig:usecasediagram} shows the relationships between 
+Uses cases are descriptions of interaction scenarios between a system to be designed and users of the system \cite{usecase}. Figure \ref{fig:usecasediagram} shows the relationships between the direct stakeholders of the system outlined in section \ref{directstakeholders} and their associated actions.
 
 \begin{figure}[h]
 	\centering
@@ -472,9 +474,21 @@ Uses cases are descriptions of interaction scenarios between a system to be desi
 \end{figure}
 
 \section{Key Capabilities}
+Through the process of identifying stakeholders in the project, developing a problem statement and having discussions with the project supervisor, who represents the interests of several of the stakeholder groups, a list of key capabilities of the software was written up.
+
+\begin{enumerate}
+	\item Ability to query information from the Git Object Model (Commits, Tags, Blobs and Trees) of an arbitrary number of git repositories using the Epsilon Framework and its associated domain-specific modelling languages
+	\item Ability to generate HTML and other artefacts from the information in the Git Object Model using The Epsilon Frameworks generators
+	\item To have both a high-level API for the commonly used sections of the git system, but access to native code for less commonly used sections that there wasn't time to improve code for
+	\item The ability to work on large git repositories in a reasonable time
+\end{enumerate} 
+
+These key capabilities are the ones that will be focused on the most during the development stage of the project and will be most important in achieving the aims and objectives of the project outlined in section \ref{aimsandobjectives}.
 
 \section{Stakeholder Requirements}
-%Things users need
+Stakeholder requirements refer to the requirements of the people identified in section \ref{stakeholders}. They have been decided upon in the same way as the key capabilities of the system. 
+
+Stakeholders have an interest in both the functional and the non-functional requirements of the system. A functional requirement is the requirement of the function of a peace of software, for example "it must be able to add two numbers together", a non-functional requirement is one pertaining to operating cost, performance, reliability, maintainability portability and anything else which doesn't relate directly to the functionality of the program \cite{nonfunctionalrequirements}.
 
 \section{System Requirements}
 %Things that need to be done in software to enable what users need
