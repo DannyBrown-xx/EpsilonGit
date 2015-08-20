@@ -5,6 +5,7 @@
 \addbibresource{references.bib}
 \usepackage[parfill]{parskip}
 \usepackage{courier,textcomp,amsmath,listings, color}
+\usepackage{float}
 \newcommand{\code}[1]{\texttt{#1}}
 
 % CODE HIGHLIGHTING COLOURS SET UP
@@ -400,7 +401,7 @@ The functionality required of an EMC layer is described through the abstract cla
 
 
 
-\begin{figure}[h]
+\begin{figure}[H]
 	\centering
 	\includegraphics[width=\textwidth]{images/imodel-interface}
 	\caption{The IModel Interface \cite{theepsilonbook}}
@@ -504,19 +505,41 @@ A short code to identify the requirement. Type-Function-Number format. E.g. ST-N
 \end{table}
 
 \subsection{Functional Requirements}
-\begin{table}[h]
+\begin{table}[H]
 \centering
 \begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
+SH-F-1 & Git Analysts should be able to access all commonly used parts of the git API via a model driven interface &  Git Object Model (Tag, Commit, Tree, Blob) accessible via EOL \\ \hline
+SH-F-2 & Git Analysts should be able to access multiple git repositories at once for comparison & Multiple repositories query-able via EOL.  \\ \hline
+SH-F-3 & Git Analysts should be able to use generators to develop artefacts from their git repositories & HTML should be able to be produced via EGX files \\ \hline
+SH-F-4 & Query Developers should be able to develop epsilon object language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about & The model interface should not itself require knowledge of git repository locations \\ \hline
+SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs and Generators using the Epsilon GUI & An option should be shown to add a git repository as a model in the epsilon GUI. When clicked this should allow the user to name it and select its location \\ \hline
 \end{tabular}
 \caption{Functional Stakeholder Requirements}
 \label{tab:functionalstakeholderrequirements}
 \end{table}
 
 \subsection{Non-Functional Requirements}
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+\hline
+\textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
+SH-NF-1 &  & \\ \hline
+SH-NF-2 &  & \\ \hline
+SH-NF-3 &  & \\ \hline
+SH-NF-4 &  & \\ \hline
+SH-NF-5 &  & \\ \hline
+\end{tabular}
+\caption{Non-Functional Stakeholder Requirements}
+\label{tab:nonfunctionalstakeholderrequirements}
+\end{table}
 
-\section{System Requirements}
+
+\section{System \& Software Requirements}
+System and Software requirements are the requirements that don't directly interfere with the user but are required to allow the software to work as intended.
+
 %Things that need to be done in software to enable what users need
 \subsection{Functional Requirements}
 \subsection{Non-Functional Requirements}
