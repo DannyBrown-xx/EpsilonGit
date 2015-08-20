@@ -7,6 +7,7 @@
 \usepackage{courier,textcomp,amsmath,listings, color}
 \usepackage{float}
 \newcommand{\code}[1]{\texttt{#1}}
+\usepackage{longtable}
 
 % CODE HIGHLIGHTING COLOURS SET UP
 % Set up for C#, Credit: http://tex.stackexchange.com/questions/124953/syntax-highlighting-in-listings-for-c-that-it-looks-like-in-visual-studio
@@ -90,6 +91,10 @@ The data that my project interacts with is a local copy of a git database. The u
 No other significant ethical issues related to this project could be identified.
 
 \tableofcontents
+
+\listoffigures
+ 
+\listoftables
 
 \chapter{Introduction}
 \label{introandbackground}
@@ -414,6 +419,10 @@ The functionality required of an EMC layer is described through the abstract cla
 \section{Problem Statement}
 \label{problemstatement}
 % Statement of Needs
+% Stakeholder Identification (whos interested in project and their roles)
+	% requirements of these stakeholders
+% Breakdown of functional (features) and non-functional (speed, UX) requirements
+% Use case diagram
 A problem statement outlines the basic issue which the project is trying to solve. An abstract outline of the requirements of the product which could solve this problem will be discussed. This information can then be used to determine stakeholders of the process and guide the requirement solicitation process \cite{problemstatement}.
 
 The problem statement is heavily influenced by the initial project proposal written by the project supervisor \cite{initialproposal}.
@@ -500,10 +509,11 @@ A short code to identify the requirement. Type-Function-Number format. E.g. ST-N
 \label{tab:requirementsstyle}
 \end{table}
 
+\clearpage
 \subsection{Functional Requirements}
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{2cm}|p{7cm}|p{6cm}|}
+\begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
 SH-F-1 & Git Analysts should be able to access all commonly used parts of the git API via a model driven interface &  Git Object Model (Tag, Commit, Tree, Blob) accessible via EOL \\ \hline
@@ -511,7 +521,7 @@ SH-F-2 & Git Analysts should be able to access multiple git repositories at once
 SH-F-3 & Git Analysts should be able to use generators to develop artefacts from their git repositories & HTML should be able to be produced via EGX files \\ \hline
 SH-F-4 & Query Developers should be able to develop epsilon object language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about & The model interface should not itself require knowledge of git repository locations \\ \hline
 SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs and Generators using the Epsilon GUI & An option should be shown to add a git repository as a model in the epsilon GUI. When clicked this should allow the user to name it and select its location \\ \hline
-\end{tabular}
+\end{longtable}
 \caption{Functional Stakeholder Requirements}
 \label{tab:functionalstakeholderrequirements}
 \end{table}
@@ -519,7 +529,7 @@ SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs
 \subsection{Non-Functional Requirements}
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{2cm}|p{7cm}|p{6cm}|}
+\begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
 SH-NF-1 & The code required to develop a query or generate an artefact should be quicker to write than alternative methods & An EpsilonGit program producing identical output as a competitor should require less lines of code \\ \hline
@@ -528,7 +538,8 @@ SH-NF-3 & The solution should be able to be run as an Eclipse plug-in for ease o
 SH-NF-4 & Queries developed using EpsilonGit should be equally as performant, or better, than competitors & The average time required to run a query which produces the same output on the same machine should be less for EpsilonGit than for GitInspector \\ \hline
 SH-NF-5 & Documentation for the EMC layer of Epsilon should be improved & A document which better explains the steps required to develop an EMC driver should be written and made available to other developers as part of this process \\ \hline
 SH-NF-6 & Novel research into the effectiveness of Model Driven Engineering to solve problems in the field of Mining Software Repositories should be produced & The impact of this report should be assessed \\ \hline
-\end{tabular}
+SH-NF-7 & The code produced for the solution should be easily maintainable and extendable in the future & There should be low cyclomatic complexity and high class decoupling \\ \hline
+\end{longtable}
 \caption{Non-Functional Stakeholder Requirements}
 \label{tab:nonfunctionalstakeholderrequirements}
 \end{table}
@@ -536,33 +547,41 @@ SH-NF-6 & Novel research into the effectiveness of Model Driven Engineering to s
 
 \section{System \& Software Requirements}
 System and Software requirements are the requirements that don't directly interfere with the user but are required to allow the software to work as intended.
+\subsection{Functional Requirements}
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{2cm}|p{7cm}|p{6cm}|}
+\begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
-SY-F-1 & & \\ \hline
-SY-F-2 & & \\ \hline
-SY-F-3 & & \\ \hline
-SY-F-4 & & \\ \hline
-SY-F-5 & & \\ \hline
-\end{tabular}
+SY-F-1 & The software solution must be able to interact with the Epsilon Platform and its set of Domain Specific Languages and Generators & The Software must implement the model reading functions of the \code{IModel} interface provided by Epsilon \\ \hline
+SY-F-2 & The software must be able to read information from git & The Software must be able to read all information from the Git Object Model \\ \hline
+SY-F-3 & The software must provide information to the Epsilon GUI framework to allow users to select repositories etc & Epsilon GUIs should work in the same way for Git repositories as they do for EMF files \\ \hline
+\end{longtable}
 \caption{Functional System Requirements}
 \label{tab:functionalsystemrequirements}
 \end{table}
 
 
 %Things that need to be done in software to enable what users need
-\subsection{Functional Requirements}
 \subsection{Non-Functional Requirements}
-
-% Stakeholder Identification (whos interested in project and their roles)
-	% requirements of these stakeholders
-% Breakdown of functional (features) and non-functional (speed, UX) requirements
-% Use case diagram
+\begin{table}[H]
+\centering
+\begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
+\hline
+\textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
+SY-NF-1 & The system should allow fast access to git from epsilon & The Software should be as fast as competitors at accessing git \\ \hline
+SY-NF-2 & The system should be extensable & The system should provide hooks to easily add new features, particular in an open source fashion \\ \hline
+SY-NF-3 & The system should be easy to distribute and install & The system should use an Eclipse Plug-in project to make it a one-click install \\ \hline
+\end{longtable}
+\caption{Non-Functional System Requirements}
+\label{tab:nonfunctionalsystemrequirements}
+\end{table}
 
 \chapter{Methodology}
 % Used agile TDD based approach, discuss why this was chosen and
+Software development is aided by having a defined methodology.
+
+Agile Methodologies are popular both in academia and industry as a lightweight, nimble alternative to process-oriented methods \cite{agilesoftwaredevelopementreview}. Process based methodologies, such as Waterfall, require that requirements are solicited at the 
 
 \chapter{Design}
 % Making architecture fit between JGit and Epsilon
