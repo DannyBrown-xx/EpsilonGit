@@ -339,7 +339,7 @@ Like GitInspector and GitStat the queries ran cannot be altered by the user, but
 
 Unlike the aforementioned packages the results of analysis are displayed in a very modern HTML5 markup, with JavaScript that allows users to select just the information that is relevant to them, e.g. to select information between two dates.
 
-The backend for Github Graphs is developed in Ruby and accesses git via %TODO: ???? Asked some people who work at GitHub, will have answer soon!
+The backend for Github Graphs is developed in Ruby and accesses git via Rugged, a libgit2 wrapper library \cite{rugged}. libgit2 is a portable, pure C implementation of the Git core methods which enables developers to write code which natively interacts with git object databases \cite{libgit2}.
 
 \subsection{Gitana}
 Gitana is a system which incrementally exports git information to a relational database which can then be queried via SQL statements \cite{gitana}. One of the things that sets Gitana apart from the other systems is that it allows anyone with knowledge of SQL to write their own queries.
