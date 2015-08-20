@@ -176,6 +176,7 @@ The objectives of the project are as follows:
 A secondary aim of the project is to attract more users to the Epsilon Platform and model driven engineering in general using git prevalence in Software Engineering as a draw.
 
 \section{Constraints}
+\label{constaints}
 There are several constraints which could have an effect on the outcome of this project. 
 
 \begin{enumerate}
@@ -579,9 +580,30 @@ SY-NF-3 & The system should be easy to distribute and install & The system shoul
 
 \chapter{Methodology}
 % Used agile TDD based approach, discuss why this was chosen and
-Software development is aided by having a defined methodology.
+Software Development Methodologies are workflow structures for use whilst working on software development projects that aim to structure and simplify the processes involved, with the assumption that this will lead to improved productivity and quality of the final product \cite{useofsystemdevelopmentmethodologies}.
 
-Agile Methodologies are popular both in academia and industry as a lightweight, nimble alternative to process-oriented methods \cite{agilesoftwaredevelopementreview}. Process based methodologies, such as Waterfall, require that requirements are solicited at the 
+\section{Project Attributes Related to Methodology Selection}
+\vspace{-0.2cm}
+In this section the project factors affecting the choice of methodology will be outlined.
+
+\begin{table}[H]
+\centering
+\begin{longtable}{|p{5cm}|p{10cm}|}
+\hline
+\textbf{Factor} & \textbf{This project} \\ \hline
+Number of Developers & 1 \\ \hline
+Roles of Developers & Due to the fact there is only one developer they will have to take on all roles; including development, testing, writing documentation and maintenance \\ \hline
+Rate of Requirement Change & Whilst the overall aim of the project is unlikely to change, the methods used and therefore the exact requirements are likely to change due to experimentation \\ \hline
+Interaction with Stakeholders & One meeting per week takes place between the author and the project supervisor who, as discussed in section \ref{stakeholders}, speaks on behalf of several stakeholders. This could change the requirements of the project or provide valuable assistance in the development process \\ \hline
+Time Management & EpsilonGit has to be delivered to a hard, non-negotiable, and reasonably short deadline in which other activities are taking place, as discussed in section \ref{constaints}  \\ \hline
+Technical Competency & The developer has had some experience with MDE and Epsilon through a MSc level taught course. He has also developed an IDE with git support previously. Integration with Eclipse, and the more in-depth git concepts are new to him however, which may affect how long it takes to develop solutions \\ \hline
+\end{longtable}
+\caption{Factors affecting choice of Software Development Methodology}
+\label{tab:nonfunctionalsystemrequirements}
+\end{table}
+
+\section{Agile vs. Process Oriented Methodologies}
+Agile Methodologies are popular both in academia and industry as a lightweight, nimble alternative to process-oriented methods \cite{agilesoftwaredevelopementreview}. Process based methodologies, such as Waterfall, require that requirements are solicited at the beginning of the process and do not change. As a research project moving goals and constant experimentation is expected and the attributes of agile methodologies 
 
 \chapter{Design}
 % Making architecture fit between JGit and Epsilon
