@@ -503,7 +503,7 @@ A short code to identify the requirement. Type-Function-Number format. E.g. ST-N
 \subsection{Functional Requirements}
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+\begin{tabular}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
 SH-F-1 & Git Analysts should be able to access all commonly used parts of the git API via a model driven interface &  Git Object Model (Tag, Commit, Tree, Blob) accessible via EOL \\ \hline
@@ -519,14 +519,15 @@ SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs
 \subsection{Non-Functional Requirements}
 \begin{table}[H]
 \centering
-\begin{tabular}{|p{5cm}|p{5cm}|p{5cm}|}
+\begin{tabular}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
-SH-NF-1 &  & \\ \hline
-SH-NF-2 &  & \\ \hline
-SH-NF-3 &  & \\ \hline
-SH-NF-4 &  & \\ \hline
-SH-NF-5 &  & \\ \hline
+SH-NF-1 & The code required to develop a query or generate an artefact should be quicker to write than alternative methods & An EpsilonGit program producing identical output as a competitor should require less lines of code \\ \hline
+SH-NF-2 & The code required to develop a query or generate an artefact should be easier to learn and remember than alternative methods & An EpsilonGit program producing identical output as a competitor should have a lower cyclomatic complexity \\ \hline
+SH-NF-3 & The solution should be able to be run as an Eclipse plug-in for ease of use & The solution should integrate with Epsilon Eclipse to the same level as the built-in EMF model type \\ \hline
+SH-NF-4 & Queries developed using EpsilonGit should be equally as performant, or better, than competitors & The average time required to run a query which produces the same output on the same machine should be less for EpsilonGit than for GitInspector \\ \hline
+SH-NF-5 & Documentation for the EMC layer of Epsilon should be improved & A document which better explains the steps required to develop an EMC driver should be written and made available to other developers as part of this process \\ \hline
+SH-NF-6 & Novel research into the effectiveness of Model Driven Engineering to solve problems in the field of Mining Software Repositories should be produced & The impact of this report should be assessed \\ \hline
 \end{tabular}
 \caption{Non-Functional Stakeholder Requirements}
 \label{tab:nonfunctionalstakeholderrequirements}
@@ -535,6 +536,21 @@ SH-NF-5 &  & \\ \hline
 
 \section{System \& Software Requirements}
 System and Software requirements are the requirements that don't directly interfere with the user but are required to allow the software to work as intended.
+\begin{table}[H]
+\centering
+\begin{tabular}{|p{2cm}|p{7cm}|p{6cm}|}
+\hline
+\textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
+SY-F-1 & & \\ \hline
+SY-F-2 & & \\ \hline
+SY-F-3 & & \\ \hline
+SY-F-4 & & \\ \hline
+SY-F-5 & & \\ \hline
+\end{tabular}
+\caption{Functional System Requirements}
+\label{tab:functionalsystemrequirements}
+\end{table}
+
 
 %Things that need to be done in software to enable what users need
 \subsection{Functional Requirements}
