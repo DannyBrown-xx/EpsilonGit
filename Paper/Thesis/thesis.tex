@@ -311,12 +311,12 @@ Git Inspector is described as a statistical analysis tool for git repositories. 
 	\centering
 	\includegraphics[width=0.4\textwidth]{images/gitinspector}
 	\caption{A Sample HTML output from GitInspector \cite{gitinspector}}
-	\label{fig:gitbranching}
+	\label{fig:gitinspector}
 \end{figure} 
 
 The output from GitInspector is a HTML file with embedded CSS and JavaScript. It is implemented in Python and the queries cannot be edited by a user without editing the program itself.
 
-By reading the code we can see that Git is accessed by GitInpector by issuing commands to the git program installed on the users computer via the system default terminal emulator, the output of git to standard io is then parsed by Gitinspector. This isn't a particularly efficient way of dealing with the git object model. %Can you reference code?
+By reading the code we can see that Git is accessed by GitInpector by issuing commands to the git program installed on the users computer via the system default terminal emulator, the output of git to standard IO is then parsed by Gitinspector. This isn't a particularly efficient way of dealing with the git object model. %Can you reference code?
 
 
 \subsection{GitStats}
@@ -599,11 +599,13 @@ Time Management & EpsilonGit has to be delivered to a hard, non-negotiable, and 
 Technical Competency & The developer has had some experience with MDE and Epsilon through a MSc level taught course. He has also developed an IDE with git support previously. Integration with Eclipse, and the more in-depth git concepts are new to him however, which may affect how long it takes to develop solutions \\ \hline
 \end{longtable}
 \caption{Factors affecting choice of Software Development Methodology}
-\label{tab:nonfunctionalsystemrequirements}
+\label{tab:methodologyfactors}
 \end{table}
 
 \section{Agile vs. Process Oriented Methodologies}
-Agile Methodologies are popular both in academia and industry as a lightweight, nimble alternative to process-oriented methods \cite{agilesoftwaredevelopementreview}. Process based methodologies, such as Waterfall, require that requirements are solicited at the beginning of the process and do not change. As a research project moving goals and constant experimentation is expected and the attributes of agile methodologies 
+Software Development Methodologies can be categorised into two main groups, Process Oriented and Agile \cite{agilesoftwaredevelopementreview}. 
+
+Agile Methodologies are popular both in academia and industry as a lightweight, nimble alternative to process-oriented methods \cite{explainingagile}\cite{agilesoftwaredevelopementreview}. Process based methodologies, such as Waterfall, require that requirements are solicited at the beginning of the process and do not change. As a research project moving goals and constant experimentation is expected and the attributes of agile methodologies 
 
 \chapter{Design}
 % Making architecture fit between JGit and Epsilon
