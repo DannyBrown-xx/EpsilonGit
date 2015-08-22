@@ -620,7 +620,7 @@ Due to the fact that this project will be conducted by a single person, nullifyi
 \section{Considered Methodologies}
 There are many popular methodologies which follow the twelve principles bestowed by the Agile Manifesto \cite{agilemanifesto}. Time being a limited resource required that the author investigate only a subset of these. The subset consisted of methodologies the author had previously used or been exposed to, in a hope this might speed up the overall process.
 
-\subsection{SCRUM}
+\subsection{Scrum}
 SCRUM isn't a methodology in and of itself, but rather a framework for managing the processes of Software Development. It is a team oriented framework that relies on two main characters, a Scrum Master and a Product Owner. A product owner is simply the person who represents the interests of customers or users of the end product, whilst a scrum master is best thought of as a team leader \cite{thescrumguide}.
  
 \begin{figure}[H]
@@ -641,6 +641,7 @@ At the end of each Sprint a 'Sprint Review' takes place in which the work that t
 Scrum is advantageous for a research project such as this one because the product backlog makes it easy to keep track of how the project is progressing and the frequent meetings and discussions aid time-keeping and knowledge sharing between key stakeholders. However, as the project is being tackled by only 1 developer acting as all the characters may be somewhat difficult. 
 
 \subsection{Extreme Programming}
+Interaction with the customer and changing requirements at any time, even late in the development cycle, are the key focus points of Extreme Programming (XP) \cite{xpgentalintro}. Changes to the software are made usable and deliverable as soon as possible in order to ascertain early feedback from stakeholders, at a time where changes are the least expensive in terms of time and effort.
 
 \begin{figure}[H]
 	\centering
@@ -649,11 +650,25 @@ Scrum is advantageous for a research project such as this one because the produc
 	\label{fig:xp}
 \end{figure}
 
+Figure \ref{fig:xp} shows the four main stages of the XP process. 
+
+In the exploration stage developers work out what is required of the software by soliciting user stories. User stories are simply stories that explain a users need that is to be resolved by the final product, for example "Sally wants to see who committed the most Java code in February". Planning takes place iteratively, in each iteration developers make estimates for how long each story will take to implement and what to focus on next.
+
+The Implementation of the code required for a user story is often written utilising a Test Driven Development methodology in which tests are developed alongside production code \cite{tddxp}. Pair Programming, the process of two developers working side-by-side on the same computer and helping each other solve bugs and develop code, is also often used in order to speed up development and aid learning.
+
+The outcome of the extreme programming model is known as continuous integration (CI). CI is the process of writing and deploying many small changes, along with their required tests, which are often automatically ran to ensure code is ready for a production environment. This continuous integration into a useable product allows for immediate feedback from customers and end-users, which can results in improvements in future releases.
+
+XPs continuous integration, which allows for immediate feedback and rapid changes to requirements suits the needs of this research project well. Additionally the use of Test Driven Development workflows are attractive as they maintain a feedback loop about the quality of the software being written and can alert the developer to any regressions, which are likely given the two complex interfaces being wrangled by the project -- Epsilon and Git.
+
+The downsides to using XP are similar to those of scrum, the methodology is aimed at teams of developers and are therefore not perfectly suited to a one person development team like the one involved in this project.
+
 \subsection{Kanban}
+Kanban is a Just In Time development process. 
+
 \begin{figure}[H]
 	\centering
 	\includegraphics[width=0.6\textwidth]{images/kanban}
-	\caption{A Kanban Board \cite{kanbandiagram}}
+	\caption{A Kanban Card \cite{kanbandiagram}}
 	\label{fig:kanban}
 \end{figure}
 
