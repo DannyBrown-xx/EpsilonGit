@@ -294,7 +294,7 @@ All of the git workflows described in section \ref{sec:git} make use of branchin
 Once work on a branch is complete its changes can be merged into the main branch, or any other branch. When this is done a commit is made, called a 'merge commit' to keep track of the event, in Figure \ref{fig:gitbranching} 'C2' is a merge commit.
 
 \subsection{Forking}
-Forking isn't a command in git, or indeed an object type, but rather a concept about how to copy and add to repositories. In the forking workflow \cite{forkingworkflow} a repository is cloned, and committed to as if it was a branch, before pushing changes 'upstream' to the original repository. Often pull requests are required for contributors who do not have direct write access to the original repository.
+Forking isn't a command in git, or indeed an object type, but rather a concept about how to copy and add to repositories. In the forking workflow \cite{gitcomparingworkflows} a repository is cloned, and committed to as if it was a branch, before pushing changes 'upstream' to the original repository. Often pull requests are required for contributors who do not have direct write access to the original repository.
 
 \section{Existing Git Analysis Tools}
 % Section on literature pertaining to accessing git information
@@ -603,9 +603,37 @@ Technical Competency & The developer has had some experience with MDE and Epsilo
 \end{table}
 
 \section{Agile vs. Process Oriented Methodologies}
-Software Development Methodologies can be categorised into two main groups, Process Oriented and Agile \cite{agilesoftwaredevelopementreview}. 
+Software Development Methodologies can be categorised into two main groups, Process Oriented and Agile \cite{agilesoftwaredevelopementreview}. The Waterfall Methodology, shown in Figure \ref{fig:waterfall}, was one of the first formal Software Development Methodologies and is process oriented. A software engineer has to complete each stage, for the entire product, before moving on to the next one. If any mistakes occur, or requirements change, then all work after that point has to stop and the requirements and any succeeding stages have to be reworked.
 
-Agile Methodologies are popular both in academia and industry as a lightweight, nimble alternative to process-oriented methods \cite{explainingagile}\cite{agilesoftwaredevelopementreview}. Process based methodologies, such as Waterfall, require that requirements are solicited at the beginning of the process and do not change. As a research project moving goals and constant experimentation is expected and the attributes of agile methodologies 
+Process Oriented methodologies are good because they are easy to understand and follow, even for people outside of the technical process, and provide a paper-trail for managers at each stage. However, their rigid structure can slow the overall process of software development down.
+
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/waterfall}
+	\caption{The Waterfall Methodology \cite{traditionalwaterfall}}
+	\label{fig:waterfall}
+\end{figure}
+
+Agile Methodologies are popular both in academia and industry as a lightweight, nimble alternative to process-oriented methods \cite{explainingagile}\cite{agilesoftwaredevelopementreview}. Process based methodologies, such as Waterfall, require that requirements are solicited at the beginning of the process and do not change. As a research project moving goals and constant experimentation is expected and the attributes of agile methodologies are better suited to this kind of work.
+
+Due to the fact that this project will be conducted by a single person, nullifying the need for a paper-trail and non-technical understanding, and is likely to have changing requirements and a need for experimentation it was decided that choosing an Agile methodology was the best route forward.
+
+\section{Considered Methodologies}
+There are many popular methodologies which follow the twelve principles bestowed by the Agile Manifesto \cite{agilemanifesto}. Time being a limited resource required that the author investigate only a subset of these. The subset consisted of methodologies the author had previously used or been exposed to, in a hope this might speed up the overall process.
+
+\subsection{SCRUM}
+\begin{figure}[H]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/scrum}
+	\caption{The Scrum Methodology \cite{scrumdiagram}}
+	\label{fig:waterfall}
+\end{figure}
+
+\subsection{Extreme Programming}
+
+\subsection{Kanban}
+
+\section{Selected Methodology} 
 
 \chapter{Design}
 % Making architecture fit between JGit and Epsilon
