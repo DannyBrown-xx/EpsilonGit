@@ -684,12 +684,30 @@ None of the methodologies researched matched the requirements of the project per
 To solve this problem a hybrid agile methodology derived from parts of Scrum, Extreme Programming and Kanban was used. The continuous integration and test driven development ideals from XP were combined with the scrum meetings -- once a week with the project supervisor -- and the focused approach of Kanban.
 
 \chapter{Design}
-% Making architecture fit between JGit and Epsilon
-% Experimentation and changes necessary as things changed (for example learning more about jGit, epsilon and Java or subclassing jGit types to provide better names in EOL code and hide some of the underlying implementation)
-% Language
-	% Explain how expected EOL code was developed before driver was, so driver could achieve what was wanted  
+\section{Quality Attributes}
+
+\section{High Level Architecture}
+% Diagram here
+
+\section{Component Design}
 
 \chapter{Implementation}
+% lots of code samples etc.
+\section{Environment}
+\subsection{Epsilon Eclipse}
+\subsection{Git}
+
+\section{Libraries}
+\subsection{Epsilon Eclipse Libraries}
+\subsection{JGit}
+\subsection{Apache Commons Lang}
+
+\section{Project Structure}
+
+\section{Running EpsilonGit}
+
+\section{Experimentation}
+
 % Environment used
 	% Epsilon Eclipse Interim (why interim?)
 	% Latest version of Git
@@ -704,8 +722,16 @@ To solve this problem a hybrid agile methodology derived from parts of Scrum, Ex
 	% .git.tools (some useful EOL tools for Git stuff)
 % Lots of stuff about implementation decisions here
 % Summary of what do to to get the system running on your own machine
+% Making architecture fit between JGit and Epsilon
+% Experimentation and changes necessary as things changed (for example learning more about jGit, epsilon and Java or subclassing jGit types to provide better names in EOL code and hide some of the underlying implementation)
+% Language
+	% Explain how expected EOL code was developed before driver was, so driver could achieve what was wanted  
 
 \chapter{Testing}
+\section{Test-Driven Development}
+\section{Acceptance Tests}
+\section{Continuous Integration}
+\section{Results of Testing}
 % Explain use of TDD, both unit tests, integration and use of EOL files that it would be hoped would work with
 % Automated testing
 % Use of CI
@@ -719,14 +745,14 @@ To solve this problem a hybrid agile methodology derived from parts of Scrum, Ex
 	% Comparison of Run Time on same hardware
 
 \chapter{Conclusion}
-% Project Review (Cronological rundown of what happened)
+% Project Review (Chronological rundown of what happened)
 % Is this a feasible way of dealing with git analysis and querying?
 	% Why? Why not?
 % Whats missing?
 % A success?
 
 
-\section{Future Work}
+\section{Potential Future Work}
 % Currently read only, would be interesting to see if being able to author commits etc via epsilon could be useful. Or even the ability to change names on commits etc via http://stacktoheap.com/blog/2013/01/06/using-mailmap-to-fix-authors-list-in-git/
 % Make it would with subversion, mercurial etc
 % Transform from git to svn/mercurial or vice versa via ETL (lots of people would want to make this transition)
