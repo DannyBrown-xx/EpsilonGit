@@ -663,7 +663,7 @@ XPs continuous integration, which allows for immediate feedback and rapid change
 The downsides to using XP are similar to those of scrum, the methodology is aimed at teams of developers and are therefore not perfectly suited to a one person development team like the one involved in this project.
 
 \subsection{Kanban}
-Kanban is a Just In Time development process. 
+Kanban is a Just In Time (JIT) development process originally developed by Toyota Motors for use in the manufacture of cars that also translates well to Software Development \cite{toyota}.
 
 \begin{figure}[H]
 	\centering
@@ -672,7 +672,16 @@ Kanban is a Just In Time development process.
 	\label{fig:kanban}
 \end{figure}
 
+Kanban at its most basic is simply a board of tasks, such as the one shown in figure \ref{fig:kanban}, with limits on how many tasks can be in each column at any one time. This stops people and processes from being overworked.
+
+The pending list of features can be ordered by priority by a product owner.
+
+The main advantage of Kanban is its simplicity and ease of use and efficiency through focusing only on what is next to implement rather than having a view over the entire project at any one time. However, the lack of perspective and rigid structure to work could prove to be disadvantageous. 
+
 \section{Selected Methodology} 
+None of the methodologies researched matched the requirements of the project perfectly, particularly due to the fact that all of them were built around being used in teams rather than by individuals.
+
+To solve this problem a hybrid agile methodology derived from parts of Scrum, Extreme Programming and Kanban was used. The continuous integration and test driven development ideals from XP were combined with the scrum meetings -- once a week with the project supervisor -- and the focused approach of Kanban.
 
 \chapter{Design}
 % Making architecture fit between JGit and Epsilon
