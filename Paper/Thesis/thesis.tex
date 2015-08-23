@@ -692,14 +692,19 @@ In this chapter the final design of the EpsilonGit software will be outlined, an
 \section{System Quality Attributes}
 System Quality Attributes (SQAs) are a set of attributes of a proposed system which can be reasoned about in a systematic way in order to aid the design of a systems high-level architecture in an objective way free from bias and hidden assumptions \cite{qualityattributes}.  
 
-To aid the design of the software for this project a subset of the system quality attributes outlined by the Quality Attributes technical report released by Carnegie-Mellon University and a the Microsoft Application Architecture Guide \cite{qualitymicrosoft} were considered based on how relevant they were according to the requirements of the software solution enumerated in chapter \ref{requirements}.
+To aid the design of the software for this project a subset of the system quality attributes outlined by the Quality Attributes technical report released by Carnegie-Mellon University and a the Microsoft Application Architecture Guide \cite{qualitymicrosoft} were considered based on how relevant they were according to the requirements of the software solution enumerated in chapter \ref{requirements}. They are presented with some methods used to achieve their goals.
 
-In Software Engineering trade-offs occasionally have to be made -- for example making a system more performant may make it harder to maintain in the future or port to new operating systems or platforms -- this reality is reflected in quality attributes. Whilst a single metric cannot accurately describe the effect of trade-offs on a system a simple numeric rank has been assigned to each attribute to signify its relative importance as a time saving device, this is necessary due to the limited time available to the project. The rank of a quality attribute will aid the decision making processes in designing the software if two attributes oppose one another.
+In Software Engineering trade-offs occasionally have to be made -- for example making a system more performant may make it harder to maintain in the future or port to new operating systems or platforms -- this reality is reflected in quality attributes. Whilst a single metric cannot accurately describe the effect of trade-offs on a system a simple numeric rank has been assigned to each attribute to signify its relative importance as a time saving device, this is necessary due to the limited time available to the project. The rank of a quality attribute will aid the decision making processes in designing the software if two attributes oppose one another. The numeric ranking ranges from 0, completely unimportant, to 5, critical.
 
 The frequent refactoring and therefore changes to designs of the system based on experimentation made it useful to have a set of Quality Attributes as guiding principles of the development process.
 
 \subsection{Performance}
 Performance refers to system responsiveness: either the time required to respond to specific events, or the number of events processed in a given time interval \cite{performancedefinition}.
+
+Two non-functional requirements of the solution, SH-NF-5 and SY-NF-1, refer to performance as important to the software in order to compete with competing methods of interacting with git repositories such as GitInspector and Github Graphs.
+
+In order to develop a performant system 
+
 
 \subsection{Usability}
 
