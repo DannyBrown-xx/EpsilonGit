@@ -55,7 +55,7 @@
 		\vspace{1.5cm}
 		\Large A thesis submitted in partial fulfilment for the degree of \\ \textit{Master of Science in Advanced Computer Science}\\
 		\vspace{5cm}
-		\small 4,417 words as counted by Texpad.app
+		\small 7,741 words as counted by Texpad.app
 	\end{center}
 	\restoregeometry
 \end{titlepage}
@@ -416,6 +416,8 @@ The functionality required of an EMC layer is described through the abstract cla
 %TODO: Ask Dimitris if this is necessary
 
 \chapter{Requirements}
+\label{requirements}
+
 \section{Problem Statement}
 \label{problemstatement}
 % Statement of Needs
@@ -679,12 +681,33 @@ The pending list of features can be ordered by priority by a product owner.
 The main advantage of Kanban is its simplicity and ease of use and efficiency through focusing only on what is next to implement rather than having a view over the entire project at any one time. However, the lack of perspective and rigid structure to work could prove to be disadvantageous. 
 
 \section{Selected Methodology} 
+\label{selectedmethodology}
 None of the methodologies researched matched the requirements of the project perfectly, particularly due to the fact that all of them were built around being used in teams rather than by individuals.
 
 To solve this problem a hybrid agile methodology derived from parts of Scrum, Extreme Programming and Kanban was used. The continuous integration and test driven development ideals from XP were combined with the scrum meetings -- once a week with the project supervisor -- and the focused approach of Kanban.
 
 \chapter{Design}
-\section{Quality Attributes}
+In this chapter the final design of the EpsilonGit software will be outlined, and the rationale behind many of the design decisions will be discussed. The agile methodology used, as described in section \ref{selectedmethodology}, meant that refactoring of the solution took place often, when deemed necessary to improve the solution -- the rest of this chapter focuses only on the design at the time of writing but includes lessons learnt from the iterative design and implementation process.
+
+\section{System Quality Attributes}
+System Quality Attributes (SQAs) are a set of attributes of a proposed system which can be reasoned about in a systematic way in order to aid the design of a systems high-level architecture in an objective way free from bias and hidden assumptions \cite{qualityattributes}.  
+
+To aid the design of the software for this project a subset of the system quality attributes outlined by the Quality Attributes technical report released by Carnegie-Mellon University and a the Microsoft Application Architecture Guide \cite{qualitymicrosoft} were considered based on how relevant they were according to the requirements of the software solution enumerated in chapter \ref{requirements}.
+
+In Software Engineering trade-offs occasionally have to be made -- for example making a system more performant may make it harder to maintain in the future or port to new operating systems or platforms -- this reality is reflected in quality attributes. Whilst a single metric cannot accurately describe the effect of trade-offs on a system a simple numeric rank has been assigned to each attribute to signify its relative importance as a time saving device, this is necessary due to the limited time available to the project. The rank of a quality attribute will aid the decision making processes in designing the software if two attributes oppose one another.
+
+The frequent refactoring and therefore changes to designs of the system based on experimentation made it useful to have a set of Quality Attributes as guiding principles of the development process.
+
+\subsection{Performance}
+Performance refers to system responsiveness: either the time required to respond to specific events, or the number of events processed in a given time interval \cite{performancedefinition}.
+
+\subsection{Usability}
+
+\subsection{Interoperability}
+
+\subsection{Maintainability}
+
+\subsection{Conceptual Integrity}
 
 \section{High Level Architecture}
 % Diagram here
