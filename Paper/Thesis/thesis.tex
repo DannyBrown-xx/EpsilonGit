@@ -297,6 +297,7 @@ Once work on a branch is complete its changes can be merged into the main branch
 Forking isn't a command in git, or indeed an object type, but rather a concept about how to copy and add to repositories. In the forking workflow \cite{gitcomparingworkflows} a repository is cloned, and committed to as if it was a branch, before pushing changes 'upstream' to the original repository. Often pull requests are required for contributors who do not have direct write access to the original repository.
 
 \section{Existing Git Analysis Tools}
+\label{competitors}
 % Section on literature pertaining to accessing git information
 	% e.g. http://www.researchgate.net/publication/279058070_Gitana_a_SQL-based_Git_Repository_Inspector
 	% Some info on gitinspector
@@ -696,26 +697,72 @@ In Software Engineering trade-offs occasionally have to be made -- for example m
 The frequent refactoring and therefore changes to designs of the system based on experimentation made it useful to have a set of Quality Attributes as guiding principles of the development process.
 
 \subsection{Performance}
+\textbf{Rating: 4}
+
 Performance refers to system responsiveness: either the time required to respond to specific events, or the number of events processed in a given time interval \cite{performancedefinition}.
 
-Two non-functional requirements of the solution, SH-NF-5 and SY-NF-1, refer to performance as important to the software, in order to compete with competing methods of interacting with git repositories such as GitInspector and Github Graphs, therefore this SQA is rated as 4 (Important).
+Two non-functional requirements of the solution, SH-NF-5 and SY-NF-1, refer to performance as important to the software, in order to compete with competing methods of interacting with git repositories such as GitInspector and Github Graphs. The second objective of this project, outlined in section \ref{aimsandobjectives}, is to develop a solution that is competitive with other solutions in terms of speed therefore this SQA is rated as 4 (important).
 
-In order to develop a performant system... 
+In order to develop a performant system lessons learnt from looking at existing git analysis tools in section \ref{competitors}. Gitana took a long time to initially import a git repository to a database, so EpsilonGit will access git data directly as it is needed rather than cache it before use (for example in an EMF model). GitInspector was slow too, but because it read terminal output rather than interfacing with git directly. All of the competing solutions were written in interpreted languages, so using a compiled language may gain some additional speed.
+
+\subsubsection{Methods}
+\begin{enumerate}
+	\item Interact with Git using a native library rather than by interacting with a git application via Standard IO
+	\item Interact with Git directly, rather than by constructing a database or other intermediate representation of data
+	\item Develop using a compiled language -- Java
+	\item Use the model caching provided by epsilon through the \code{ICachedModel} interface to reduce the amount of disk access and reading of git object data
+\end{enumerate}
 
 
 \subsection{Usability}
+\textbf{Rating: 5}
+
 Usability is the ease with which a software system can be used to perform its intended task by its users \cite{usabilitydefinition}. 
 
+Requirements SH-NF-1, SH-NF-2 and SH-NF-3 all relate to making the system easy to use for git analysts and query developers in order to allow more people to use the software and to get more people interested in model-driven engineering in general. The third and fourth objectives of the project, outlined in section \ref{aimsandobjectives}, also highlight the need for reduction of complexity in mining information from Git repositories.
+
+\subsubsection{Methods}
+\begin{enumerate}
+	\item Integrate with the standard Epsilon user interface system, so that existing epsilon users don't have to learn something new (this is stated in requirement SY-F-3)
+	\item Use the Epsilon Object Language and its model specific idioms as an interface to reduce code complexity
+	\item Use self documenting method and variable names to aid learning the system
+\end{enumerate}
+
 \subsection{Interoperability}
+\textbf{Rating: 4}
+
 Interoperability is the level to which a software system integrates with other software systems in its environement; e.g. by using the same data formats, user interface styles or coding conventions \cite{integrationdefinition}.
 
+Interoperability will be particularly important for EpsilonGit as it is effectively a driver between two technologies, Epsilon on one side and git on the other as outlined in requirements SY-F-1 and SY-F-2. However, interoperability with other systems, e.g. an authentication system, is not required so this SQA has been rated as a 4.
+
+\subsubsection{Methods}
+\begin{enumerate}
+	\item Implement the \code{IModel} interface to integrate with the Model Connectivity Layer of Epsilon
+	\item Use the JGit Java Library to integrate with git
+	\item Allow access to all features of git through epsilon by subclassing JGit objects to make Model Elements
+\end{enumerate}
+
 \subsection{Maintainability}
+\textbf{Rating: 3}
+
 The process of changing a software system after initial deployment, or first version, for any reason including the addition of features, bug fixes or optimisation is called maintenance -- the ease and speed at which this can be done is called maintainability \cite{maintainabilitydefinition}. 
 
-This ease with which maintenance can occur is influenced by many factors including use of coding conventions, writing of documentation and use of well-known software patterns.
+This ease with which maintenance can occur is influenced by many factors including use of coding conventions, writing of documentation and use of well-known software patterns, the need for good maintainability for this project is highlighted in requirement SH-NF-7.
+
+\subsubsection{Methods}
+\begin{enumerate}
+	\item Use third party libraries when appropriate to avoid writing more code then is necessary
+	\item Use the Java coding conventions and check them using a Lint program
+	\item Use accurate and self documenting variable and method names
+	\item Develop documentation
+\end{enumerate}
 
 \subsection{Conceptual Integrity}
-Conceptual integrity 
+\textbf{Rating: 3}
+
+Conceptual integrity defines consistency and coherence of the overall design of a system architecture \cite{qualitymicrosoft}. It can be thought of as maintainability but on a design level rather than at the implementation level. 
+
+This would primarily be useful to enable easy extensibility to the software in the future
 
 \section{High Level Architecture}
 % Diagram here
