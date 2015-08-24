@@ -412,9 +412,6 @@ The functionality required of an EMC layer is described through the abstract cla
 	\label{fig:imodelinterface}
 \end{figure}
 
-%\section{Modelling Software Repositories}
-%TODO: Ask Dimitris if this is necessary
-
 \chapter{Requirements}
 \label{requirements}
 
@@ -717,12 +714,18 @@ The process of changing a software system after initial deployment, or first ver
 
 This ease with which maintenance can occur is influenced by many factors including use of coding conventions, writing of documentation and use of well-known software patterns.
 
+\subsection{Conceptual Integrity}
+Conceptual integrity 
+
 \section{High Level Architecture}
 % Diagram here
 
 \section{Component Design}
 
 \chapter{Implementation}
+
+All source code and assets required to build and run EpsilonGit are available for download on GitHub \cite{epsilongitgithub}. 
+
 % lots of code samples etc.
 \section{Environment}
 \subsection{Epsilon Eclipse}
@@ -758,7 +761,7 @@ This ease with which maintenance can occur is influenced by many factors includi
 % Language
 	% Explain how expected EOL code was developed before driver was, so driver could achieve what was wanted  
 
-\chapter{Testing}
+\chapter{Testing \& Evaluation}
 \section{Test-Driven Development}
 \section{Acceptance Tests}
 \section{Continuous Integration}
@@ -768,8 +771,6 @@ This ease with which maintenance can occur is influenced by many factors includi
 % Use of CI
 % Testing against requirements
 % Summary (did all test pass?)
-
-\chapter{Evaluation}
 % Does it at least fulfil all of the analysis and querying required by the two systems its competing with (github and gitinspector?)
 % Case Study vs GitInspector
 	% Comparison of lines of code and code complexity required for the same output
@@ -789,7 +790,7 @@ This ease with which maintenance can occur is influenced by many factors includi
 % Transform from git to svn/mercurial or vice versa via ETL (lots of people would want to make this transition)
 % Lots of low hanging fruit regarding performance (e.g. computing properties each time instead of storing them in memory once they've been worked out once)
 
-\chapter{Reflection}
+\section{Reflection}
 % Working on project whilst other 'real life' stuff happens
 % Working on coming back to a project after a long time 
 % TDD was great, agile working seemed to work well.
