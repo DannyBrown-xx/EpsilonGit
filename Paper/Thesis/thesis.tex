@@ -788,7 +788,9 @@ In order to read data from the git object database a Java module called JGit is 
 
 The main class of EpsilonGit is the \code{GitModel} class which extends the \code{CachedModel} class provided by Epsilon. Extending this class, which implements the \code{IModel} interface allows the program to hook in as a Epsilon Model Connectivity module. Extending the \code{CachedModel} class, rather than \code{IModel} itself, provides caching of objects used by the system after they have been read for the first time, reducing the number of times the Git Object Database has to be read from, therefore improving performance.
 
-In order to allow a \code{GitModel} object to be created from the user interface provided by Epsilon Eclipse for cached models a class which implemented the abstract base class \code{AbstractCachedModelConfigurationDialog} is included in the design. This 
+The git model provides access to three main types of model elements. Tree, Blob, Commit and Tag git objects are part of the ObjectModel module. The People module provides access to model elements representing Authors and Committers. Finally the FileSystem module allows users to interact with the git object model on a per-file basis -- allowing them to, for example, get all commits associated with a certain file name -- despite git not having knowledge of files, just blobs and trees. The FileSystem module was included to aid to usability of the system for those not familiar with gits internals.
+
+In order to allow a \code{GitModel} object to be created from the user interface provided by Epsilon Eclipse for cached models a class which implemented the abstract base class \\ \code{AbstractCachedModelConfigurationDialog} is included in the design.
 
 \section{Component Design}
 \subsection{}
