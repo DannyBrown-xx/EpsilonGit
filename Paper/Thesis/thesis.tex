@@ -792,8 +792,22 @@ The git model provides access to three main types of model elements. Tree, Blob,
 
 In order to allow a \code{GitModel} object to be created from the user interface provided by Epsilon Eclipse for cached models a class which implemented the abstract base class \\ \code{AbstractCachedModelConfigurationDialog} is included in the design.
 
-\section{Component Design}
-\subsection{}
+Separate from the EpsilonGit system itself, but part of the project, are the two modules at the bottom of figure \ref{fig:hla}. 
+
+Tests consists of a JUnit \cite{junit} unit testing module developed in a test-driven development style alongside EpsilonGit itself. It contains unit tests to test individual methods with different input data and edge cases and integration tests designed to test the aggregation of methods. Validation tests, to ensure the requirements of the software are being met, are also included by way of test EOL files. This is explained in more detail in chapter \ref{testeval}.
+
+EOLTools is a small module designed to make 	developer artefact generators for Git data easier, for example it includes methods which assigns a random colour to each Person, committer and/or author, in a repository for use in graphs or other visual media.
+
+\section{Component Designs}
+\subsection{ObjectModel}
+
+\subsection{FileSystem}
+
+\subsection{People}
+
+\subsection{Configuration Dialog}
+
+\subsection{GitModel}
 
 \chapter{Implementation}
 
@@ -835,6 +849,7 @@ All source code and assets required to build and run EpsilonGit are available fo
 	% Explain how expected EOL code was developed before driver was, so driver could achieve what was wanted  
 
 \chapter{Testing \& Evaluation}
+\label{testeval}
 \section{Test-Driven Development}
 \section{Acceptance Tests}
 \section{Continuous Integration}
