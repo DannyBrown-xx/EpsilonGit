@@ -8,6 +8,7 @@
 \usepackage{float}
 \newcommand{\code}[1]{\texttt{#1}}
 \usepackage{longtable}
+\usepackage{tcolorbox}
 
 % CODE HIGHLIGHTING COLOURS SET UP
 % Set up for C#, Credit: http://tex.stackexchange.com/questions/124953/syntax-highlighting-in-listings-for-c-that-it-looks-like-in-visual-studio
@@ -772,6 +773,7 @@ This would primarily be useful to enable easy extensibility to the software in t
 \end{enumerate}
 
 \section{High Level Architecture}
+\label{hla}
 % Diagram here
 \begin{figure}[H]
 	\centering
@@ -799,15 +801,37 @@ Tests consists of a JUnit \cite{junit} unit testing module developed in a test-d
 EOLTools is a small module designed to make 	developer artefact generators for Git data easier, for example it includes methods which assigns a random colour to each Person, committer and/or author, in a repository for use in graphs or other visual media.
 
 \section{Component Designs}
+\subsection{GitModel}
+\begin{tcolorbox}
+\textbf{Requirements addressed:}  SH-F-1, SH-NF-3, SY-F-1, SY-F-2
+\end{tcolorbox}
+
+As described in section \ref{hla}, the \code{GitModel} is the class which implements all of the functionality required by the Epsilon Model Connectivity layer to allow Epsilon to treat a git repository as a model/structured artefact. It does this by implementing the relevant methods provided by the \code{IModel} interface indirectly by extending the \code{CachedModel} class.
+
+The decision was made to use \code{CachedModel} 
+
 \subsection{ObjectModel}
+\begin{tcolorbox}
+\textbf{Requirements addressed:}
+\end{tcolorbox}
+
+The ObjectModel module is a java package which contains Java class files for interacting with the git object model via JGit. 
 
 \subsection{FileSystem}
+\begin{tcolorbox}
+\textbf{Requirements addressed:}
+\end{tcolorbox}
 
 \subsection{People}
+\begin{tcolorbox}
+\textbf{Requirements addressed:}
+\end{tcolorbox}
 
 \subsection{Configuration Dialog}
+\begin{tcolorbox}
+\textbf{Requirements addressed:}
+\end{tcolorbox}
 
-\subsection{GitModel}
 
 \chapter{Implementation}
 
