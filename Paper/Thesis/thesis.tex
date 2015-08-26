@@ -813,35 +813,29 @@ The \code{IModel} interface allows Epsilon to hook into the data provided by git
 
 \begin{table}[H]
 \centering
-\begin{longtable}{|p{4cm}|p{8cm}|p{3cm}|}
+\begin{longtable}{|p{3cm}|p{6.5cm}|p{5.5cm}|}
 \hline
 \textbf{Method Name} & \textbf{Description} & \textbf{Implemented} \\ \hline
 allContents() & Returns a collection containing all of the objects contained by the model & Yes \\ \hline
-createInstance() & & \\ \hline
-deleteElement() & & \\ \hline
-dispose() & & \\ \hline
-getAliases() & & \\ \hline
-getAllOfKind() & & \\ \hline
-getAllOfType() & & \\ \hline
-getElementById() & & \\ \hline
-getElementId() & &  \\ \hline
-getName() & & \\ \hline
-getTypeOf() & & \\ \hline
-getTypeNameOf() & & \\ \hline
-hasType() & & \\ \hline
-isInstantiable() & & \\ \hline
-isOfKind() & & \\ \hline
-isOfType() & & \\ \hline
-load() & & \\ \hline
-store() & & \\ \hline
-owns() & & \\ \hline
-setElementId() & & \\ \hline
-setName() & & \\ \hline
-
+createInstance() & Initialises a new instance of a model & No - New git repositories cannot be made by EpsilonGit. This is outside the scope of the project \\ \hline
+deleteElement() & Deletes an element of the model & No - EpsilonGit is read-only \\ \hline
+getAllOfKind() & Return a collection of all objects of a specified kind. E.g. All people and any subclasses of people & Yes \\ \hline
+getAllOfType() & Return a collection of all object of a specified type. No subclasses &  \\ \hline
+getElementById() & Each model object has an ID. This method returns whichever element is associated with the provided ID & Yes \\ \hline
+getElementId() & Gets the ID of any given element. For object model types this is their hash code & Yes  \\ \hline
+getTypeNameOf() & Returns the name of any owned object's class & Yes \\ \hline
+hasType() & Determines if the model supports a given type & Yes \\ \hline
+isInstantiable() & Determines if Epsilon can instantiate a new version of that model & No - EpsilonGit is read only \\ \hline
+load() & Load the model from storage & Yes \\ \hline
+store() & Save the model to storage & No - As no changes can be made in EpsilonGit nothing needs to be saved back to disk \\ \hline
+owns() & Determines if a model element is owned by the model & Yes \\ \hline
+setElementId() & Sets the ID of an Element & No - IDs like other data are read only \\ \hline
 \end{longtable}
 \caption{Methods of the \code{IModel} interface \cite{imodeljavadoc}}
 \label{tab:imodel}
 \end{table}
+
+
 
 \subsubsection{Caching}
 The decision was made to extend the \code{CachedModel} class, rather than implement the \code{IModel} interface directly, as it adds caching functionality, meaning that data access times decrease for EOL programs that access model elements more than once. The increased performance this allows helps to address requirements SY-NF-1 and SH-NF-4. \\
