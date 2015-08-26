@@ -808,7 +808,22 @@ EOLTools is a small module designed to make 	developer artefact generators for G
 
 As described in section \ref{hla}, the \code{GitModel} is the class which implements all of the functionality required by the Epsilon Model Connectivity layer to allow Epsilon to treat a git repository as a model/structured artefact. It does this by implementing the relevant methods provided by the \code{IModel} interface indirectly by extending the \code{CachedModel} class.
 
-The decision was made to use \code{CachedModel} 
+\subsubsection{IModel Interface}
+
+
+\subsubsection{Caching}
+The decision was made to extend the \code{CachedModel} class, rather than implement the \code{IModel} interface directly, as it adds caching functionality, meaning that data access times decrease for EOL programs that access model elements more than once. The increased performance this allows helps to address requirements SY-NF-1 and SH-NF-4. \\
+
+\begin{lstlisting}[caption=EOL Code benefiting from caching, label=lst:caching]
+Commit.all.size().println();
+for(commit in Commit.all) {
+	(commit.getFullMessage()).println();
+}
+\end{lstlisting}
+
+Listing \ref{lst:caching} shows a simple EOL program which prints out the number of commits in a git repository and then prints out message of each commit. In this example all the commits of the git repository are read into the system on line 1, when they are first required. If the system was not using \code{CachedModel} then the same commits would be read in from scratch on line 2 -- which in the case of some large repositories could mean reading several thousand object database files. Using \code{CachedModel} retains the commits in memory, solving this performance bottleneck. For situations where caching may not be appropriate, for example where there are more commits then may fit in memory, then the user can turn caching off via their model configuration dialog.
+
+
 
 \subsection{ObjectModel}
 \begin{tcolorbox}
