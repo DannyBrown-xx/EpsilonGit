@@ -809,7 +809,39 @@ EOLTools is a small module designed to make 	developer artefact generators for G
 As described in section \ref{hla}, the \code{GitModel} is the class which implements all of the functionality required by the Epsilon Model Connectivity layer to allow Epsilon to treat a git repository as a model/structured artefact. It does this by implementing the relevant methods provided by the \code{IModel} interface indirectly by extending the \code{CachedModel} class.
 
 \subsubsection{IModel Interface}
+The \code{IModel} interface allows Epsilon to hook into the data provided by git, in order to do this it provides the methods outlined and described in Figure \ref{tab:imodel}. EpsilonGit doesn't implement all of the methods as, due to the scope of the project, the ability to modify or delete model elements is not required -- the project only requires reading of a git repositories data to provide querying and analysis functionality.
 
+\begin{table}[H]
+\centering
+\begin{longtable}{|p{4cm}|p{8cm}|p{3cm}|}
+\hline
+\textbf{Method Name} & \textbf{Description} & \textbf{Implemented} \\ \hline
+allContents() & Returns a collection containing all of the objects contained by the model & Yes \\ \hline
+createInstance() & & \\ \hline
+deleteElement() & & \\ \hline
+dispose() & & \\ \hline
+getAliases() & & \\ \hline
+getAllOfKind() & & \\ \hline
+getAllOfType() & & \\ \hline
+getElementById() & & \\ \hline
+getElementId() & &  \\ \hline
+getName() & & \\ \hline
+getTypeOf() & & \\ \hline
+getTypeNameOf() & & \\ \hline
+hasType() & & \\ \hline
+isInstantiable() & & \\ \hline
+isOfKind() & & \\ \hline
+isOfType() & & \\ \hline
+load() & & \\ \hline
+store() & & \\ \hline
+owns() & & \\ \hline
+setElementId() & & \\ \hline
+setName() & & \\ \hline
+
+\end{longtable}
+\caption{Methods of the \code{IModel} interface \cite{imodeljavadoc}}
+\label{tab:imodel}
+\end{table}
 
 \subsubsection{Caching}
 The decision was made to extend the \code{CachedModel} class, rather than implement the \code{IModel} interface directly, as it adds caching functionality, meaning that data access times decrease for EOL programs that access model elements more than once. The increased performance this allows helps to address requirements SY-NF-1 and SH-NF-4. \\
