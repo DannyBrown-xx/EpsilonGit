@@ -956,11 +956,12 @@ In order to make epsilon git easy to use it integrates with the graphical user i
 	\label{fig:configurationdialog}
 \end{figure}
 
+In order to be able to provide a Configuration GUI the configuration dialog has to implement the \code{AbstractCachedModelConfigurationDialog} provided by Epsilon.
 
-
-
+It was decided that the configuration dialog box would ask the user to provide the location of the object database of their git repository itself, rather than the root working directory of their git repository as it is possible for git repositories to contain other git repositories or have their object database named something other than \code{.git}, so asking for the object database directly avoids some edge cases at a small cost to ease of use as by default these object database directories are hidden.
 
 \chapter{Implementation}
+In this chapter 
 
 All source code and assets required to build and run EpsilonGit are available for download on GitHub \cite{epsilongitgithub}. 
 
