@@ -56,7 +56,7 @@
 		\vspace{1.5cm}
 		\Large A thesis submitted in partial fulfilment for the degree of \\ \textit{Master of Science in Advanced Computer Science}\\
 		\vspace{5cm}
-		\small 7,741 words as counted by Texpad.app
+		\small 9,983 words as counted by Texpad.app
 	\end{center}
 	\restoregeometry
 \end{titlepage}
@@ -252,6 +252,7 @@ The many different ways of using git suggest that different analytics may also b
 \clearpage
 
 \section{The Git Object Model}
+\label{gitobjectmodel}
 The core of git is a content-addressable filesystem which can store any object and assign it a hashcode by which it can be identified \cite{progit}. There are 4 main types of object stored in this system, known as the git object model, which are shown in Figure \ref{fig:gitobjectmodeldiagram}.
 
 \begin{figure}[h]
@@ -481,6 +482,7 @@ Uses cases are descriptions of interaction scenarios between a system to be desi
 \end{figure}
 
 \section{Key Capabilities}
+\label{keycapabilities}
 Through the process of identifying stakeholders in the project, developing a problem statement and having discussions with the project supervisor, who represents the interests of several of the stakeholder groups, a list of key capabilities of the software was written up.
 
 \begin{enumerate}
@@ -809,7 +811,7 @@ EOLTools is a small module designed to make 	developer artefact generators for G
 As described in section \ref{hla}, the \code{GitModel} is the class which implements all of the functionality required by the Epsilon Model Connectivity layer to allow Epsilon to treat a git repository as a model/structured artefact. It does this by implementing the relevant methods provided by the \code{IModel} interface indirectly by extending the \code{CachedModel} class.
 
 \subsubsection{IModel Interface}
-The \code{IModel} interface allows Epsilon to hook into the data provided by git, in order to do this it provides the methods outlined and described in Figure \ref{tab:imodel}. EpsilonGit doesn't implement all of the methods as, due to the scope of the project, the ability to modify or delete model elements is not required -- the project only requires reading of a git repositories data to provide querying and analysis functionality.
+The \code{IModel} interface allows Epsilon to hook into the data provided by git, in order to do this it provides the methods outlined and described in Table \ref{tab:imodel}. EpsilonGit doesn't implement all of the methods as, due to the scope of the project, the ability to modify or delete model elements is not required -- the project only requires reading of a git repositories data to provide querying and analysis functionality.
 
 \begin{table}[H]
 \centering
@@ -835,9 +837,8 @@ setElementId() & Sets the ID of an Element & No - IDs like other data are read o
 \label{tab:imodel}
 \end{table}
 
-
-
 \subsubsection{Caching}
+\label{caching}
 The decision was made to extend the \code{CachedModel} class, rather than implement the \code{IModel} interface directly, as it adds caching functionality, meaning that data access times decrease for EOL programs that access model elements more than once. The increased performance this allows helps to address requirements SY-NF-1 and SH-NF-4. \\
 
 \begin{lstlisting}[caption=EOL Code benefiting from caching, label=lst:caching]
@@ -849,29 +850,114 @@ for(commit in Commit.all) {
 
 Listing \ref{lst:caching} shows a simple EOL program which prints out the number of commits in a git repository and then prints out message of each commit. In this example all the commits of the git repository are read into the system on line 1, when they are first required. If the system was not using \code{CachedModel} then the same commits would be read in from scratch on line 2 -- which in the case of some large repositories could mean reading several thousand object database files. Using \code{CachedModel} retains the commits in memory, solving this performance bottleneck. For situations where caching may not be appropriate, for example where there are more commits then may fit in memory, then the user can turn caching off via their model configuration dialog.
 
-
-
 \subsection{ObjectModel}
 \begin{tcolorbox}
-\textbf{Requirements addressed:}
+\textbf{Requirements addressed:}  SH-F-1, SH-NF-1, SH-NF-2, SY-F-2
 \end{tcolorbox}
+The ObjectModel module is a java package which contains representations of the git object model types -- Tree, Blob, Commit and Tag -- that can be used as model elements in Epsilon accessed via the GitModel class. 
 
-The ObjectModel module is a java package which contains Java class files for interacting with the git object model via JGit. 
+\subsubsection{Subclassing JGit Types}
+In order to ensure that all of the git system is available to EpsilonGit users it was decided that the Model Elements representing git objects should be subclasses of the associate JGit type. Table \ref{tab:subclassing} shows the parent class of each object model model element.
+
+\begin{table}[H]
+\centering
+\begin{longtable}{|p{7.5cm}|p{7.5cm}|}
+\hline
+\textbf{Model Element} & \textbf{Parent Class}  \\ \hline
+Commit 	& jgit.revwalk.RevCommit \\ \hline
+Tag 	& jgit.revwalk.RevTag \\ \hline
+Tree 	& jgit.revwalk.RevTree \\ \hline
+Blob 	& jgit.revwalk.RevBlob \\ \hline
+\end{longtable}
+\caption{Object Model JGit subclassing}
+\label{tab:subclassing}
+\end{table}
+
+Extending these JGit types means that the author doesn't have to reimplement methods like \code{commit.getFullMessage()} which saves time -- the main constraint on this project. It also means that all functionality provided by JGit is available to users through the model driven interface -- meaning a prospective user doesn't have to decide between all of JGits features and the ease of development provided by the EpsilonGit model driven approach.
+
+The downside of subclassing the JGit classes directly is that they were not developed with the intention of being used in a modelling environment, and therefore some of the methods either don't make sense in this context or cannot be used. An example of this is that some methods require an integer constant as a parameter. These constants are public fields of JGit classes, however Epsilon doesn't allow access to fields directly and requires the use of getter and setter methods. This meant that even though a method could be accessed through Epsilon it was in fact unusable and a replacement or override had to be developed.
+
+\subsubsection{Helper Methods}
+The third key capability of EpsilonGit, outlined in section \ref{keycapabilities}, is that it provides a high level API for the most common parts of the git system in order to aid rapid, easy development of query and analysis EOL programs.
+
+To this end each of the object model elements have methods to make development easier. Table \ref{tab:helpermethods} displays a subset of the features added by these helped methods.
+
+\begin{table}[H]
+\centering
+\begin{longtable}{|p{2cm}|p{4.5cm}|p{8.5cm}|}
+\hline
+\textbf{Element} & \textbf{Method} & \textbf{Description}  \\ \hline
+Commit & isRoof & Determines if a commit is the roof (first) commit in a repository \\
+& isHead() & Determines if a commit is the last (most recent) commit in a repository \\
+& isMergeCommit() & Determines if a commit is the product of merging two branches \\
+& getCommitCalendar() & Returns a Java calendar object representing time rather than a raw UNIX time integer, making it easier to compare dates and times \\
+& getDifferenceFromParent() & Returns a collection of differences (modifications, deletions, additions) from the previous commit \\ \hline
+\end{longtable}
+\caption{Object Model Helper Methods}
+\label{tab:helpermethods}
+\end{table}
 
 \subsection{FileSystem}
 \begin{tcolorbox}
-\textbf{Requirements addressed:}
+\textbf{Requirements addressed:} SH-NF-1, SH-NF-2, SY-F-2
 \end{tcolorbox}
+As explained in section \ref{gitobjectmodel}, git has no concept of files -- instead it keep track of blobs of data which can be associated to a name in a tree.
+
+This subtle difference is actually quite important. For example, if a user was to assume a Blob was analogous to a file then they might start to make assumptions about the number of files in a repository by counting the number of blobs, even though one blob can represent many files with the same data but different file names or not be associated to a file at all (blobs can be added to git without a corresponding name in a tree).
+
+In order to make development of query and analysis tools easier for people with little knowledge of the internals of git it was decided that a \code{GitFile} class should be developed that allowed people to think in terms of files rather than blobs and trees. 
+
+The \code{GitFile} class provides the following functionality:
+
+\begin{enumerate}
+	\item Allows a user to determine if a file exists in the working directory
+	\item Keeps track of commits in which the file was 
+	\begin{enumerate}
+	\item Added to the repository
+	\item Modified
+	\item Deleted
+	\item Copied
+	\item Renamed
+	\end{enumerate}
+\end{enumerate}
 
 \subsection{People}
 \begin{tcolorbox}
-\textbf{Requirements addressed:}
+\textbf{Requirements addressed:} SH-F-1, SH-NF-1, SH-NF-2, SY-F-2
 \end{tcolorbox}
+People in git are represented in two forms -- authors and committers -- however, there is no one type of object which contains their information. Rather, their information is spread out in different areas of the git object model. 
+
+The author anticipates that git analysts would be particularly interested in the analysis of individuals within a team, therefore it was important to make accessing information about people as simple as possible. 
+
+In order to do this 3 classes are required:
+\begin{enumerate}
+	\item \code{Author} which represents someone who has developed code or another artefact which is in the repository
+	\item \code{Committer} which represents someone who has committed code to the repository
+	\item \code{Person} which is an abstract class which can be used to reason about both committers and authors
+\end{enumerate}
+
+In git a person can be an author, a committer or both and these classes allow that flexibility. The \code{Person} class in particular makes it easy to just query all people involved in a project, regardless of their role within it.
+
+Having the people model elements means that query developers don't have to parse out information from every Commit and Tag which contains information about a human, that is all done for them by EpsilonGit.
+
+\clearpage
 
 \subsection{Configuration Dialog}
 \begin{tcolorbox}
-\textbf{Requirements addressed:}
+\textbf{Requirements addressed:} SH-F-5, SH-NF-3, SY-F-3
 \end{tcolorbox}
+
+In order to make epsilon git easy to use it integrates with the graphical user interface of Eclipse Epsilon. This allows users to specify the location of their git repositories and whether or not they would like to use the caching mechanism explained in section \ref{caching} without having to write code or use a command-line.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{images/configurationdialog}
+	\caption{EpsilonGit configuration dialog}
+	\label{fig:configurationdialog}
+\end{figure}
+
+
+
 
 
 \chapter{Implementation}
