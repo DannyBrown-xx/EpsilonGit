@@ -1003,10 +1003,14 @@ All source code and assets required to build and run EpsilonGit are available fo
 
 \chapter{Testing \& Evaluation}
 \label{testeval}
+In this chapter the unit, integration and acceptance tests used to guide development and evaluate the software solution will be enumerated and explained. The solution developed by this project will then be compared in terms of performance and ease of query development against the existing git analysis tools outlined in section \ref{competitors}.
+
 \section{Test-Driven Development}
+In section \ref{selectedmethodology} it was established that the project would be build in a test-driven fashion. This means that unit tests were built before production code was, and was used to validate whether methods worked correctly. Similarly integration tests were produced to ensure that aggregations of methods worked together as intended.
+
 \section{Acceptance Tests}
-\section{Continuous Integration}
-\section{Results of Testing}
+Whilst the unit tests proved that the code written did what was expected of it, it did nothing to ensure that the software developed actually met the initial specification and project requirements. 
+
 % Explain use of TDD, both unit tests, integration and use of EOL files that it would be hoped would work with
 % Automated testing
 % Use of CI
@@ -1035,7 +1039,7 @@ Overall this project has been a success. The system envisioned at the beginning 
 
 Model-Driven Engineering has proven itself to be a highly effective way of dealing with complex structured data -- both in terms of reducing query complexity and enabling more bespoke and complex queries -- and the author thinks that model-driven engineerings role in mining software repositories should be further researched.
 
-If the project were to be done over again then the author would do little differently, however, 
+If the project were to be done over again then the author would do little differently -- many design and implementation issues were fixed through the use of the iterative methodology -- however he would have written more acceptance tests covering more of Epsilons domain specific languages \& generators and written more helper methods for some of the object model elements.
 
 The success of this project could be built upon in future by implementing or researching some of ideas presented in section \ref{potentialfuturework}.
 
