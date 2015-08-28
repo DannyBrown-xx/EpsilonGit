@@ -1018,16 +1018,29 @@ All source code and assets required to build and run EpsilonGit are available fo
 	% Comparison of Run Time on same hardware
 
 \chapter{Conclusion}
+% Project Review (Chronological rundown of what happened)
 \section{Project Review}
+This project set out with the task of bringing easy to develop, customisable and bespoke queries to git repositories by using model-driven engineering techniques. 
+
+The project started by conducting a thorough review of the literature concerning version control systems, git, the internals and uses of the git system, existing tools to analyse git repositories and model driven engineering -- particularly using Epsilon.
+
+A problem statement was written outlining the problem to be solved, which allowed the author to identify stakeholders in the process and use the information about their use cases to determine the exact requirements of the project.
+
+The requirements of the project and the likelihood of change present in any research project suggested to the author that he should be using an agile methodology -- a mixture of Scrum, Kanban and Extreme Programming was adopted to suite the exact requirements and constraints of the project.
+
+Design and implementation took place iteratively, and allowed for experimentation. Once the features outlined in the requirements phase of the project were complete the system was evaluated against its competitors.
 
 \section{Project Success}
-% Project Review (Chronological rundown of what happened)
-% Is this a feasible way of dealing with git analysis and querying?
-	% Why? Why not?
-% Whats missing?
-% A success?
+Overall this project has been a success. The system envisioned at the beginning of the process has been delivered, as proven by the acceptance tests outlined in chapter \ref{testeval}.
+
+Model-Driven Engineering has proven itself to be a highly effective way of dealing with complex structured data -- both in terms of reducing query complexity and enabling more bespoke and complex queries -- and the author thinks that model-driven engineerings role in mining software repositories should be further researched.
+
+If the project were to be done over again then the author would do little differently, however, 
+
+The success of this project could be built upon in future by implementing or researching some of ideas presented in section \ref{potentialfuturework}.
 
 \section{Potential Future Work}
+\label{potentialfuturework}
 % Currently read only, would be interesting to see if being able to author commits etc via epsilon could be useful. Or even the ability to change names on commits etc via http://stacktoheap.com/blog/2013/01/06/using-mailmap-to-fix-authors-list-in-git/
 % Make it would with subversion, mercurial etc
 % Transform from git to svn/mercurial or vice versa via ETL (lots of people would want to make this transition)
@@ -1043,6 +1056,8 @@ In Chapter \ref{design} it is discussed how the system provides read only access
 	\item Retrospectively changing the name or contact details of authors and committers in the system using git mailmap \cite{gitmailmap}
 \end{enumerate} 
 
+It is unknown if there would be benefit to a user in having a model driven interface for making changes to a git repository -- this too could be researched. 
+
 A larger addition to EpsilonGit could be to make it compatible with other popular version control systems -- such as Mercurial and Apache Subversion. Adding in compatibility with these systems, alongside write support, would enable the use of EpsilonGit to migrate from one version control system to another, as well as providing the analysis and querying functionality presented in this report for git.
 
 Chapter \ref{design} discusses some of the design decisions made, such as the use of caching, to improve the performance of the EpsilonGit system. However, due to the size of the project and the time constraints imposed upon it there are some low hanging fruit regards performance improvement. For example, whilst the model elements themselves are cached, some of the results of methods ran on them are not -- e.g. every time \code{commit.getCommitCalendar()} is called a new calendar object is initialised -- these could be cached for future use.
@@ -1052,14 +1067,21 @@ The secondary aim of this project is the increase the interest amongst developer
 \section{Reflection}
 In this section the author will reflect on the project as a whole and his ability to deliver it both on time and to the initial specification.
 
+% TDD was great, agile working seemed to work well.
+Overall it is felt that the project went reasonably well, especially as all of the initial aims and objectives were met. The methodology used, in particular the test-driven development aspects, were well suited to the project and made developing a solution to a complicated problem simpler in the long-run -- though did of course require some up-front time investment.
 
+% Java code is pretty reasonable, took a little while to get into but previous C# knowledge helped
+It is felt that the quality of the code produced for the project was quite high and could certainly be reused or extended in the future if need be -- perhaps with some ideas from section \ref{potentialfuturework}. There was a very slight learning curve for the author as he comes from a background of primarily C\# development. Whilst C\# and Java are fairly similar as languages -- both garbage collected, object-oriented and with a syntax inspired by C -- their standard libraries are rather different. The author in particular remembers having to use the \code{Apache.Commons.Lang} library to use some features which come out-of-the-box in C\#, like \code{NotImplementedException}s.
+
+% Example EOL/EGX code works well, but might be better if more declarative 
+The EOL code used as acceptance tests for the solution is also felt to be of good quality -- in the respects that it is easily readable and can be explained easily -- however the author acknowledges that less lines of code would have been required had it been written in a more declarative style rather than imperative. 
 
 % Working on project whilst other 'real life' stuff happens
 % Working on coming back to a project after a long time 
-% TDD was great, agile working seemed to work well.
-% Java code is pretty reasonable, took a little while to get into but previous C# knowledge helped
-% Example EOL/EGX code works well, but might be better if more declarative 
+In section \ref{constaints} the main constraint of this project was identified as time. This was certainly true, but to a higher degree than was expected. During the period of time in which the project was scheduled to run the author had to find employment for after his studies and find somewhere close to that employment to live -- both of these activities took longer than the author naively assumed they would. This extended period of time devoted to house and job hunting led to a second problem, having to re-learn the project after an extended period of time away from it -- fortunately good note taking and good commit messages in version control stopped this from being a big issue. 
+
 % This is one of only a few large projects I've worked on, so it was good experience
+EpsilonGit has been a rather large project, in terms of the number of technologies involved, the number of lines of code itself and the amount of literature review required to be able to design something novel in the field. The author is sure that the experience of developing a project of this magnitude will aid him in his future endevours.
 
 \printbibliography
 
