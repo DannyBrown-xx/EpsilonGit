@@ -1009,7 +1009,12 @@ In this chapter the unit, integration and acceptance tests used to guide develop
 \section{Test-Driven Development}
 In section \ref{selectedmethodology} it was established that the project would be build in a test-driven fashion. This means that unit tests were built before production code was, and was used to validate whether methods worked correctly. Similarly integration tests were produced to ensure that aggregations of methods worked together as intended.
 
+The primary use of these TDD unit tests was to ensure that as development progressed changes were not causing regressions in the functionality and correctness of the software. In order to do this each unit of software was tested against expected edge cases and in both acceptable and exceptional cases -- e.g. with parameters that should return a correct result and parameters that should cause exceptional behaviour. Whilst the author feels that most of the individual units of software within the solution are well tested by the JUnit suite written it is always worth remembering that, as Edsger Dijkstra said, program testing can be used very effectively to show the presence of bugs but never to show their absence \cite{edsger}.
+
+There are too many unit tests to properly enumerate and explain in this report, however the reader is invited to view all of them and run them against EpsilonGit by loading the \\  \code{EpsilonGit/Implementation/org.eclipse.epsilon.emc.git.tests} Java project into Eclipse from the projects git repository \cite{epsilongitgithub}.
+
 \section{Epsilon Integration Test}
+\label{evalepsilonintegration}
 Requirements SY-NF-3 and SH-NF-3 require that the system be easy to install and distributed by way of an Epsilon Plug-in -- this functionality was tested with the interim version of Epsilon Eclipse and the EpsilonGit as made available on Github \cite{epsilongitgithub}. Figure \ref{fig:epsilonintegration} shows git model information being added to Epsilon, satisfying the aforementioned requirements.
 
 \begin{figure}[h]
@@ -1019,9 +1024,10 @@ Requirements SY-NF-3 and SH-NF-3 require that the system be easy to install and 
 	\label{fig:epsilonintegration}
 \end{figure}
 
-SY-F-3 requires that a GUI consistent with the rest of the epsilon suite be accessible for users to add git models for querying and analysis to Epsilon -- this too can be seen being satisfied in Figure \ref{fig:epsilonintegration}. 
+SY-F-3 requires that a GUI consistent with the rest of the epsilon suite be accessible for users to add git models for querying and analysis to Epsilon -- this too can be seen being satisfied in Figure \ref{fig:epsilonintegration}. Due to the fact that this configuration dialog allows a user to enter the location of their git repository and therefore EOL code doesn't need to have this hardcoded EpsilonGit also satisfies requirement SH-F-4, "Query Developers should be able to develop epsilon object language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about"
 
 \section{Acceptance Tests}
+\label{evalacceptance}
 Whilst the unit tests proved that the code written did what was expected of it, it did nothing to ensure that the software developed actually met the initial specification and project requirements.
 
 Acceptance tests specify the desired behaviour of the system and are a type of formal testing conducted to determine whether or not a system satisfies its acceptance criteria and to enable the customer to determine whether or not to accept the system \cite{acceptancetests1}\cite{acceptancetests2}. 
@@ -1033,10 +1039,17 @@ The acceptance tests presented as Listings A.1-A.5 were written to prove that re
 Each of these tests can be executed using Epsilon and EpsilonGit and provide results consistent with those provided by the competing solutions -- therefore all EOL acceptance tests passed.
 
 \section{Comparison with Existing Solutions}
+Sections \ref{evalepsilonintegration} and \ref{evalacceptance} outline how EpsilonGit has met both its stakeholder and system functional requirements. However, they do not prove that the solution produced for this project has met or exceeded its non-functional requirements relating to speed or ease-of-use compared to the existing solutions detailed in section \ref{competitors}.
 
+In this section performance and ease-of-development relating to bespoke queries will be compared.
 
 \subsection{Performance}
+Each of the tools being compared here is rather different, each using different programming languages and libraries, which can make comparing performance difficult. After much consideration the author has decided that performance will be measured in the amount of time required to perform a specified query. CPU and memory usage will not be measured.
+
 \subsection{Ease of Query Development}
+Code complexity is itself a complex topic. There are several ways to measure complexity including cyclomatic complexity and halstead volumes \cite{halstead}.
+
+\section{Overall Review}
 
 % Explain use of TDD, both unit tests, integration and use of EOL files that it would be hoped would work with
 % Automated testing
