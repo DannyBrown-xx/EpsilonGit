@@ -9,6 +9,7 @@
 \newcommand{\code}[1]{\texttt{#1}}
 \usepackage{longtable}
 \usepackage{tcolorbox}
+\usepackage[titletoc]{appendix}
 
 % CODE HIGHLIGHTING COLOURS SET UP
 % Set up for C#, Credit: http://tex.stackexchange.com/questions/124953/syntax-highlighting-in-listings-for-c-that-it-looks-like-in-visual-studio
@@ -1008,10 +1009,32 @@ In this chapter the unit, integration and acceptance tests used to guide develop
 \section{Test-Driven Development}
 In section \ref{selectedmethodology} it was established that the project would be build in a test-driven fashion. This means that unit tests were built before production code was, and was used to validate whether methods worked correctly. Similarly integration tests were produced to ensure that aggregations of methods worked together as intended.
 
+\section{Epsilon Integration Test}
+Requirements SY-NF-3 and SH-NF-3 require that the system be easy to install and distributed by way of an Epsilon Plug-in -- this functionality was tested with the interim version of Epsilon Eclipse and the EpsilonGit as made available on Github \cite{epsilongitgithub}. Figure \ref{fig:epsilonintegration} shows git model information being added to Epsilon, satisfying the aforementioned requirements.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{images/epsilonintegration}
+	\caption{EpsilonGit configuration dialog}
+	\label{fig:epsilonintegration}
+\end{figure}
+
+SY-F-3 requires that a GUI consistent with the rest of the epsilon suite be accessible for users to add git models for querying and analysis to Epsilon -- this too can be seen being satisfied in Figure \ref{fig:epsilonintegration}. 
+
 \section{Acceptance Tests}
-Whilst the unit tests proved that the code written did what was expected of it, it did nothing to ensure that the software developed actually met the initial specification and project requirements. 
+Whilst the unit tests proved that the code written did what was expected of it, it did nothing to ensure that the software developed actually met the initial specification and project requirements.
+
+Acceptance tests specify the desired behaviour of the system and are a type of formal testing conducted to determine whether or not a system satisfies its acceptance criteria and to enable the customer to determine whether or not to accept the system \cite{acceptancetests1}\cite{acceptancetests2}. 
+
+Acceptance tests for EpsilonGit consisted of a set of Epsilon Object Language scripts, which should execute successfully with an acceptable solution, written prior to development of production code. 
+
+The acceptance tests presented as Listings A.1-A.5 were written to prove that read access to all the most common parts of git was available through Epsilons domain specific languages and generators, satisfying requirements SH-F-1, SH-F-3, SH-F-1 and SY-F-2. Acceptance test A.6 compares the amount of commits in two repositories and outputs a message saying which has more -- thus proving EpsilonGit satisfies requirement SH-F-2, "Git Analysts should be able to access multiple git repositories at once for comparison".
+
+Each of these tests can be executed using Epsilon and EpsilonGit and provide results consistent with those provided by the competing solutions -- therefore all EOL acceptance tests passed.
 
 \section{Comparison with Existing Solutions}
+
+
 \subsection{Performance}
 \subsection{Ease of Query Development}
 
@@ -1092,5 +1115,225 @@ In section \ref{constaints} the main constraint of this project was identified a
 EpsilonGit has been a rather large project, in terms of the number of technologies involved, the number of lines of code itself and the amount of literature review required to be able to design something novel in the field. The author is sure that the experience of developing a project of this magnitude will aid him in his future endevours.
 
 \printbibliography
+
+\begin{appendices}
+\noappendicestocpagenum
+\addappheadtotoc
+\chapter{EOL Acceptance Test Code}
+\label{eolacceptance}
+
+\begin{lstlisting}[caption=Punchcard, label=lst:punchcard]
+var currentDay;
+var commitsInHour : Map;
+for(commit in Commit.all.sortBy(c | c.getCommitCalendar().getDayOfWeekValue())) {
+	var commitCalendar = commit.getCommitCalendar();
+	var commitDay = commitCalendar.getDayOfWeek();
+	if(not (commitDay == currentDay)) {
+		if(not(currentDay == null)) {
+			//This commit occured in the next type of day. Print out current days info.
+			currentDay.println();
+			commitsInHour.println();
+			"".println();
+		}
+		
+		//Reset
+		currentDay = commitDay;
+		commitsInHour.clear();
+	}
+	
+	//Get hour of commit and add to list
+	var hourOfCommit = commitCalendar.getHours();
+	if(commitsInHour.containsKey(hourOfCommit)) {
+		commitsInHour.put(hourOfCommit, commitsInHour.get(hourOfCommit) + 1);
+	}
+	else {
+		commitsInHour.put(hourOfCommit, 1);
+	}
+}
+\end{lstlisting}
+\clearpage
+\begin{lstlisting}[caption=Contribution Dates, label=lst:contributiondates]
+"The following number of commits happened per day across the whole repository:".println();
+printDatesToCommits(Commit.all);
+"\n\n".print();
+
+for(committer in Committer.all) {
+	(committer.getName() + " (" + committer.getEmailAddress() + ") committed this many times per day:").println();
+	printDatesToCommits(committer.getAllCommittedCommits());
+	"\n\n".print();
+}
+
+operation printDatesToCommits(commitsList) {  
+	var datesToNumberCommits : Map;
+	for(commit in commitsList.sortBy(c | c.getCommitCalendarDate())) {
+		var commitDate = commit.getCommitCalendarDate();
+	
+		if(datesToNumberCommits.containsKey(commitDate)) {
+			datesToNumberCommits.put(commitDate, datesToNumberCommits.get(commitDate) + 1);
+		}
+		else {
+			datesToNumberCommits.put(commitDate, 1);
+		}
+	}
+	
+	for(date in datesToNumberCommits.keySet().sortBy(k | k)) {
+		(date.getDay() + "/" + date.getMonth() + "/" + date.getYear()).print();
+		" - ".print();
+		datesToNumberCommits.get(date).print();
+		" commits".println();
+	}
+}
+\end{lstlisting}
+\clearpage
+\begin{lstlisting}[caption=Commit frequency, label=lst:commitfrequency]
+"Week".format("%-30s | ").print();
+"Commits".format("%-13s | ").print();
+"Insertions".format("%-13s | ").print();
+"Deletions".format("%-13s | ").println();
+"--------------------------------------------------------------------------------".println();
+
+
+var startOfWeek;
+var endOfWeek;
+var numberCommits = 0;
+var numberAdditions = 0;
+var numberRemovals = 0;
+
+for(commit in Commit.all.reject(c | c.isMergeCommit()).sortBy(c | c.getCommitCalendarDate())) {
+	
+	var commitDate = commit.getCommitCalendarDate();
+	
+	if(endOfWeek == null) {
+		//This is the first commit. Lets set up our weeks...
+		//Week start on a Sunday. We grab the sunday before this first commit. (this is how Github works! madness!)
+		startOfWeek = commitDate.getPreviousDay("Sunday");
+					
+		endOfWeek = startOfWeek.addDays(6);
+	}
+	
+	while(commitDate.compareTo(endOfWeek) > 0) {
+		//This commit belongs in a later week...
+		//First print current week data
+		(formatDate(startOfWeek) + " - " + formatDate(endOfWeek)).format("%-30s | ").print();
+
+		numberCommits.format("%-13s | ").print();
+		numberAdditions.format("%-13s | ").print();
+		numberRemovals.format("%-13s | ").println();
+		
+		//Iterate to next week
+		startOfWeek = endOfWeek.addDays(1);
+		endOfWeek = startOfWeek.addDays(6);	
+		
+		//Reset counts
+		numberCommits = 0;
+		numberAdditions = 0;
+		numberRemovals = 0;
+	}
+	
+	// Add to this weeks totals
+	var differenceCount = commit.getDifferenceCountFromParent();
+	numberCommits = numberCommits + 1;	
+	numberAdditions += differenceCount.getLinesAdded();
+	numberRemovals += differenceCount.getLinesRemoved();
+}
+
+operation formatDate(date) {
+	return (date.getDay() + "/" + date.getMonth() + "/" + date.getYear());
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=GitInspector-style output, label=lst:gitinspectorequivilence]
+"The following historical commit information, by author, was found in this repository:\n".println();
+"Author".format("%-60s | ").print();
+"Commits".format("%-13s | ").print();
+"Insertions".format("%-13s | ").print();
+"Deletions".format("%-13s | ").print();
+"% of Changes".format("%-13s |").println();
+"---------------------------------------------".println();
+
+//Work out totals
+var totalRepositoryAdditions : Real;
+var totalRepositoryRemovals : Real;
+for(commit in Commit.all.reject(a | a.isMergeCommit())) {
+	var differenceCounts = commit.getDifferenceCountFromParent();
+	totalRepositoryAdditions += differenceCounts.getLinesAdded();
+	totalRepositoryRemovals += differenceCounts.getLinesRemoved();
+}
+var totalRepositoryChanges : Real = totalRepositoryAdditions + totalRepositoryRemovals;
+	
+for(author in Author.all.sortBy(a | a.getName())) {
+	(author.getName() +" (" + author.getEmailAddress() + ")").format("%-60s | ").print();	
+	author.getAllAuthoredCommits().size().asInteger().format("%-13d | ").print();
+	
+	var commitsByAuthor = author.getAllAuthoredCommits().reject(a | a.isMergeCommit());
+		
+	var totalAuthorInsertions : Real;
+	var totalAuthorDeletions : Real;
+	for(commit in commitsByAuthor) {
+		var differenceCounts = commit.getDifferenceCountFromParent();
+		totalAuthorInsertions += differenceCounts.getLinesAdded();
+		totalAuthorDeletions += differenceCounts.getLinesRemoved();
+	}
+	var totalAuthorChanges : Real = totalAuthorInsertions + totalAuthorDeletions;
+	
+	totalAuthorInsertions.asInteger().format("%-13d | ").print();
+	
+	totalAuthorDeletions.asInteger().format("%-13d | ").print();
+	
+	if(totalAuthorChanges == 0) {
+		"0%".format("%-13s |").println();
+	}
+	else {
+		(((totalAuthorChanges / totalRepositoryChanges) * 100).format("%.2f") + "%").format("%-13s |").println();
+	}
+}
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Author vs Committer Information, label=lst:authorvscommitter]
+var onlyAuthors = Author.all.excludingAll(Committer.all).sortBy(a | a.getName());
+if(onlyAuthors.size() > 0) {
+	("The following " + onlyAuthors.size() + " authors are not committers: ").println();
+	for(author in onlyAuthors) {
+		("* " + author.getName() + " (" + author.getEmailAddress() + ")").println();
+	} 
+}
+else {
+	"All authors are also comitters".println();
+}
+
+"".println();
+"------".println();
+"".println();
+
+var onlyCommitters = Committer.all.excludingAll(Author.all).sortBy(a | a.getName());
+if(onlyCommitters.size() > 0) {
+	("The following " + onlyCommitters.size() + " committers are not authors: ").println();
+	for(committer in onlyCommitters) {
+		("* " + committer.getName() + " (" + committer.getEmailAddress() + ")").println();
+	}
+}
+else {
+	"All committers are also authors".println();
+}
+\end{lstlisting}
+\clearpage
+\begin{lstlisting}[caption=Author vs Committer Information, label=lst:multirepos]
+var repoOneSize = RepoOne!Commit.all.size();
+var repoTwoSize = RepoTwo!Commit.all.size();
+if(repoOneSize == repoTwoSize) {
+	"Repositories have same number of commits".println();
+}
+else
+{
+	if(repoOneSize > repoTwoSize) {
+		"Repository one has more commits".println();
+	}
+	else {
+		"Repository two has more commits".println();
+	}
+}
+\end{lstlisting}
+
+\end{appendices}
 
 \end{document}

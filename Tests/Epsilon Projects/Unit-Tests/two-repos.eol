@@ -1,0 +1,14 @@
+var repoOneSize = RepoOne!Commit.all.size();
+var repoTwoSize = RepoTwo!Commit.all.size();
+if(repoOneSize == repoTwoSize) {
+	"Repositories have same number of commits".println();
+}
+else
+{
+	if(repoOneSize > repoTwoSize) {
+		"Repository one has more commits".println();
+	}
+	else {
+		"Repository two has more commits".println();
+	}
+}
