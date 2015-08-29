@@ -1041,10 +1041,14 @@ Each of these tests can be executed using Epsilon and EpsilonGit and provide res
 \section{Comparison with Existing Solutions}
 Sections \ref{evalepsilonintegration} and \ref{evalacceptance} outline how EpsilonGit has met both its stakeholder and system functional requirements. However, they do not prove that the solution produced for this project has met or exceeded its non-functional requirements relating to speed or ease-of-use compared to the existing solutions detailed in section \ref{competitors}.
 
-In this section performance and ease-of-development relating to bespoke queries will be compared.
+In this section performance and ease-of-development relating to bespoke queries will be compared with GitInspector, GitHub and Gitana.
 
 \subsection{Performance}
 Each of the tools being compared here is rather different, each using different programming languages and libraries, which can make comparing performance difficult. After much consideration the author has decided that performance will be measured in the amount of time required to perform a specified query. CPU and memory usage will not be measured.
+
+Some of the systems may fair better with repositories of different sizes, so a small repository, medium sized repository and large repository will be used for evaluation. The small repository is for one of the authors side projects, called csblogs, and consists of 411 commits \cite{csbrepository}. The medium sized repository is for the node.js runtime and consists of 10,762 commits \cite{noderepository}. The large repository is the linux kernel repository, which consists of 535,010 commits \cite{linuxrepository}.
+
+ 
 
 %TODO : Eval
 
@@ -1054,7 +1058,11 @@ Code complexity is itself a complex topic. There are several ways to measure com
 %TODO : Eval
 
 \section{Overall Review}
-Allowing access to git, a software repository, via a model-driven interface is both a novel and powerful application of Model Driven Engineering. 
+Allowing access to git, a software repository, via a model-driven interface is both a novel and powerful application of Model Driven Engineering that will allow both the author and other software engineers to write queries useful for analysing git repositories in order to uncover interesting and actionable information about software systems.
+
+The integration with the epsilon platform both makes the use of epsilon more attractive to software engineers in general and allows existing modelling engineers to query git repositories with the same ease as they can any other Epsilon Model Connectivity format.
+
+The author intends to submit a paper to both to MSR 2016 -- The 13th Working Conference on Mining Software Repositories \cite{msr2016} -- and a future International Conference on Model Driven Engineering Languages and Systems.
 
 % Explain use of TDD, both unit tests, integration and use of EOL files that it would be hoped would work with
 % Automated testing
@@ -1114,6 +1122,8 @@ A larger addition to EpsilonGit could be to make it compatible with other popula
 Chapter \ref{design} discusses some of the design decisions made, such as the use of caching, to improve the performance of the EpsilonGit system. However, due to the size of the project and the time constraints imposed upon it there are some low hanging fruit regards performance improvement. For example, whilst the model elements themselves are cached, some of the results of methods ran on them are not -- e.g. every time \code{commit.getCommitCalendar()} is called a new calendar object is initialised -- these could be cached for future use.
 
 The secondary aim of this project is the increase the interest amongst developers in Epsilon and Model Driven Engineering. The project, as is, is required to be used through Epsilon Eclipse, which includes many useful model driven engineering tools, but may be too large a piece of software to download, install and manage for someone who just wants to analyse one software repository -- putting people off of using EpsilonGit and therefore not finding out more about MDE. This could be resolved in future by allowing a developer to download a program which just includes EpsilonGit, a texteditor to write epsilons domain specific languages, and the required Epsilon Libraries, or by providing them with an online interface to these features.
+
+At the time of writing a fellow student is developing a web accessible system for generating artefacts from and querying models and structured artefacts that are accessible using Epsilon Model Connectivity. The ability to query analyse git through a web interface could be useful and so it would be interesting to consider combining the two systems in future.
 
 \section{Reflection}
 In this section the author will reflect on the project as a whole and his ability to deliver it both on time and to the initial specification.
