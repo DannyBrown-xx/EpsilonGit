@@ -1046,10 +1046,15 @@ In this section performance and ease-of-development relating to bespoke queries 
 \subsection{Performance}
 Each of the tools being compared here is rather different, each using different programming languages and libraries, which can make comparing performance difficult. After much consideration the author has decided that performance will be measured in the amount of time required to perform a specified query. CPU and memory usage will not be measured.
 
+%TODO : Eval
+
 \subsection{Ease of Query Development}
-Code complexity is itself a complex topic. There are several ways to measure complexity including cyclomatic complexity and halstead volumes \cite{halstead}.
+Code complexity is itself a complex topic. There are several ways to measure complexity including cyclomatic complexity and halstead volumes \cite{halstead}. However, it was decided that a simpler metric of lines of code to produce a pre-determined result would be easier to analyse and sufficient to determine if the ease-of-use requirements had be satisfied.
+
+%TODO : Eval
 
 \section{Overall Review}
+Allowing access to git, a software repository, via a model-driven interface is both a novel and powerful application of Model Driven Engineering. 
 
 % Explain use of TDD, both unit tests, integration and use of EOL files that it would be hoped would work with
 % Automated testing
@@ -1080,6 +1085,8 @@ Overall this project has been a success. The system envisioned at the beginning 
 Model-Driven Engineering has proven itself to be a highly effective way of dealing with complex structured data -- both in terms of reducing query complexity and enabling more bespoke and complex queries -- and the author thinks that model-driven engineerings role in mining software repositories should be further researched.
 
 If the project were to be done over again then the author would do little differently -- many design and implementation issues were fixed through the use of the iterative methodology -- however he would have written more acceptance tests covering more of Epsilons domain specific languages \& generators and written more helper methods for some of the object model elements.
+
+The author is personally very excited to see what novel analysis can be made on git repositories by third-parties using the EpsilonGit software.
 
 The success of this project could be built upon in future by implementing or researching some of ideas presented in section \ref{potentialfuturework}.
 
