@@ -966,7 +966,25 @@ It was decided that the configuration dialog box would ask the user to provide t
 In this chapter the implementation details of EpsilonGit will be explained including information about how to set up EpsilonGit for use on the readers machine, the structure of the projects code and the environment used for development purposes.
 
 \section{Project Structure}
+The EpsilonGit project is structured as 4 Eclipse Plug-in projects, one for each of the main modules discussed in the design chapter and displayed in the EpsilonGit frame of figure \ref{fig:hla}. Eclipse Plug-in projects were used in order to maintain compatibility with Epsilon. These projects are:
 
+\begin{enumerate}
+	\item \code{org.eclipse.epsilon.emc.git} \\ The main EMC driver project
+	\item \code{org.eclipse.epsilon.emc.git.dt} \\ The project for integrating with Epsilons user interface 
+	\item \code{org.eclipse.epsilon.emc.git.tests} \\ The project containing JUnit tests for the EMC driver
+	\item \code{org.eclipse.epsilon.emc.git.tools} \\ The project containing the EOL tools described in chapter \ref{design}
+\end{enumerate}
+
+The tests were originally contained in the main EMC driver project, however it was decided that they should reside in their own project to make a clear line between what was production code and what was auxiliary testing code. Encapsulating the tests in their own project also meant it would be easier to add tests for the tools and user interface projects in future.
+
+The \code{dt}, \code{tests} and \code{tools} projects each contain only one Java package, of the same name, however the main EMC driver project contains several Java packages which encapsulate different functionality in order to aid the organisation and therefore maintainability of the code.
+
+The packages that make up the main EMC driver are:
+
+%TODO: start here
+\begin{enumerate}
+	\item people
+\end{enumerate}
 
 \section{Git EMC Driver}
 Several implementation choices had to be made during the development of the EMC driver for git including language, method for interacting with git and coding conventions. 
@@ -976,6 +994,10 @@ In Chapter \ref{design} it was determined that a compiled language should be use
 Once it was decided to implement the project in the Java programming language it had to be decided how to implement the functionality required to read from git repositories. The author could have opted to write a git interaction module himself, however due to the complexity of git and the constraint of time on the project it was decided that this wasn't an optimal solution -- instead the author decided to look at libraries available for Java. 
 
 JGit is a popular Java library for interfacing with git repositories that provides a 'plumbing' module that allows a developer to interact with object model types (tree, blob, commit and tag) and a 'porcelain' module which allows developers to work with git at a high level -- similar to issuing git commands via the command line interface \cite{jgit}. JGit has been used as the backend for EGit, a standard plugin for Eclipse that allows users to manage their git repositories from inside the IDE. This integration means that JGit can be used as a dependency without bundling the library with EpsilonGit -- it is already present in Eclipse \cite{egit}. An alternative library, JavaGit, was considered -- however it had not been maintained since 2008 \cite{javagit}.
+
+In order to improve the maintainability of the code it was decided that a coding convention should be followed. Initially the Oracle "Code Conventions for the Java Programming Language" were followed, however this became increasingly difficult as the constraint of time bore down on the project. A lint program could be ran against the source code to 'clean up' any convention mistakes made in the rapid pace of development.
+
+One of the idioms of Epsilon is that it requires the use of accessor and mutator paradigm for public fields of a class -- even if a field is public it cannot be read or written to from EOL code without \code{getX()} and \code{setX()} methods. As discussed in chapter \ref{design} this lead to a need for more helper methods to access JGit information but it also affected the implementation of original EpsilonGit classes by requiring more code (thought the author understands that it is good practice to always provide accessors and mutators for class fields). 
 
 % lots of code samples etc
 
