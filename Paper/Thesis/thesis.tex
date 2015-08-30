@@ -965,18 +965,19 @@ It was decided that the configuration dialog box would ask the user to provide t
 \chapter{Implementation}
 In this chapter the implementation details of EpsilonGit will be explained including information about how to set up EpsilonGit for use on the readers machine, the structure of the projects code and the environment used for development purposes.
 
-
-% lots of code samples etc.
-\section{Environment}
-\subsection{Epsilon Eclipse}
-\subsection{Git}
-
-\section{Libraries}
-\subsection{Epsilon Eclipse Libraries}
-\subsection{JGit}
-\subsection{Apache Commons Lang}
-
 \section{Project Structure}
+
+
+\section{Git EMC Driver}
+Several implementation choices had to be made during the development of the EMC driver for git including language, method for interacting with git and coding conventions. 
+
+In Chapter \ref{design} it was determined that a compiled language should be used, rather than an interpreted language such as Python or Ruby, in order to give EpsilonGit a performance advantage over competing solutions. Due to the fact that Epsilon is written in Java and the interfaces it provides are written in Java the decision was made to use Java. Other programming languages which use the Java Virtual Machine (JVM) could also have been considered, such as Scala or Clojure, as they can implement Java interfaces \cite{scalacookbook}, however it was felt that it was best for maintainability and conceptual integrity that the EpsilonGit driver was written in the same dialect as Epsilon itself.
+
+Once it was decided to implement the project in the Java programming language it had to be decided how to implement the functionality required to read from git repositories. The author could have opted to write a git interaction module himself, however due to the complexity of git and the constraint of time on the project it was decided that this wasn't an optimal solution -- instead the author decided to look at libraries available for Java. 
+
+JGit is a popular Java library for interfacing with git repositories that provides a 'plumbing' module that allows a developer to interact with object model types (tree, blob, commit and tag) and a 'porcelain' module which allows developers to work with git at a high level -- similar to issuing git commands via the command line interface \cite{jgit}. JGit has been used as the backend for EGit, a standard plugin for Eclipse that allows users to manage their git repositories from inside the IDE. This integration means that JGit can be used as a dependency without bundling the library with EpsilonGit -- it is already present in Eclipse \cite{egit}. An alternative library, JavaGit, was considered -- however it had not been maintained since 2008 \cite{javagit}.
+
+% lots of code samples etc
 
 
 \section{Experimentation}
