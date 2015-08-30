@@ -963,9 +963,8 @@ In order to be able to provide a Configuration GUI the configuration dialog has 
 It was decided that the configuration dialog box would ask the user to provide the location of the object database of their git repository itself, rather than the root working directory of their git repository as it is possible for git repositories to contain other git repositories or have their object database named something other than \code{.git}, so asking for the object database directly avoids some edge cases at a small cost to ease of use as by default these object database directories are hidden.
 
 \chapter{Implementation}
-In this chapter 
+In this chapter the implementation details of EpsilonGit will be explained including information about how to set up EpsilonGit for use on the readers machine, the structure of the projects code and the environment used for development purposes.
 
-All source code and assets required to build and run EpsilonGit are available for download on GitHub \cite{epsilongitgithub}. 
 
 % lots of code samples etc.
 \section{Environment}
@@ -979,7 +978,6 @@ All source code and assets required to build and run EpsilonGit are available fo
 
 \section{Project Structure}
 
-\section{Running EpsilonGit}
 
 \section{Experimentation}
 
@@ -996,11 +994,30 @@ All source code and assets required to build and run EpsilonGit are available fo
 	% .git.test (tdd stuff)
 	% .git.tools (some useful EOL tools for Git stuff)
 % Lots of stuff about implementation decisions here
-% Summary of what do to to get the system running on your own machine
 % Making architecture fit between JGit and Epsilon
 % Experimentation and changes necessary as things changed (for example learning more about jGit, epsilon and Java or subclassing jGit types to provide better names in EOL code and hide some of the underlying implementation)
-% Language
-	% Explain how expected EOL code was developed before driver was, so driver could achieve what was wanted  
+	
+% Summary of what do to to get the system running on your own machine
+\section{Running EpsilonGit}
+All source code and assets required to build and run EpsilonGit are available for download on GitHub \cite{epsilongitgithub}. 
+
+In order to run the software a machine must have Epsilon Eclipse \cite{epsilonhomepage} installed, which requires the Java Runtime, an installation of git itself is not required as all git procedures are carried out by JGit.
+
+Once Epsilon Eclipse is installed and the EpsilonGit git repository has been cloned to a machine the user can start using it by:
+
+\begin{enumerate}
+	\item Opening Epsilon Eclipse
+	\item Updating Epsilon Eclipse to the latest interim release
+	\item Clicking File $\rightarrow
+$ Import and importing all the projects in the \code{EpsilonGit/Implementation} folder.
+	\item Right clicking \code{org.eclipse.epsilon.emc.git} $\rightarrow
+$ Run as Eclipse Application. The user will now be in an Epsilon workspace that can access the EpsilonGit user interface and model connectivity layers
+\end{enumerate}
+
+In a publicly available version of this software a user would be able to simply install Epsilon from the Eclipse New Software downloader.
+
+Once in the Epsilon workspace with access to EpsilonGit the user can create new query and analysis tools using any of the domain specific languages and generator tools provided by Epsilon. To run these tools on a git repository the user simply has to create a new run configuration and add a git model to it.
+
 
 \chapter{Testing \& Evaluation}
 \label{testeval}
