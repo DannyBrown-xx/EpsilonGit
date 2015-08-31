@@ -1154,36 +1154,34 @@ Again, here each solution was tasked with providing an output equivalent to that
 %TODO : Eval
 
 \section{Requirements Satisfied}
-In this section the requirements outlined in Chapter \ref{requirements} 
+In this section the requirements outlined in Chapter \ref{requirements} are revisited and listed alongside their success criterion. Each requirement is then categorised as being satisfied or unsatisfied.
 
 
-\begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
+\begin{longtable}{|p{2cm}|p{10cm}|p{3cm}|}
 \hline
-\textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
-SH-F-1 & Git Analysts should be able to access all commonly used parts of the git API via a model driven interface &  Git Object Model (Tag, Commit, Tree, Blob) accessible via EOL \\ \hline
-SH-F-2 & Git Analysts should be able to access multiple git repositories at once for comparison & Multiple repositories query-able via EOL.  \\ \hline
-SH-F-3 & Git Analysts should be able to use generators to develop artefacts from their git repositories & HTML should be able to be produced via Epsilon Generation Language (EGL) files \\ \hline
-SH-F-4 & Query Developers should be able to develop Epsilon Object Language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about & The model interface should not itself require knowledge of git repository locations \\ \hline
-SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs and Generators using the Epsilon GUI & An option should be shown to add a git repository as a model in the epsilon GUI. When clicked this should allow the user to name it and select its location \\ \hline
-SH-NF-1 & The code required to develop a query or generate an artefact should be more concise than alternative methods & An EpsilonGit program producing identical output as a competitor should require less lines of code \\ \hline
-SH-NF-2 & The code required to develop a query or generate an artefact should be less complex than alternative methods & An EpsilonGit program producing identical output as a competitor should have a lower cyclomatic complexity \\ \hline
-SH-NF-3 & The solution should be able to be run as an Eclipse plug-in for ease of use & The solution should integrate with Epsilon Eclipse to the same level as the built-in EMF model type \\ \hline
-SH-NF-4 & Queries developed using EpsilonGit should be equally as performant, or better, than competitors & The average time required to run a query which produces the same output on the same machine should be less for EpsilonGit than for GitInspector \\ \hline
-SH-NF-5 & Documentation for the EMC layer of Epsilon should be improved & A document which better explains the steps required to develop an EMC driver should be written and made available to other developers as part of this process \\ \hline
-SH-NF-6 & Novel research into the effectiveness of Model Driven Engineering techniques to solve problems in the field of Mining Software Repositories should be produced & The impact of this report should be assessed \\ \hline
-SH-NF-7 & The code produced for the solution should be easily maintainable and extendable in the future & There should be low cyclomatic complexity and high class decoupling \\ \hline
-SY-F-1 & The software solution must be able to interact with the Epsilon Platform and its set of Domain Specific Languages and Generators & The Software must implement the model reading functions of the \code{IModel} interface provided by Epsilon \\ \hline
-SY-F-2 & The software must be able to read information from git & The Software must be able to read all information from the Git Object Model \\ \hline
-SY-F-3 & The software must provide information to the Epsilon GUI framework to allow users to select repositories etc & Epsilon GUIs should work in the same way for Git repositories as they do for EMF files \\ \hline
-SY-NF-1 & The system should allow fast access to git from epsilon & The Software should be as fast as the competitors outlined in section \ref{competitors} at accessing git information \\ \hline
-SY-NF-2 & The system should be extensable & The system should provide hooks to easily add new features, particular in an open source fashion \\ \hline
-SY-NF-3 & The system should be easy to distribute and install & The system should use an Eclipse Plug-in project to make it a one-click install \\ \hline
+\textbf{Identifier} & \textbf{Success Criteria} & \textbf{Achieved} \\ \hline
+SH-F-1 &  Git Object Model (Tag, Commit, Tree, Blob) accessible via EOL & Yes \\  \hline
+SH-F-2 & Multiple repositories query-able via EOL. & Yes  \\ \hline
+SH-F-3 & HTML should be able to be produced via Epsilon Generation Language (EGL) files & Yes \\ \hline
+SH-F-4 & The model interface should not itself require knowledge of git repository locations & Yes \\ \hline
+SH-F-5 & An option should be shown to add a git repository as a model in the epsilon GUI. When clicked this should allow the user to name it and select its location & Yes \\ \hline
+SH-NF-1 & An EpsilonGit program producing identical output as a competitor should require less lines of code & Yes \\ \hline
+SH-NF-2 & An EpsilonGit program producing identical output as a competitor should have a lower cyclomatic complexity & Yes \\ \hline
+SH-NF-3 & The solution should integrate with Epsilon Eclipse to the same level as the built-in EMF model type & Yes \\ \hline
+SH-NF-4 & The average time required to run a query which produces the same output on the same machine should be less for EpsilonGit than for GitInspector & Yes \\ \hline
+SH-NF-5 & A document which better explains the steps required to develop an EMC driver should be written and made available to other developers as part of this process & Yes \\ \hline
+SH-NF-6 & The impact of this report should be assessed & Yes \\ \hline
+SH-NF-7 & There should be low cyclomatic complexity and high class decoupling  & Yes \\ \hline
+SY-F-1 & The Software must implement the model reading functions of the \code{IModel} interface provided by Epsilon & Yes \\ \hline
+SY-F-2 & The Software must be able to read all information from the Git Object Model & Yes \\ \hline
+SY-F-3 & Epsilon GUIs should work in the same way for Git repositories as they do for EMF files & Yes \\ \hline
+SY-NF-1 & The Software should be as fast as the competitors outlined in section \ref{competitors} at accessing git information & Yes \\ \hline
+SY-NF-2 & The system should provide hooks to easily add new features, particular in an open source fashion & Yes \\ \hline
+SY-NF-3 & The system should use an Eclipse Plug-in project to make it a one-click install & Yes \\ \hline
 
 \caption{Requirements status at end of project}
 \label{tab:reqsats}
 \end{longtable}
-
-%TODO : Listing of requirements again, with satisfied yes/no
 
 \section{Overall Review}
 Allowing access to git, a software repository, via a model-driven interface is both a novel and powerful application of Model Driven Engineering that will allow both the author and other software engineers to write queries useful for analysing git repositories in order to uncover interesting and actionable information about software systems.
