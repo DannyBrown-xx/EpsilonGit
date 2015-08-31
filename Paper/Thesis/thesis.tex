@@ -1130,12 +1130,12 @@ Some of the systems may perform better with repositories of different sizes, so 
 \label{tab:perf}
 \end{table}
 
-Each solution was tasked with providing an output equivalent to that of GitInspector  
+Each solution was tasked with providing an output equivalent to that of GitInspector shown in Figure \ref{fig:gitinspector}. 
 
 \subsection{Ease of Query Development}
 Code complexity is itself a complex topic. There are several ways to measure complexity including cyclomatic complexity and halstead volumes \cite{halstead}. However, it was decided that a simpler metric of lines of code to produce a pre-determined result would be easier to analyse and sufficient to determine if the ease-of-use requirements had be satisfied.
 
-Again, here each solution was tasked with providing an output equivalent to that of GitInspector. The number of lines of code required to generate this output were then counted. It is worth noting that none of the solutions, including the EpsilonGit solution, were optimised to reduce lines of code.
+Again, here each solution was tasked with providing an output equivalent to that of GitInspector shown in Figure \ref{fig:gitinspector}. The number of lines of code required to generate this output were then counted. 
 
 \begin{table}[H]
 \centering
@@ -1143,8 +1143,8 @@ Again, here each solution was tasked with providing an output equivalent to that
 \begin{tabular}{|l|l|}
 \hline
 \multicolumn{1}{|r|}{{\bf System}} & {\bf Lines of Code} \\ \hline
-{\bf EpsilonGit}                   &                     \\ \hline
-{\bf GitInspector}                 &                     \\ \hline
+{\bf EpsilonGit}                   & 187                 \\ \hline
+{\bf GitInspector}                 & 2311                \\ \hline
 {\bf Gitana}                       &                     \\ \hline
 \end{tabular}
 \caption{Line of Code Comparison}
@@ -1155,7 +1155,6 @@ Again, here each solution was tasked with providing an output equivalent to that
 
 \section{Requirements Satisfied}
 In this section the requirements outlined in Chapter \ref{requirements} are revisited and listed alongside their success criterion. Each requirement is then categorised as being satisfied or unsatisfied.
-
 
 \begin{longtable}{|p{2cm}|p{10cm}|p{3cm}|}
 \hline
