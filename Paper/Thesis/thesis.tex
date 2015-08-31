@@ -57,7 +57,7 @@
 		\vspace{1.5cm}
 		\Large A thesis submitted in partial fulfilment for the degree of \\ \textit{Master of Science in Advanced Computer Science}\\
 		\vspace{5cm}
-		\small 9,983 words as counted by Texpad.app
+		\small 14,387 words as counted by Texpad.app
 	\end{center}
 	\restoregeometry
 \end{titlepage}
@@ -972,6 +972,9 @@ The design shown in chapter \ref{design} shows that several different tools and 
 There are several commercial and open source IDEs available which allow their user to write, compile and run their Java code, however as the project is being developed to integrate with the Epsilon Modelling Platform which is a Eclipse Foundation product and integrated into the Eclipse IDE itself, thus requiring the EMC layer to be written as an Eclipse Plug-in project, it only makes sense to use Eclipse to write the projects code.
 
 To begin with the publicly available latest release version of the Epsilon Eclipse package was used -- version 1.2 of Epsilon with Eclipse 4.4 Luna. However, mid-way through the project the author hit Epsilon Bug \#341481 \cite{epsilonbug}. At this point the author updated to the latest interim release in which this bug had been fixed -- this required the editing of one line of code. 
+
+\subsection{Git}
+Although the git source control management software is not required to run or develop EpsilonGit it was useful in order to validate any... %TODO: Start here tomorrow 
 
 \section{Project Structure}
 The EpsilonGit project is structured as 4 Eclipse Plug-in projects, one for each of the main modules discussed in the design chapter and displayed in the EpsilonGit frame of figure \ref{fig:hla}. Eclipse Plug-in projects were used in order to maintain compatibility with Epsilon. These projects are:
