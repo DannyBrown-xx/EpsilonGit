@@ -309,7 +309,7 @@ Forking isn't a command in git, or indeed an object type, but rather a concept a
 	% Some info on gitinspector
 	% Conclusions drawn from the literature
 		% Primarily, there isnt many projects doing this. The SQL one has some drawbacks, etc.
-There hasn't been any previous work on interacting with git through modelling, however there have been several pieces of software developed to allow users to extract information from their git repositories.
+There hasn't been any previous work on interacting with git through model management languages, however there have been several pieces of software developed to allow users to extract information from their git repositories.
 
 \subsection{Git Inspector}
 Git Inspector is described as a statistical analysis tool for git repositories. The default analysis shows general statistics per author, which can be complemented with a timeline analysis that shows the workload and activity of each author \cite{gitinspector}.
@@ -323,7 +323,7 @@ Git Inspector is described as a statistical analysis tool for git repositories. 
 
 The output from GitInspector is a HTML file with embedded CSS and JavaScript. It is implemented in Python and the queries cannot be edited by a user without editing the program itself.
 
-By reading the code we can see that Git is accessed by GitInpector by issuing commands to the git program installed on the users computer via the system default terminal emulator, the output of git to standard IO is then parsed by Gitinspector. This isn't a particularly efficient way of dealing with the git object model. %Can you reference code?
+Inspection of the code reveals that Git is accessed by GitInpector by issuing commands to the git program installed on the users computer via the system default terminal emulator, the output of git to standard IO is then parsed by Gitinspector. This isn't a particularly efficient way of dealing with the git object model. %Can you reference code?
 
 
 \subsection{GitStats}
@@ -408,7 +408,7 @@ The Epsilon Model Connectivity layer enables developers to build plug-ins for Ep
 	\label{fig:emc}
 \end{figure}
 
-In Figure \ref{fig:emc} it can be seen that implementing the Epsilon Model Connectivity layer allows all the 'task specific languages' to access the models information via EOL. It can also be seen that Epsilons 'built-in' model types are built using the same technology.
+In Figure \ref{fig:emc} it can be seen that implementing the Epsilon Model Connectivity layer allows all the 'task specific languages' to access the models information via EOL. It can also be seen that Epsilon's 'built-in' model types are built using the same technology.
 
 The functionality required of an EMC layer is described through the abstract classes which must be implemented in Java, a graphical overview of which can be seen in Figure \ref{fig:imodelinterface}. The \code{IModel} interface describes the formal parameters for functions to control basics such as storing and loading the model, accessing model elements and optionally writing changes to model elements.
 
@@ -454,7 +454,7 @@ Direct stakeholders are people whom interact with the computer system directly a
 Project managers, team leads or individuals who want to use the software solution to analyse their git repositories using built-in queries or those developed by other people. The main "users" of the system.
 
 \subsubsection{Query Developers}
-The developers writing custom queries either for Git Analysts. An individual could be both a query developer and a git analyst, and this is the expected use case. 
+The developers writing custom queries either for Git Analysts or themselves. An individual could be both a query developer and a git analyst, and this is the expected use case. 
 
 \subsection{Indirect Stakeholders}
 \subsubsection{Project Managers}
@@ -467,7 +467,7 @@ Developers and other people who have contributed code or other artefacts to a gi
 If the git repository for 'My Word Processor' is analysed and this results in an improvement or deterioration to the workflow for that team it could potentially have an effect on the final product and therefore the end users of 'My Word Processor'. 
 
 \subsubsection{Epsilon Users and Developers}
-One of the secondary aims of the project, as outlined in section \ref{aimsandobjectives}, is to get more people interested in Epsilon and Model Driven Engineering -- Therefore the Epsilon Developers are key stakeholders. Users of Epsilon could benefit from increased exposure of epsilon to the developer community.
+One of the secondary aims of the project, as outlined in section \ref{aimsandobjectives}, is to get more people interested in Epsilon and Model Driven Engineering, for this reason the Epsilon Developers are key stakeholders. Users of Epsilon could benefit from increased exposure of Epsilon to the developer community.
 
 \subsubsection{Project Supervisor and Author}
 Both the Project Supervisor and the author of this project are invested in as good an outcome as possible within the limits in terms of time and resources available to the project. 
@@ -491,7 +491,7 @@ Through the process of identifying stakeholders in the project, developing a pro
 
 \begin{enumerate}
 	\item Ability to query information from the Git Object Model (Commits, Tags, Blobs and Trees) of an arbitrary number of git repositories using the Epsilon Framework and its associated domain-specific modelling languages
-	\item Ability to generate HTML and other artefacts from the information in the Git Object Model using The Epsilon Frameworks generators
+	\item Ability to generate HTML and other artefacts from the information in the Git Object Model using Epsilon Generation Language (EGL)
 	\item To have both a high-level API for the commonly used sections of the git system, but access to native code for less commonly used sections that there wasn't time to improve code for
 	\item The ability to work on large git repositories in a reasonable time
 \end{enumerate} 
@@ -525,8 +525,8 @@ A short code to identify the requirement. Type-Function-Number format. E.g. ST-N
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
 SH-F-1 & Git Analysts should be able to access all commonly used parts of the git API via a model driven interface &  Git Object Model (Tag, Commit, Tree, Blob) accessible via EOL \\ \hline
 SH-F-2 & Git Analysts should be able to access multiple git repositories at once for comparison & Multiple repositories query-able via EOL.  \\ \hline
-SH-F-3 & Git Analysts should be able to use generators to develop artefacts from their git repositories & HTML should be able to be produced via EGX files \\ \hline
-SH-F-4 & Query Developers should be able to develop epsilon object language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about & The model interface should not itself require knowledge of git repository locations \\ \hline
+SH-F-3 & Git Analysts should be able to use generators to develop artefacts from their git repositories & HTML should be able to be produced via Epsilon Generation Language (EGL) files \\ \hline
+SH-F-4 & Query Developers should be able to develop Epsilon Object Language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about & The model interface should not itself require knowledge of git repository locations \\ \hline
 SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs and Generators using the Epsilon GUI & An option should be shown to add a git repository as a model in the epsilon GUI. When clicked this should allow the user to name it and select its location \\ \hline
 \end{longtable}
 \caption{Functional Stakeholder Requirements}
@@ -539,12 +539,12 @@ SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs
 \begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
-SH-NF-1 & The code required to develop a query or generate an artefact should be quicker to write than alternative methods & An EpsilonGit program producing identical output as a competitor should require less lines of code \\ \hline
-SH-NF-2 & The code required to develop a query or generate an artefact should be easier to learn and remember than alternative methods & An EpsilonGit program producing identical output as a competitor should have a lower cyclomatic complexity \\ \hline
+SH-NF-1 & The code required to develop a query or generate an artefact should be more concise than alternative methods & An EpsilonGit program producing identical output as a competitor should require less lines of code \\ \hline
+SH-NF-2 & The code required to develop a query or generate an artefact should be less complex than alternative methods & An EpsilonGit program producing identical output as a competitor should have a lower cyclomatic complexity \\ \hline
 SH-NF-3 & The solution should be able to be run as an Eclipse plug-in for ease of use & The solution should integrate with Epsilon Eclipse to the same level as the built-in EMF model type \\ \hline
 SH-NF-4 & Queries developed using EpsilonGit should be equally as performant, or better, than competitors & The average time required to run a query which produces the same output on the same machine should be less for EpsilonGit than for GitInspector \\ \hline
 SH-NF-5 & Documentation for the EMC layer of Epsilon should be improved & A document which better explains the steps required to develop an EMC driver should be written and made available to other developers as part of this process \\ \hline
-SH-NF-6 & Novel research into the effectiveness of Model Driven Engineering to solve problems in the field of Mining Software Repositories should be produced & The impact of this report should be assessed \\ \hline
+SH-NF-6 & Novel research into the effectiveness of Model Driven Engineering techniques to solve problems in the field of Mining Software Repositories should be produced & The impact of this report should be assessed \\ \hline
 SH-NF-7 & The code produced for the solution should be easily maintainable and extendable in the future & There should be low cyclomatic complexity and high class decoupling \\ \hline
 \end{longtable}
 \caption{Non-Functional Stakeholder Requirements}
@@ -576,7 +576,7 @@ SY-F-3 & The software must provide information to the Epsilon GUI framework to a
 \begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
-SY-NF-1 & The system should allow fast access to git from epsilon & The Software should be as fast as competitors at accessing git \\ \hline
+SY-NF-1 & The system should allow fast access to git from epsilon & The Software should be as fast as the competitors outlined in section \ref{competitors} at accessing git information \\ \hline
 SY-NF-2 & The system should be extensable & The system should provide hooks to easily add new features, particular in an open source fashion \\ \hline
 SY-NF-3 & The system should be easy to distribute and install & The system should use an Eclipse Plug-in project to make it a one-click install \\ \hline
 \end{longtable}
@@ -698,7 +698,7 @@ In this chapter the final design of the EpsilonGit software will be outlined, an
 \section{System Quality Attributes}
 System Quality Attributes (SQAs) are a set of attributes of a proposed system which can be reasoned about in a systematic way in order to aid the design of a systems high-level architecture in an objective way free from bias and hidden assumptions \cite{qualityattributes}.  
 
-To aid the design of the software for this project a subset of the system quality attributes outlined by the Quality Attributes technical report released by Carnegie-Mellon University and a the Microsoft Application Architecture Guide \cite{qualitymicrosoft} were considered based on how relevant they were according to the requirements of the software solution enumerated in chapter \ref{requirements}. They are presented with some methods used to achieve their goals.
+To aid the design of the software for this project a subset of the system quality attributes outlined by the Quality Attributes technical report released by Carnegie-Mellon University and and the Microsoft Application Architecture Guide \cite{qualitymicrosoft} were considered based on how relevant they were according to the requirements of the software solution enumerated in Chapter \ref{requirements}. They are presented with some methods used to achieve their goals.
 
 In Software Engineering trade-offs occasionally have to be made -- for example making a system more performant may make it harder to maintain in the future or port to new operating systems or platforms -- this reality is reflected in quality attributes. Whilst a single metric cannot accurately describe the effect of trade-offs on a system a simple numeric rank has been assigned to each attribute to signify its relative importance as a time saving device, this is necessary due to the limited time available to the project. The rank of a quality attribute will aid the decision making processes in designing the software if two attributes oppose one another. The numeric ranking ranges from 0, completely unimportant, to 5, critical.
 
@@ -709,16 +709,16 @@ The frequent refactoring and therefore changes to designs of the system based on
 
 Performance refers to system responsiveness: either the time required to respond to specific events, or the number of events processed in a given time interval \cite{performancedefinition}.
 
-Two non-functional requirements of the solution, SH-NF-5 and SY-NF-1, refer to performance as important to the software, in order to compete with competing methods of interacting with git repositories such as GitInspector and Github Graphs. The second objective of this project, outlined in section \ref{aimsandobjectives}, is to develop a solution that is competitive with other solutions in terms of speed therefore this SQA is rated as 4 (important).
+Two non-functional requirements of the solution, SH-NF-5 and SY-NF-1, refer to performance as important to the software, in order to compete with competing methods of interacting with git repositories such as GitInspector and Github Graphs. The second objective of this project, outlined in section \ref{aimsandobjectives}, is to develop a solution that is comparable to other solutions in terms of speed therefore this SQA is rated as 4 (important).
 
-In order to develop a performant system lessons learnt from looking at existing git analysis tools in section \ref{competitors}. Gitana took a long time to initially import a git repository to a database, so EpsilonGit will access git data directly as it is needed rather than cache it before use (for example in an EMF model). GitInspector was slow too, but because it read terminal output rather than interfacing with git directly. All of the competing solutions were written in interpreted languages, so using a compiled language may gain some additional speed.
+In order to develop a performant system lessons learnt from looking at existing git analysis tools in section \ref{competitors}. n preliminary experiments, Gitana took a long time to initially import a git repository to a database, so EpsilonGit will access git data directly as it is needed rather than cache it before use (for example in an EMF model). GitInspector was slow too, but because it read terminal output rather than interfacing with git directly. All of the competing solutions were written in interpreted languages, so using a compiled language may gain some additional speed.
 
 \subsubsection{Methods}
 \begin{enumerate}
-	\item Interact with Git using a native library rather than by interacting with a git application via Standard IO
+	\item Interact with Git using a native library rather than by interacting with a git application via standard IO
 	\item Interact with Git directly, rather than by constructing a database or other intermediate representation of data
 	\item Develop using a compiled language -- Java
-	\item Use the model caching provided by epsilon through the \code{ICachedModel} interface to reduce the amount of disk access and reading of git object data
+	\item Use the model caching capabilities provided by Epsilon through the \code{ICachedModel} interface to reduce the amount of disk access and reading of git object data
 \end{enumerate}
 
 
@@ -745,7 +745,7 @@ Interoperability will be particularly important for EpsilonGit as it is effectiv
 
 \subsubsection{Methods}
 \begin{enumerate}
-	\item Implement the \code{IModel} interface to integrate with the Model Connectivity Layer of Epsilon (This is a Java interface so Java should be used as the programming language) 
+	\item Implement the \code{IModel} interface, outlined in Chapter \ref{design}, to integrate with the Model Connectivity Layer of Epsilon (This is a Java interface so Java should be used as the programming language) 
 	\item Use the JGit Java Library to integrate with git
 	\item Allow access to all features of git through epsilon by subclassing JGit objects to make Model Elements
 \end{enumerate}
@@ -803,7 +803,7 @@ In order to allow a \code{GitModel} object to be created from the user interface
 
 Separate from the EpsilonGit system itself, but part of the project, are the two modules at the bottom of figure \ref{fig:hla}. 
 
-Tests consists of a JUnit \cite{junit} unit testing module developed in a test-driven development style alongside EpsilonGit itself. It contains unit tests to test individual methods with different input data and edge cases and integration tests designed to test the aggregation of methods. Validation tests, to ensure the requirements of the software are being met, are also included by way of test EOL files. This is explained in more detail in chapter \ref{testeval}.
+Tests consist of a JUnit \cite{junit} unit testing module developed in a test-driven development style alongside EpsilonGit itself. It contains unit tests to test individual methods with different input data and edge cases and integration tests designed to test the aggregation of methods. Validation tests, to ensure the requirements of the software are being met, are also included by way of test EOL files. This is explained in more detail in chapter \ref{testeval}.
 
 EOLTools is a small module designed to make 	developer artefact generators for Git data easier, for example it includes methods which assigns a random colour to each Person, committer and/or author, in a repository for use in graphs or other visual media.
 
@@ -906,7 +906,7 @@ Commit & isRoof & Determines if a commit is the roof (first) commit in a reposit
 \begin{tcolorbox}
 \textbf{Requirements addressed:} SH-NF-1, SH-NF-2, SY-F-2
 \end{tcolorbox}
-As explained in section \ref{gitobjectmodel}, git has no concept of files -- instead it keep track of blobs of data which can be associated to a name in a tree.
+As explained in section \ref{gitobjectmodel}, git has no concept of files -- instead it keeps track of blobs of data which can be associated to a name in a tree.
 
 This subtle difference is actually quite important. For example, if a user was to assume a Blob was analogous to a file then they might start to make assumptions about the number of files in a repository by counting the number of blobs, even though one blob can represent many files with the same data but different file names or not be associated to a file at all (blobs can be added to git without a corresponding name in a tree).
 
@@ -952,7 +952,7 @@ Having the people model elements means that query developers don't have to parse
 \textbf{Requirements addressed:} SH-F-5, SH-NF-3, SY-F-3
 \end{tcolorbox}
 
-In order to make epsilon git easy to use it integrates with the graphical user interface of Eclipse Epsilon. This allows users to specify the location of their git repositories and whether or not they would like to use the caching mechanism explained in section \ref{caching} without having to write code or use a command-line.
+In order to make EpsilonGit easy to use it integrates with the graphical user interface of Eclipse Epsilon. This allows users to specify the location of their git repositories and whether or not they would like to use the caching mechanism explained in section \ref{caching} without having to write code or use a command-line.
 
 \begin{figure}[h]
 	\centering
@@ -974,19 +974,19 @@ The design shown in chapter \ref{design} shows that several different tools and 
 \subsection{Integrated Development Environment}
 There are several commercial and open source IDEs available which allow their user to write, compile and run their Java code, however as the project is being developed to integrate with the Epsilon Modelling Platform which is a Eclipse Foundation product and integrated into the Eclipse IDE itself, thus requiring the EMC layer to be written as an Eclipse Plug-in project, it only makes sense to use Eclipse to write the projects code.
 
-To begin with the publicly available latest release version of the Epsilon Eclipse package was used -- version 1.2 of Epsilon with Eclipse 4.4 Luna. However, mid-way through the project the author hit Epsilon Bug \#341481 \cite{epsilonbug}. At this point the author updated to the latest interim release in which this bug had been fixed -- this required the editing of one line of code. 
+To begin with, the publicly available latest release version of the Epsilon Eclipse package was used -- version 1.2 of Epsilon with Eclipse 4.4 Luna. However, mid-way through the project the author encountered Epsilon Bug \#341481 \cite{epsilonbug}. At this point the author updated to the latest interim release in which this bug had been fixed -- this required the editing of one line of code. 
 
 \subsection{Git}
 Although the git source control management software is not required to run or develop EpsilonGit it was useful in order to validate any... %TODO: Start here tomorrow 
 
 \section{Project Structure}
-The EpsilonGit project is structured as 4 Eclipse Plug-in projects, one for each of the main modules discussed in the design chapter and displayed in the EpsilonGit frame of figure \ref{fig:hla}. Eclipse Plug-in projects were used in order to maintain compatibility with Epsilon. These projects are:
+The EpsilonGit project is structured as 4 Eclipse plug-in projects, one for each of the main modules discussed in the design chapter and displayed in the EpsilonGit frame of figure \ref{fig:hla}. Eclipse Plug-in projects were used in order to maintain compatibility with Epsilon. These projects are:
 
 \begin{enumerate}
-	\item \code{org.eclipse.epsilon.emc.git} \\ The main EMC driver project
-	\item \code{org.eclipse.epsilon.emc.git.dt} \\ The project for integrating with Epsilons user interface 
-	\item \code{org.eclipse.epsilon.emc.git.tests} \\ The project containing JUnit tests for the EMC driver
-	\item \code{org.eclipse.epsilon.emc.git.tools} \\ The project containing the EOL tools described in chapter \ref{design}
+	\item \code{org.eclipse.epsilon.emc.git} \\ The main EMC driver project.
+	\item \code{org.eclipse.epsilon.emc.git.dt} \\ The project for integrating with Epsilon's user interface.
+	\item \code{org.eclipse.epsilon.emc.git.tests} \\ The project containing JUnit tests for the EMC driver.
+	\item \code{org.eclipse.epsilon.emc.git.tools} \\ The project containing the EOL tools described in chapter \ref{design}.
 \end{enumerate}
 
 The tests were originally contained in the main EMC driver project, however it was decided that they should reside in their own project to make a clear line between what was production code and what was auxiliary testing code. Encapsulating the tests in their own project also meant it would be easier to add tests for the tools and user interface projects in future.
@@ -998,11 +998,11 @@ The \code{dt}, \code{tests} and \code{tools} projects each contain only one Java
 The packages that make up the main EMC driver are:
 
 \begin{enumerate}
-	\item \code{org.eclipse.epsilon.git} \\ Contains the main class, \code{GitModel.java} , which implements the \code{IModel} interface and \code{GitCalendar.java}, a class which provides the helper methods for working with commit times
+	\item \code{org.eclipse.epsilon.git} \\ Contains the main class, \code{GitModel.java} , which implements the \code{IModel} interface and \code{GitCalendar.java}, a class which provides the helper methods for working with commit times.
 	\item \code{org.eclipse.epsilon.git.objectmodel} \\ Contains the classes which provide access and helper methods for the git object model
 	\item \code{org.eclipse.epsilon.git.filesystem} \\ Contains the classes used to provide the FileSystem abstraction explained in chapter \ref{design}.
-	\item \code{org.eclipse.epsilon.git.people} \\ Contains the classes which deal with accessing and searching for Authors and Commiters to git repositories
-	\item \code{org.eclipse.epsilon.git.diff} \\ Contains classes which provide helper methods for computing a diff between two commits
+	\item \code{org.eclipse.epsilon.git.people} \\ Contains the classes which deal with accessing and searching for Authors and Commiters to git repositories.
+	\item \code{org.eclipse.epsilon.git.diff} \\ Contains classes which provide helper methods for computing a diff between two commits.
 \end{enumerate}
 
 You can see that these align quite rigidly with the high level architecture outlined in Figure \ref{fig:hla} except for the addition of a diff package. The diff package was added because it was felt that the diff helper methods were numerous enough to warrant their own package, rather than pollute the main package.
@@ -1088,7 +1088,7 @@ There are too many unit tests to properly enumerate and explain in this report, 
 
 \section{Epsilon Integration Test}
 \label{evalepsilonintegration}
-Requirements SY-NF-3 and SH-NF-3 require that the system be easy to install and distributed by way of an Epsilon Plug-in -- this functionality was tested with the interim version of Epsilon Eclipse and the EpsilonGit as made available on Github \cite{epsilongitgithub}. Figure \ref{fig:epsilonintegration} shows git model information being added to Epsilon, satisfying the aforementioned requirements.
+Requirements SY-NF-3 and SH-F-5 require that the system be easy to install and distributed by way of an Epsilon Plug-in -- this functionality was tested with the interim version of Epsilon Eclipse and the EpsilonGit as made available on Github \cite{epsilongitgithub}. Figure \ref{fig:epsilonintegration} shows git model information being added to Epsilon, satisfying the aforementioned requirements.
 
 \begin{figure}[h]
 	\centering
@@ -1097,7 +1097,7 @@ Requirements SY-NF-3 and SH-NF-3 require that the system be easy to install and 
 	\label{fig:epsilonintegration}
 \end{figure}
 
-SY-F-3 requires that a GUI consistent with the rest of the epsilon suite be accessible for users to add git models for querying and analysis to Epsilon -- this too can be seen being satisfied in Figure \ref{fig:epsilonintegration}. Due to the fact that this configuration dialog allows a user to enter the location of their git repository and therefore EOL code doesn't need to have this hardcoded EpsilonGit also satisfies requirement SH-F-4, "Query Developers should be able to develop epsilon object language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about"
+SY-F-3 requires that a GUI consistent with the rest of the Epsilon suite be accessible for users to add git models for querying and analysis to Epsilon -- this too can be seen being satisfied in Figure \ref{fig:epsilonintegration}. Due to the fact that this configuration dialog allows a user to enter the location of their git repository and therefore EOL code doesn't need to have this hardcoded EpsilonGit also satisfies requirement SH-F-4, "Query Developers should be able to develop epsilon object language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about"
 
 \section{Acceptance Tests}
 \label{evalacceptance}
@@ -1105,9 +1105,9 @@ Whilst the unit tests proved that the code written did what was expected of it, 
 
 Acceptance tests specify the desired behaviour of the system and are a type of formal testing conducted to determine whether or not a system satisfies its acceptance criteria and to enable the customer to determine whether or not to accept the system \cite{acceptancetests1}\cite{acceptancetests2}. 
 
-Acceptance tests for EpsilonGit consisted of a set of Epsilon Object Language scripts, which should execute successfully with an acceptable solution, written prior to development of production code. 
+Acceptance tests for EpsilonGit consisted of a set of Epsilon Object Language scripts, which should execute successfully if the EMC driver implements all the functional requirements outlined in Chapter \ref{requirements}, written prior to development of production code. 
 
-The acceptance tests presented as Listings A.1-A.5 were written to prove that read access to all the most common parts of git was available through Epsilons domain specific languages and generators, satisfying requirements SH-F-1, SH-F-3, SH-F-1 and SY-F-2. Acceptance test A.6 compares the amount of commits in two repositories and outputs a message saying which has more -- thus proving EpsilonGit satisfies requirement SH-F-2, "Git Analysts should be able to access multiple git repositories at once for comparison".
+The acceptance tests presented as Listings A.1-A.5 were written to prove that read access to all the most common parts of git was available through Epsilon's domain specific languages and generators, satisfying requirements SH-F-1, SH-F-3, SH-F-1 and SY-F-2. Acceptance test A.6 compares the amount of commits in two repositories and outputs a message saying which has more -- thus proving EpsilonGit satisfies requirement SH-F-2, "Git Analysts should be able to access multiple git repositories at once for comparison".
 
 Each of these tests can be executed using Epsilon and EpsilonGit and provide results consistent with those provided by the competing solutions -- therefore all EOL acceptance tests passed.
 
@@ -1119,7 +1119,7 @@ In this section performance and ease-of-development relating to bespoke queries 
 \subsection{Performance}
 Each of the tools being compared here is rather different, each using different programming languages and libraries, which can make comparing performance difficult. After much consideration the author has decided that performance will be measured in the amount of time required to perform a specified query. CPU and memory usage will not be measured.
 
-Some of the systems may fair better with repositories of different sizes, so a small repository, medium sized repository and large repository will be used for evaluation. The small repository is for one of the authors side projects, called csblogs, and consists of 411 commits \cite{csbrepository}. The medium sized repository is for the node.js runtime and consists of 10,762 commits \cite{noderepository}. The large repository is the linux kernel repository, which consists of 535,010 commits \cite{linuxrepository}.
+Some of the systems may perform better with repositories of different sizes, so a small repository, medium sized repository and large repository will be used for evaluation. The small repository is for one of the authors side projects, called csblogs, and consists of 411 commits \cite{csbrepository}. The medium sized repository is for the node.js runtime and consists of 10,762 commits \cite{noderepository}. The large repository is the linux kernel repository, which consists of 535,010 commits \cite{linuxrepository}.
 
  
 
@@ -1165,7 +1165,7 @@ Overall this project has been a success. The system envisioned at the beginning 
 
 Model-Driven Engineering has proven itself to be a highly effective way of dealing with complex structured data -- both in terms of reducing query complexity and enabling more bespoke and complex queries -- and the author thinks that model-driven engineerings role in mining software repositories should be further researched.
 
-If the project were to be done over again then the author would do little differently -- many design and implementation issues were fixed through the use of the iterative methodology -- however he would have written more acceptance tests covering more of Epsilons domain specific languages \& generators and written more helper methods for some of the object model elements.
+If the project were to be done over again then the author would do little differently -- many design and implementation issues were fixed through the use of the iterative methodology -- however he would have written more acceptance tests covering more of Epsilon's domain specific languages \& generators and written more helper methods for some of the object model elements.
 
 The author is personally very excited to see what novel analysis can be made on git repositories by third-parties using the EpsilonGit software.
 
@@ -1194,7 +1194,7 @@ A larger addition to EpsilonGit could be to make it compatible with other popula
 
 Chapter \ref{design} discusses some of the design decisions made, such as the use of caching, to improve the performance of the EpsilonGit system. However, due to the size of the project and the time constraints imposed upon it there are some low hanging fruit regards performance improvement. For example, whilst the model elements themselves are cached, some of the results of methods ran on them are not -- e.g. every time \code{commit.getCommitCalendar()} is called a new calendar object is initialised -- these could be cached for future use.
 
-The secondary aim of this project is the increase the interest amongst developers in Epsilon and Model Driven Engineering. The project, as is, is required to be used through Epsilon Eclipse, which includes many useful model driven engineering tools, but may be too large a piece of software to download, install and manage for someone who just wants to analyse one software repository -- putting people off of using EpsilonGit and therefore not finding out more about MDE. This could be resolved in future by allowing a developer to download a program which just includes EpsilonGit, a texteditor to write epsilons domain specific languages, and the required Epsilon Libraries, or by providing them with an online interface to these features.
+The secondary aim of this project is the increase the interest amongst developers in Epsilon and Model Driven Engineering. The project, as is, is required to be used through Epsilon Eclipse, which includes many useful model driven engineering tools, but may be too large a piece of software to download, install and manage for someone who just wants to analyse one software repository -- putting people off of using EpsilonGit and therefore not finding out more about MDE. This could be resolved in future by allowing a developer to download a program which just includes EpsilonGit, a text editor to write Epsilon's domain specific languages, and the required Epsilon Libraries, or by providing them with an online interface to these features.
 
 At the time of writing a fellow student is developing a web accessible system for generating artefacts from and querying models and structured artefacts that are accessible using Epsilon Model Connectivity. The ability to query analyse git through a web interface could be useful and so it would be interesting to consider combining the two systems in future.
 
