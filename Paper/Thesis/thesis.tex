@@ -13,6 +13,7 @@
 \usepackage [english]{babel}
 \usepackage [autostyle, english = american]{csquotes}
 \MakeOuterQuote{"}
+\usepackage{diagbox}
 
 % CODE HIGHLIGHTING COLOURS SET UP
 % Set up for C#, Credit: http://tex.stackexchange.com/questions/124953/syntax-highlighting-in-listings-for-c-that-it-looks-like-in-visual-studio
@@ -518,8 +519,7 @@ A short code to identify the requirement. Type-Function-Number format. E.g. ST-N
 
 \clearpage
 \subsection{Functional Requirements}
-\begin{table}[H]
-\centering
+
 \begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
@@ -528,14 +528,11 @@ SH-F-2 & Git Analysts should be able to access multiple git repositories at once
 SH-F-3 & Git Analysts should be able to use generators to develop artefacts from their git repositories & HTML should be able to be produced via Epsilon Generation Language (EGL) files \\ \hline
 SH-F-4 & Query Developers should be able to develop Epsilon Object Language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about & The model interface should not itself require knowledge of git repository locations \\ \hline
 SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs and Generators using the Epsilon GUI & An option should be shown to add a git repository as a model in the epsilon GUI. When clicked this should allow the user to name it and select its location \\ \hline
-\end{longtable}
 \caption{Functional Stakeholder Requirements}
 \label{tab:functionalstakeholderrequirements}
-\end{table}
+\end{longtable}
 
 \subsection{Non-Functional Requirements}
-\begin{table}[H]
-\centering
 \begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
@@ -546,27 +543,22 @@ SH-NF-4 & Queries developed using EpsilonGit should be equally as performant, or
 SH-NF-5 & Documentation for the EMC layer of Epsilon should be improved & A document which better explains the steps required to develop an EMC driver should be written and made available to other developers as part of this process \\ \hline
 SH-NF-6 & Novel research into the effectiveness of Model Driven Engineering techniques to solve problems in the field of Mining Software Repositories should be produced & The impact of this report should be assessed \\ \hline
 SH-NF-7 & The code produced for the solution should be easily maintainable and extendable in the future & There should be low cyclomatic complexity and high class decoupling \\ \hline
-\end{longtable}
 \caption{Non-Functional Stakeholder Requirements}
 \label{tab:nonfunctionalstakeholderrequirements}
-\end{table}
-
+\end{longtable}
 
 \section{System \& Software Requirements}
 System and Software requirements are the requirements that don't directly interfere with the user but are required to allow the software to work as intended.
 \subsection{Functional Requirements}
-\begin{table}[H]
-\centering
 \begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
 \hline
 \textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
 SY-F-1 & The software solution must be able to interact with the Epsilon Platform and its set of Domain Specific Languages and Generators & The Software must implement the model reading functions of the \code{IModel} interface provided by Epsilon \\ \hline
 SY-F-2 & The software must be able to read information from git & The Software must be able to read all information from the Git Object Model \\ \hline
 SY-F-3 & The software must provide information to the Epsilon GUI framework to allow users to select repositories etc & Epsilon GUIs should work in the same way for Git repositories as they do for EMF files \\ \hline
-\end{longtable}
 \caption{Functional System Requirements}
 \label{tab:functionalsystemrequirements}
-\end{table}
+\end{longtable}
 
 
 %Things that need to be done in software to enable what users need
@@ -1050,6 +1042,7 @@ else {
 The solution can determine the type of object it should be looking for by first determining if it is an object-model type element, JGit provides an in-built method to test if a hash code is a valid identified in that repository. Elements not part of the object model have an identifier assigned to them that starts with a type identified, this can then be used to determine which type of object to look up.
 
 \subsection{Issues Subclassing JGit Types}
+%TODO: This section
 
 % Experimentation and changes necessary as things changed (for example learning more about jGit, epsilon and Java or subclassing jGit types to provide better names in EOL code and hide some of the underlying implementation)
 	
@@ -1114,21 +1107,83 @@ Each of these tests can be executed using Epsilon and EpsilonGit and provide res
 \section{Comparison with Existing Solutions}
 Sections \ref{evalepsilonintegration} and \ref{evalacceptance} outline how EpsilonGit has met both its stakeholder and system functional requirements. However, they do not prove that the solution produced for this project has met or exceeded its non-functional requirements relating to speed or ease-of-use compared to the existing solutions detailed in section \ref{competitors}.
 
-In this section performance and ease-of-development relating to bespoke queries will be compared with GitInspector, GitHub and Gitana.
+In this section performance and ease-of-development relating to bespoke queries will be compared with GitInspector and Gitana. 
+
+The author would have liked to compare EpsilonGit with the Github solution, however it is closed source and only available via the internet which means the code would be running on a different, possibly more powerful machine, than the other two solutions and would introduce network latency -- both variables which would make any comparison unfair.
 
 \subsection{Performance}
 Each of the tools being compared here is rather different, each using different programming languages and libraries, which can make comparing performance difficult. After much consideration the author has decided that performance will be measured in the amount of time required to perform a specified query. CPU and memory usage will not be measured.
 
-Some of the systems may perform better with repositories of different sizes, so a small repository, medium sized repository and large repository will be used for evaluation. The small repository is for one of the authors side projects, called csblogs, and consists of 411 commits \cite{csbrepository}. The medium sized repository is for the node.js runtime and consists of 10,762 commits \cite{noderepository}. The large repository is the linux kernel repository, which consists of 535,010 commits \cite{linuxrepository}.
-
- 
+Some of the systems may perform better with repositories of different sizes, so a small repository, medium sized repository and large repository will be used for evaluation. The small repository is for one of the authors side projects, called csblogs, and consists of 411 commits \cite{csbrepository}. The medium sized repository is for the node.js runtime and consists of 10,762 commits \cite{noderepository}. The large repository is the linux kernel repository, which consists of 535,010 commits \cite{linuxrepository}. All tests were conducted on the same late 2014 Macbook Pro.
 
 %TODO : Eval
+\begin{table}[H]
+\centering
+\begin{tabular}{|l|l|l|l|}
+\hline
+\multicolumn{1}{|r|}{\backslashbox{\textbf{System}}{\textbf{Repository}}} & {\bf Small} & {\bf Medium} & {\bf Large} \\ \hline
+{\bf EpsilonGit}                                &             &              &             \\ \hline
+{\bf GitInspector}                              &             &              &             \\ \hline
+{\bf Gitana}                                    &             &              &             \\ \hline
+\end{tabular}
+\caption{Performance of EpsilonGit compared to competing solutions}
+\label{tab:perf}
+\end{table}
+
+Each solution was tasked with providing an output equivalent to that of GitInspector  
 
 \subsection{Ease of Query Development}
 Code complexity is itself a complex topic. There are several ways to measure complexity including cyclomatic complexity and halstead volumes \cite{halstead}. However, it was decided that a simpler metric of lines of code to produce a pre-determined result would be easier to analyse and sufficient to determine if the ease-of-use requirements had be satisfied.
 
+Again, here each solution was tasked with providing an output equivalent to that of GitInspector. The number of lines of code required to generate this output were then counted. It is worth noting that none of the solutions, including the EpsilonGit solution, were optimised to reduce lines of code.
+
+\begin{table}[H]
+\centering
+
+\begin{tabular}{|l|l|}
+\hline
+\multicolumn{1}{|r|}{{\bf System}} & {\bf Lines of Code} \\ \hline
+{\bf EpsilonGit}                   &                     \\ \hline
+{\bf GitInspector}                 &                     \\ \hline
+{\bf Gitana}                       &                     \\ \hline
+\end{tabular}
+\caption{Line of Code Comparison}
+\label{tab:loc}
+\end{table}
+
 %TODO : Eval
+
+\section{Requirements Satisfied}
+In this section the requirements outlined in Chapter \ref{requirements} 
+
+
+\begin{longtable}{|p{2cm}|p{7cm}|p{6cm}|}
+\hline
+\textbf{Identifier} & \textbf{Description} & \textbf{Success Criteria} \\ \hline
+SH-F-1 & Git Analysts should be able to access all commonly used parts of the git API via a model driven interface &  Git Object Model (Tag, Commit, Tree, Blob) accessible via EOL \\ \hline
+SH-F-2 & Git Analysts should be able to access multiple git repositories at once for comparison & Multiple repositories query-able via EOL.  \\ \hline
+SH-F-3 & Git Analysts should be able to use generators to develop artefacts from their git repositories & HTML should be able to be produced via Epsilon Generation Language (EGL) files \\ \hline
+SH-F-4 & Query Developers should be able to develop Epsilon Object Language code which requires no knowledge of the underlying git repository and can therefore be distributed for others to know about & The model interface should not itself require knowledge of git repository locations \\ \hline
+SH-F-5 & Git Analysts should be able to add git repositories to Epsilon Programs and Generators using the Epsilon GUI & An option should be shown to add a git repository as a model in the epsilon GUI. When clicked this should allow the user to name it and select its location \\ \hline
+SH-NF-1 & The code required to develop a query or generate an artefact should be more concise than alternative methods & An EpsilonGit program producing identical output as a competitor should require less lines of code \\ \hline
+SH-NF-2 & The code required to develop a query or generate an artefact should be less complex than alternative methods & An EpsilonGit program producing identical output as a competitor should have a lower cyclomatic complexity \\ \hline
+SH-NF-3 & The solution should be able to be run as an Eclipse plug-in for ease of use & The solution should integrate with Epsilon Eclipse to the same level as the built-in EMF model type \\ \hline
+SH-NF-4 & Queries developed using EpsilonGit should be equally as performant, or better, than competitors & The average time required to run a query which produces the same output on the same machine should be less for EpsilonGit than for GitInspector \\ \hline
+SH-NF-5 & Documentation for the EMC layer of Epsilon should be improved & A document which better explains the steps required to develop an EMC driver should be written and made available to other developers as part of this process \\ \hline
+SH-NF-6 & Novel research into the effectiveness of Model Driven Engineering techniques to solve problems in the field of Mining Software Repositories should be produced & The impact of this report should be assessed \\ \hline
+SH-NF-7 & The code produced for the solution should be easily maintainable and extendable in the future & There should be low cyclomatic complexity and high class decoupling \\ \hline
+SY-F-1 & The software solution must be able to interact with the Epsilon Platform and its set of Domain Specific Languages and Generators & The Software must implement the model reading functions of the \code{IModel} interface provided by Epsilon \\ \hline
+SY-F-2 & The software must be able to read information from git & The Software must be able to read all information from the Git Object Model \\ \hline
+SY-F-3 & The software must provide information to the Epsilon GUI framework to allow users to select repositories etc & Epsilon GUIs should work in the same way for Git repositories as they do for EMF files \\ \hline
+SY-NF-1 & The system should allow fast access to git from epsilon & The Software should be as fast as the competitors outlined in section \ref{competitors} at accessing git information \\ \hline
+SY-NF-2 & The system should be extensable & The system should provide hooks to easily add new features, particular in an open source fashion \\ \hline
+SY-NF-3 & The system should be easy to distribute and install & The system should use an Eclipse Plug-in project to make it a one-click install \\ \hline
+
+\caption{Requirements status at end of project}
+\label{tab:reqsats}
+\end{longtable}
+
+%TODO : Listing of requirements again, with satisfied yes/no
 
 \section{Overall Review}
 Allowing access to git, a software repository, via a model-driven interface is both a novel and powerful application of Model Driven Engineering that will allow both the author and other software engineers to write queries useful for analysing git repositories in order to uncover interesting and actionable information about software systems.
