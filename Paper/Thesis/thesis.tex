@@ -965,6 +965,11 @@ It was decided that the configuration dialog box would ask the user to provide t
 \chapter{Implementation}
 In this chapter the implementation details of EpsilonGit will be explained including information about how to set up EpsilonGit for use on the readers machine, the structure of the projects code and the environment used for development purposes.
 
+\section{Preparing the Development Environment}
+The design shown in chapter \ref{design} shows that several different tools and libraries are part of the EpsilonGit system development process. In this section the tools installed in order to complete the project will be discussed.
+
+
+
 \section{Project Structure}
 The EpsilonGit project is structured as 4 Eclipse Plug-in projects, one for each of the main modules discussed in the design chapter and displayed in the EpsilonGit frame of figure \ref{fig:hla}. Eclipse Plug-in projects were used in order to maintain compatibility with Epsilon. These projects are:
 
@@ -979,12 +984,19 @@ The tests were originally contained in the main EMC driver project, however it w
 
 The \code{dt}, \code{tests} and \code{tools} projects each contain only one Java package, of the same name, however the main EMC driver project contains several Java packages which encapsulate different functionality in order to aid the organisation and therefore maintainability of the code.
 
+\clearpage
+
 The packages that make up the main EMC driver are:
 
-%TODO: start here
 \begin{enumerate}
-	\item people
+	\item \code{org.eclipse.epsilon.git} \\ Contains the main class, \code{GitModel.java} , which implements the \code{IModel} interface and \code{GitCalendar.java}, a class which provides the helper methods for working with commit times
+	\item \code{org.eclipse.epsilon.git.objectmodel} \\ Contains the classes which provide access and helper methods for the git object model
+	\item \code{org.eclipse.epsilon.git.filesystem} \\ Contains the classes used to provide the FileSystem abstraction explained in chapter \ref{design}.
+	\item \code{org.eclipse.epsilon.git.people} \\ Contains the classes which deal with accessing and searching for Authors and Commiters to git repositories
+	\item \code{org.eclipse.epsilon.git.diff} \\ Contains classes which provide helper methods for computing a diff between two commits
 \end{enumerate}
+
+You can see that these align quite rigidly with the high level architecture outlined in Figure \ref{fig:hla} except for the addition of a diff package. The diff package was added because it was felt that the diff helper methods were numerous enough to warrant their own package, rather than pollute the main package.
 
 \section{Git EMC Driver}
 Several implementation choices had to be made during the development of the EMC driver for git including language, method for interacting with git and coding conventions. 
@@ -999,25 +1011,37 @@ In order to improve the maintainability of the code it was decided that a coding
 
 One of the idioms of Epsilon is that it requires the use of accessor and mutator paradigm for public fields of a class -- even if a field is public it cannot be read or written to from EOL code without \code{getX()} and \code{setX()} methods. As discussed in chapter \ref{design} this lead to a need for more helper methods to access JGit information but it also affected the implementation of original EpsilonGit classes by requiring more code (thought the author understands that it is good practice to always provide accessors and mutators for class fields). 
 
-% lots of code samples etc
+\subsection{getElementByID}
+One of the most complex methods to write was the \code{getElementById()} method -- which allows Epsilon to ask for any model using just its unique identification code. The decision was made to use the unique hash code of an object model element as its identifier. This was simple enough and worked in early iterations of the solution where there were not non-object model types in the system.
 
+When the \code{Person}, \code{Author} and \code{Committer} types were added to the system, which don't have hash codes as they are not object model types, it was realised that these were inaccessible via \code{getElementById()}. 
 
-\section{Experimentation}
+JGit includes support for optimized searching for object model elements using their hashcode, therefore the author didn't want to change the identifier for object model types which he anticipated were to be most heavily used -- the solution used can be seen in Listing \ref{lst:modeltypeid}. \\
 
-% Environment used
-	% Epsilon Eclipse Interim (why interim?)
-	% Latest version of Git
-% Libraries used
-	% JGit
-	% Apache Commons Lang
-	% etc.
-% Projects
-	% .git.dt (for creating new Models from git)
-	% .git (main functionality of driver)
-	% .git.test (tdd stuff)
-	% .git.tools (some useful EOL tools for Git stuff)
-% Lots of stuff about implementation decisions here
-% Making architecture fit between JGit and Epsilon
+\begin{lstlisting}[caption=Determining the type of model element by its ID, label=lst:modeltypeid]
+if(ObjectId.isId(id)) {
+	//The Id passed in is the object id of a git object model element.
+}
+else {
+	if(id.startsWith("Person:")) {
+		//Person
+	}
+	else if(id.startsWith("Author:")) {
+		//Author
+	}
+	else if(id.startsWith("Committer:")) {
+		//Committer
+	}
+	else if (id.startsWith("File:")) {
+		//FileSystem type
+	}
+}
+\end{lstlisting}
+
+The solution can determine the type of object it should be looking for by first determining if it is an object-model type element, JGit provides an in-built method to test if a hash code is a valid identified in that repository. Elements not part of the object model have an identifier assigned to them that starts with a type identified, this can then be used to determine which type of object to look up.
+
+\subsection{Issues Subclassing JGit Types}
+
 % Experimentation and changes necessary as things changed (for example learning more about jGit, epsilon and Java or subclassing jGit types to provide better names in EOL code and hide some of the underlying implementation)
 	
 % Summary of what do to to get the system running on your own machine
