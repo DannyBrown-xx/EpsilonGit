@@ -1077,7 +1077,20 @@ In section \ref{selectedmethodology} it was established that the project would b
 
 The primary use of these TDD unit tests was to ensure that as development progressed changes were not causing regressions in the functionality and correctness of the software. In order to do this each unit of software was tested against expected edge cases and in both acceptable and exceptional cases -- e.g. with parameters that should return a correct result and parameters that should cause exceptional behaviour. Whilst the author feels that most of the individual units of software within the solution are well tested by the JUnit suite written it is always worth remembering that, as Edsger Dijkstra said, program testing can be used very effectively to show the presence of bugs but never to show their absence \cite{edsger}.
 
-There are too many unit tests to properly enumerate and explain in this report, however the reader is invited to view all of them and run them against EpsilonGit by loading the \\  \code{EpsilonGit/Implementation/org.eclipse.epsilon.emc.git.tests} Java project into Eclipse from the projects git repository \cite{epsilongitgithub}.
+There are too many unit tests to properly enumerate and explain in this report, however the reader is invited to view all of them and run them against EpsilonGit by loading the \\  \code{EpsilonGit/Implementation/org.eclipse.epsilon.emc.git.tests} Java project into Eclipse from the projects git repository \cite{epsilongitgithub}. A subset of the unit tests written for this project are described in Table \ref{tab:unittests}.
+
+\begin{longtable}{|l|p{6.5cm}|p{6.5cm}|p{1cm}|}
+	\hline
+	\textbf{\#}  & \textbf{Test Name} & \textbf{Description} & \textbf{Pass} \\ \hline
+	1  & getElementByIdValidCommit()			  &	Tests if the \code{getElementById()} method of the \code{GitModel} class returns the correct commit, using its hash as an ID			& Yes	   \\ \hline
+	2  & getElementByIdNonExistantCommit()			  &	Tests if the \code{getElementById()} method of the \code{GitModel} class can handle a hash which doesn't exist in the object database. Should return \code{null}.			& Yes	   \\ \hline
+	3  & getAllOfTypeFromModelCommit()			  &	Tests if the \code{getAllOfTypeFromModel()} method can correctly return all the commits in a git repository			& Yes	   \\ \hline
+	4  & hasTypeRevTag()			  &	Tests if the \code{GitModel} type accurately responds when asked if it controls the \code{Tag} model element type 			& Yes	   \\ \hline
+	\caption{A subset of the EpsilonGit Unit Testing Suite}
+	\label{tab:unittests}
+\end{longtable}
+
+Some of the tests shown in \ref{tab:unittests} require that well-known git repositories are present on the testers system in order to determine a correct result. \code{getAllOfTypeFromModelCommit()} for example needs to know the number of commits to expect back from its operation in order to correctly assert success or failure. In order to ease the testing process a \code{setUpBeforeClass()} JUnit method was implemented, which runs the required \code{git clone} commands to acquire the well-known repositories referenced by the testing code -- but only if they are not already present.
 
 \section{Epsilon Integration Test}
 \label{evalepsilonintegration}
@@ -1107,30 +1120,30 @@ Each of these tests can be executed using Epsilon and EpsilonGit and provide res
 \section{Comparison with Existing Solutions}
 Sections \ref{evalepsilonintegration} and \ref{evalacceptance} outline how EpsilonGit has met both its stakeholder and system functional requirements. However, they do not prove that the solution produced for this project has met or exceeded its non-functional requirements relating to speed or ease-of-use compared to the existing solutions detailed in section \ref{competitors}.
 
-In this section performance and ease-of-development relating to bespoke queries will be compared with GitInspector and Gitana. 
+In this section performance and ease-of-development relating to bespoke queries will be compared with GitInspector. 
 
-The author would have liked to compare EpsilonGit with the Github solution, however it is closed source and only available via the internet which means the code would be running on a different, possibly more powerful machine, than the other two solutions and would introduce network latency -- both variables which would make any comparison unfair.
+The author would have liked to compare EpsilonGit with the Github solution, however it is closed source and only available via the internet which means the code would be running on a different, possibly more powerful machine, than the other two solutions and would introduce network latency -- both variables which would make any comparison unfair. Similarly, the author would have liked to have made comparisons between Gitana and EpsilonGit -- however after several days of trying he could not get the software to run on any one of several systems.
 
 \subsection{Performance}
 Each of the tools being compared here is rather different, each using different programming languages and libraries, which can make comparing performance difficult. After much consideration the author has decided that performance will be measured in the amount of time required to perform a specified query. CPU and memory usage will not be measured.
 
-Some of the systems may perform better with repositories of different sizes, so a small repository, medium sized repository and large repository will be used for evaluation. The small repository is for one of the authors side projects, called csblogs, and consists of 411 commits \cite{csbrepository}. The medium sized repository is for the node.js runtime and consists of 10,762 commits \cite{noderepository}. The large repository is the linux kernel repository, which consists of 535,010 commits \cite{linuxrepository}. All tests were conducted on the same late 2014 Macbook Pro.
+Some of the systems may perform better with repositories of different sizes, so a small repository and large repository will be used for evaluation. The small repository is for one of the authors side projects, called csblogs, and consists of 411 commits \cite{csbrepository}. The large repository is for the node.js runtime and consists of 10,762 commits \cite{noderepository}. All tests were conducted on the same late 2014 Macbook Pro.
 
-%TODO : Eval
 \begin{table}[H]
 \centering
 \begin{tabular}{|l|l|l|l|}
 \hline
-\multicolumn{1}{|r|}{\backslashbox{\textbf{System}}{\textbf{Repository}}} & {\bf Small} & {\bf Medium} & {\bf Large} \\ \hline
-{\bf EpsilonGit}                                &             &              &             \\ \hline
-{\bf GitInspector}                              &             &              &             \\ \hline
-{\bf Gitana}                                    &             &              &             \\ \hline
+\multicolumn{1}{|r|}{\backslashbox{\textbf{System}}{\textbf{Repository}}} & {\bf Small} & {\bf Large}\\ \hline
+{\bf EpsilonGit}                               &     363ms                     & 104,121ms             \\ \hline
+{\bf GitInspector}                             &      674ms                    & 326,755ms             \\ \hline
 \end{tabular}
 \caption{Performance of EpsilonGit compared to competing solutions}
 \label{tab:perf}
 \end{table}
 
-Each solution was tasked with providing an output equivalent to that of GitInspector shown in Figure \ref{fig:gitinspector}. 
+Each solution was tasked with providing an output equivalent to that of GitInspector shown in Figure \ref{fig:gitinspector} and the timings shown are the average of five runs for each system. The EpsilonGit code was timed using the Epsilon Profile Tools \cite{epsilonprofiletools}, whilst the GitInspector code was timed using the time bash command \cite{bashtime}.
+
+From these results we can determine that EpsilonGit is faster than GitInspector when working on both small and large repositories, satisfying requirement SH-NF-5. Interesting to note is that GitInspector is 85.6\% slower than EpsilonGit when working on a small repository, but 218\% slower on the large repository, suggesting that larger repositories slow GitInspector down more than they do EpsilonGit.
 
 \subsection{Ease of Query Development}
 Code complexity is itself a complex topic. There are several ways to measure complexity including cyclomatic complexity and halstead volumes \cite{halstead}. However, it was decided that a simpler metric of lines of code to produce a pre-determined result would be easier to analyse and sufficient to determine if the ease-of-use requirements had be satisfied.
@@ -1145,13 +1158,14 @@ Again, here each solution was tasked with providing an output equivalent to that
 \multicolumn{1}{|r|}{{\bf System}} & {\bf Lines of Code} \\ \hline
 {\bf EpsilonGit}                   & 187                 \\ \hline
 {\bf GitInspector}                 & 2311                \\ \hline
-{\bf Gitana}                       &                     \\ \hline
 \end{tabular}
 \caption{Line of Code Comparison}
 \label{tab:loc}
 \end{table}
 
-%TODO : Eval
+Here we can see that the code required to generate a HTML output and graphs equivalent to those generated by GitInspector is around 12x smaller. This is mainly due to the fact that all of the git interaction is abstracted away in EpsilonGit whereas for GitInspector it is part of the analysis engine itself. 
+
+This reduction in code size makes it much easier to maintain and change the code in future. The EpsilonGit solution consists of 1 file which contains all of the query logic and HTML output, the GitInspector analysis code consists of 44 files.
 
 \section{Requirements Satisfied}
 In this section the requirements outlined in Chapter \ref{requirements} are revisited and listed alongside their success criterion. Each requirement is then categorised as being satisfied or unsatisfied.
