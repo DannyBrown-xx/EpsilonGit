@@ -1051,9 +1051,11 @@ else {
 The solution can determine the type of object it should be looking for by first determining if it is an object-model type element, JGit provides an in-built method to test if a hash code is a valid identified in that repository. Elements not part of the object model have an identifier assigned to them that starts with a type identified, this can then be used to determine which type of object to look up.
 
 \subsection{Issues Subclassing JGit Types}
-%TODO: This section
+As explained in Chapter \ref{design} it was decided that the object model elements should subclass their JGit equivalents in order to ensure query developers had access to the entire functionality of the git object model.
 
-% Experimentation and changes necessary as things changed (for example learning more about jGit, epsilon and Java or subclassing jGit types to provide better names in EOL code and hide some of the underlying implementation)
+Initially JGit types were used directly, without being subclassed. This had two main issues. The first issue was that all EOL code had to refer to Commits as RevCommit, Tags as RevTag and so on -- because this is how they were named in JGit. The author envisaged most users using the model element helper methods, and therefore not wanting or needing to know about the internal JGit types -- therefore having this naming scheme was jarring. The second issue was that helped methods could not be added into these classes without editing the JGit library itself, which would mean reduced maintainability as future versions of JGit would not be 'drop in' replacements.
+
+Subclassing JGit types wasn't as straightforward as it was initially thought it might be  because of the way they are constructed. A single type, for example  \code{RevCommit}, can symbolise an entire commit object with all its data available and a commit that has only been partially read into memory and that will throw an exception when certain methods are called. These implementation details were considered conceptually too low level for model engineers to deal with so in EpsilonGit all model element types are completely read into memory. This increases the memory footprint of EpsilonGit and reduces performance but improves usability as users don't have to check the status of a memory element before using it.
 	
 % Summary of what do to to get the system running on your own machine
 \section{Running EpsilonGit}
