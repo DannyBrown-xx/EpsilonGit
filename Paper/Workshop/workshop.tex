@@ -125,9 +125,46 @@ var onlyAuthors = Author.all.excludingAll(Committer.all).sortBy(a | a.getName())
 
 Other languages made available as part of Epsilon can be used to provide other functionality. Epsilon Validation Language (EVL) can validate that commit messages meet standards met by the project maintainer, or Epsilon Generation Language (EGL) can be used to generate HTML documents describing the various attributes of a git repository.
 
-\section{Analysis of Eclipse Modelling Git Repositories}
-Using the EpsilonGit driver and Epsilon Object Language code this workshop will now share some statistics mined from git repositories used by Eclipse Modelling projects.
+EpsilonGit is open source, licensed under the MIT license, and is available for download alongside a number of sample queries on Github \cite{epsilongitgithub}.
 
+\section{Analysis of Eclipse Modelling Git Repositories}
+Using the EpsilonGit driver and Epsilon Object Language code this workshop will now share some statistics mined from git repositories used by the following Eclipse Modelling projects: EMF, Henshin, the GMF runtime, the GMF notation and UML2.
+
+The reader is invited to think about, and optionally implement, some other bespoke queries to be run on these repositories.
+
+\subsection{Absent Authors}
+In git it is possible for the author of some code to not be the person that commits it to a repository. This may be because only a limited amount of people have commit access to a certain repository but other people are allowed and encouraged to contribute via patch files. 
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{../thesis/images/absentauthors}
+	\caption{Computed Absent Authors for Eclipse Modelling Repositories}
+	\label{fig:aa}
+\end{figure} 
+
+The data presented in Figure \ref{fig:aa} shows that EMF has by far the most authors who have not themselves committed to the repository. The GMF runtime and notation repositories both have no absent authors. The data could be interpreted in several ways, you could infer from the high number of absent authors that the EMF project is less accessible for people to get commit access, or that the GMF repositories don't allow absent authors.
+
+\subsection{Most Merges}
+Many of the most popular git workflows make use of branching. Branches in git allow changes to be made on a separate named track diverged from the main (master) set of changes. This allows for example, in the case of a web browser, a new HTML element to be developed in a branch called 'new-html-element' whilst bug fixes can be made on the main branch. This avoids the complication of multiple different people working on multiple different features on one branch and breaking each others code and focus.
+
+Branches are merged back together to share changes that have been made. Determining the number of merge commits in a repository can help a git analyst reason about the development strategy being used by an organisation. In EOL writing to console how many merge commits exist in a repository is possible in one line, as shown in Listing \ref{lst:awesometwo}.
+
+\begin{lstlisting}[caption=Printing number of merge commits in a repository to console, label=lst:awesometwo]
+Commit.all.reject(c | not c.isMergeCommit()).size().println();
+\end{lstlisting}
+
+Figure \ref{fig:mm} displays the data computed by EpsilonGit regarding the number of merge commit in each repository.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=\textwidth]{../thesis/images/mostmerges}
+	\caption{Computed Number of Merge Commits for Eclipse Modelling Repositories}
+	\label{fig:mm}
+\end{figure} 
+
+Again there are several possible interpretations of this data. EMF having a large amount of merge commits could lead you to believe they are using the Forking Workflow \cite{gitcomparingworkflows} or that they are working on a lot of disparate concepts at any one time within their repository that are later merged together. GMF notation having only 1 merge commit implies that the project has a very structured work flow with only one track of development occurring most of the time.
+
+This information could be used by the EMF and GMF teams to make changes to their workflows or determine if their current workflow is working for them. 
 
 %\begin{itemize}
 %  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.jet.git (JET2)
@@ -166,6 +203,8 @@ Currently the system provides read only access to git repositories -- this was a
 It is unknown if there would be benefit to a user in having a model driven interface for making changes to a git repository -- this too could be researched. 
 
 A larger addition to EpsilonGit could be to make it compatible with other popular version control systems -- such as Mercurial and Apache Subversion. Adding in compatibility with these systems, alongside write support, would enable the use of EpsilonGit to migrate from one version control system to another, as well as providing the analysis and querying functionality presented in this report for git.
+
+\clearpage
 
 \bibliographystyle{splncs03}
 \bibliography{references}
