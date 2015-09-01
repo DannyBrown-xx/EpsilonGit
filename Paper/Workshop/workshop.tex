@@ -108,29 +108,46 @@ Tags specify points in history as being important. Typically people use this fun
 Model Driven Engineering (MDE) is an approach to tackle the complexity of data, and how it is interacted with, through the use of high level abstractions called models \cite{modeldrivenengineering} and a set of Domain-specific modelling languages and Transformation engines and generators. "A model is a description of a (part of) systems written in a well-defined language. A well-defined language is a language with well-defined form (syntax), and meaning (semantics), which is suitable for automated interpretation by a computer" \cite{mdaexplained}.
 
 \section{Querying Git Repositories with Epsilon}
+Once a user has installed Epsilon Eclipse and EpsilonGit querying git repositories is as simple as creating a new `.eol` file and editing its run configuration to select which git repository it should act on using a configuration dialog pictured in Figure \ref{fig:configurationdialog}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.6\textwidth]{../thesis/images/configurationdialog}
+	\caption{EpsilonGit configuration dialog}
+	\label{fig:configurationdialog}
+\end{figure} 
+
+Epsilon Object Language code can then be written to the `.eol` file. EOL is a JavaScript inspired language that makes interacting with models easy \cite{epsilonhomepage}. An EOL program to make a sorted list of which authors of a program haven't themselves committed to that program's git repository can be written in one line, as shown in Listing \ref{lst:eolisawesome}.
+
+\begin{lstlisting}[caption=Author vs Committer Information, label=lst:eolisawesome]
+var onlyAuthors = Author.all.excludingAll(Committer.all).sortBy(a | a.getName());
+\end{lstlisting}
+
+Other languages made available as part of Epsilon can be used to provide other functionality. Epsilon Validation Language (EVL) can validate that commit messages meet standards met by the project maintainer, or Epsilon Generation Language (EGL) can be used to generate HTML documents describing the various attributes of a git repository.
 
 \section{Analysis of Eclipse Modelling Git Repositories}
-Compute and present statistics related to the size/activity in the Git repositories of the main Eclipse modelling repositories:
+Using the EpsilonGit driver and Epsilon Object Language code this workshop will now share some statistics mined from git repositories used by Eclipse Modelling projects.
 
-\begin{itemize}
-  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.jet.git (JET2)
-  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.acceleo.git (Acceleo)
-  \item https://github.com/eclipse/xtext.git (Xtext)
-  \item git://git.eclipse.org/gitroot/epsilon/org.eclipse.epsilon.git (Epsilon)
-  \item git://git.eclipse.org/gitroot/mmt/org.eclipse.atl.git (ATL)
-  \item https://git.eclipse.org/r/sirius/org.eclipse.sirius (Sirius)
-  \item git://git.eclipse.org/gitroot/mmt/org.eclipse.qvto.git (QVTo)
-  \item https://git.eclipse.org/r/emf/org.eclipse.emf (EMF)
-  \item https://git.eclipse.org/r/incquery/org.eclipse.incquery (IncQuery)
-  \item https://git.eclipse.org/r/gmf-tooling/org.eclipse.gmf-tooling (GMF Tooling)
-  \item git://git.eclipse.org/gitroot/gmf-runtime/org.eclipse.gmf-runtime.git (GMF Runtime)
-  \item git://git.eclipse.org/gitroot/gmf-notation/org.eclipse.gmf.notation.git  (GMF Notation)
-  \item https://git.eclipse.org/r/ocl/org.eclipse.ocl (OCL)
-  \item https://git.eclipse.org/r/henshin/org.eclipse.emft.henshin (Henshin)
-  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.xpand.git (Xpand)
-  \item https://git.eclipse.org/r/papyrus/org.eclipse.papyrus (Papyrus)
-  \item git://git.eclipse.org/gitroot/uml2/org.eclipse.uml2.git (UML2)
-\end{itemize}
+
+%\begin{itemize}
+%  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.jet.git (JET2)
+%  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.acceleo.git (Acceleo)
+%  \item https://github.com/eclipse/xtext.git (Xtext)
+%  \item git://git.eclipse.org/gitroot/epsilon/org.eclipse.epsilon.git (Epsilon)
+%  \item git://git.eclipse.org/gitroot/mmt/org.eclipse.atl.git (ATL)
+%  \item https://git.eclipse.org/r/sirius/org.eclipse.sirius (Sirius)
+%  \item git://git.eclipse.org/gitroot/mmt/org.eclipse.qvto.git (QVTo)
+%  \item https://git.eclipse.org/r/emf/org.eclipse.emf (EMF)
+%  \item https://git.eclipse.org/r/incquery/org.eclipse.incquery (IncQuery)
+%  \item https://git.eclipse.org/r/gmf-tooling/org.eclipse.gmf-tooling (GMF Tooling)
+%  \item git://git.eclipse.org/gitroot/gmf-runtime/org.eclipse.gmf-runtime.git (GMF Runtime)
+%  \item git://git.eclipse.org/gitroot/gmf-notation/org.eclipse.gmf.notation.git  (GMF Notation)
+%  \item https://git.eclipse.org/r/ocl/org.eclipse.ocl (OCL)
+%  \item https://git.eclipse.org/r/henshin/org.eclipse.emft.henshin (Henshin)
+%  \item git://git.eclipse.org/gitroot/m2t/org.eclipse.xpand.git (Xpand)
+%  \item https://git.eclipse.org/r/papyrus/org.eclipse.papyrus (Papyrus)
+%  \item git://git.eclipse.org/gitroot/uml2/org.eclipse.uml2.git (UML2)
+%\end{itemize}
 
 \section{Conclusions and Further Work}
 Model-Driven Engineering has proven itself to be a highly effective way of dealing with complex structured data -- both in terms of reducing query complexity and enabling more bespoke and complex queries -- and the author thinks that model-driven engineerings role in mining software repositories should be further researched. Performance tests also found that a model driven interface was comparable to and in some cases faster than other git analysis solutions.
