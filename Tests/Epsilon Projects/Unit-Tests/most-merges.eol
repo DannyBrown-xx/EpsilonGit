@@ -1,0 +1,1 @@
+Commit.all.reject(c | not c.isMergeCommit()).size().println();
