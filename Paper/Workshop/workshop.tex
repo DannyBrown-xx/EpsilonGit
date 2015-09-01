@@ -8,6 +8,7 @@
 \usepackage [english]{babel}
 \usepackage [autostyle, english = american]{csquotes}
 \MakeOuterQuote{"}
+\usepackage{float}
 
 \renewcommand\dblfloatpagefraction{.99}
 \renewcommand\dbltopfraction{.99}
@@ -73,6 +74,34 @@ Epsilon is a family of languages and tools for code generation, model-to-model t
 The project being introduced, EpsilonGit, is a driver for Epsilon to enable developers to work on git at a high level abstraction provided by modelling languages to make the job of querying and analysing git repositories conceptually easier and the code produced to do this more concise and easier to understand.  
 
 \section{Background}
+\subsection{The Git Object Model}
+The core of git is a content-addressable filesystem which can store any object and assign it a hashcode by which it can be identified \cite{progit}. There are 4 main types of object stored in this system, known as the git object model, which are shown in Figure \ref{fig:gitobjectmodeldiagram}.
+
+\begin{figure}[h]
+	\centering
+	\includegraphics[width=0.7\textwidth]{../thesis/images/gitobjectmodel}
+	\caption{The relationships between Git Objects}
+	\label{fig:gitobjectmodeldiagram}
+\end{figure} 
+
+\subsubsection{Blob}
+In git a blob is an array of bytes, which can be text or binary data, that is stored in the content-addressable file system. Blobs should not be confused with files as they are just content with no metadata such as filename, in fact if two files are added to git with exactly the same content, and therefore hashcode, they share a blob.
+
+\subsubsection{Tree}
+A tree object in git can be thought of as analogous to a directory in a UNIX file system. For each file in the tree a tuple is stored of the name of file, the hashcode of the blob which contains its content, and a numeric file type code \cite{gitmagic}.
+
+A tree can also contain the names and hashcodes of other trees, allowing for a hierarchical file system, as shown in Figure \ref{fig:gitobjectmodeldiagram}. 
+
+\subsubsection{Commit}
+The commit object type stores information about a snapshot of the blobs and trees in the git repository at a particular time. The information includes the name and email address of the author of changes, the name and email address of the person who made the commit, the UNIX timestamp of the time the commit was made, and a message to explain why changes have been made.
+
+A commit points at one-and-only-one root tree, which contains all the other trees and blobs that form part of that snapshot.
+
+\subsubsection{Tag}
+Tags specify points in history as being important. Typically people use this functionality to mark release points (v1.0, and so on) \cite{gitdocstags}. They contain the hashcode of the 1-and-only-1 commit they point to, a name (such as "v1.0") and a message explaining why the tagged commit is important \cite{gitforcomputerscientists}.
+
+\subsection{Model Driven Engineering}
+
 
 \section{Querying Git Repositories with Epsilon}
 
