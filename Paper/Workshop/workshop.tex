@@ -133,7 +133,22 @@ Compute and present statistics related to the size/activity in the Git repositor
 \end{itemize}
 
 \section{Conclusions and Further Work}
+Model-Driven Engineering has proven itself to be a highly effective way of dealing with complex structured data -- both in terms of reducing query complexity and enabling more bespoke and complex queries -- and the author thinks that model-driven engineerings role in mining software repositories should be further researched. Performance tests also found that a model driven interface was comparable to and in some cases faster than other git analysis solutions.
 
+Whilst the current design and implementation of EpsilonGit matches the requirements set out for this project it would be possible for a future project to build on the work completed for this one to improve EpsilonGit in a number of ways. 
+
+Currently the system provides read only access to git repositories -- this was all that was required to provide query and analysis tools. If the project was continued it would be possible to add write access via the domain specific languages provided by Epsilon. This could allow the following functionality:
+
+\begin{enumerate}
+	\item Authoring of commit messages
+	\item Deletion of commits by using the `git reset` command \cite{gitreset}
+	\item Managing of merging and branching
+	\item Retrospectively changing the name or contact details of authors and committers in the system using git mailmap \cite{gitmailmap}
+\end{enumerate} 
+
+It is unknown if there would be benefit to a user in having a model driven interface for making changes to a git repository -- this too could be researched. 
+
+A larger addition to EpsilonGit could be to make it compatible with other popular version control systems -- such as Mercurial and Apache Subversion. Adding in compatibility with these systems, alongside write support, would enable the use of EpsilonGit to migrate from one version control system to another, as well as providing the analysis and querying functionality presented in this report for git.
 
 \bibliographystyle{splncs03}
 \bibliography{references}
