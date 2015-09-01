@@ -969,7 +969,16 @@ There are several commercial and open source IDEs available which allow their us
 To begin with, the publicly available latest release version of the Epsilon Eclipse package was used -- version 1.2 of Epsilon with Eclipse 4.4 Luna. However, mid-way through the project the author encountered Epsilon Bug \#341481 \cite{epsilonbug}. At this point the author updated to the latest interim release in which this bug had been fixed -- this required the editing of one line of code. 
 
 \subsection{Git}
-Although the git source control management software is not required to run or develop EpsilonGit it was useful in order to validate any... %TODO: Start here tomorrow 
+Although the git source control management software is not required to run or develop EpsilonGit it was useful in order to validate any results from EpsilonGit. The version sued throughout the project was \code{git version 2.3.8 (Apple Git-58)}.
+
+\subsection{Software Libraries}
+In order to make EpsilonGit easy to distribute it was decided that all libraries used would be added as plug-in project dependencies, this meant that it was necessary for users to install any other software alongside EpsilonGit. The following dependencies are used:
+
+\begin{enumerate}
+	\item JGit 3.4.4 \\ A java implementation of the git version control software.
+	\item apache.commons.lang 3.3.1 \\ Various methods which aid development in Java. The \code{HashCodeBuilder} class is used to determine unique hashcodes for Author, Committer and Person model elements.
+	\item apache.commons.collections 3.2.1 \\ Used to provide fast searching of non-object model elements.
+\end{enumerate}
 
 \section{Project Structure}
 The EpsilonGit project is structured as 4 Eclipse plug-in projects, one for each of the main modules discussed in the design chapter and displayed in the EpsilonGit frame of figure \ref{fig:hla}. Eclipse Plug-in projects were used in order to maintain compatibility with Epsilon. These projects are:
