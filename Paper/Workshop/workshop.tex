@@ -54,7 +54,23 @@ This workshop presents a tool, called EpsilonGit, which allow users to write the
 \end{abstract}
 
 \section{Introduction}
+Git is a free and open source distributed version control system \cite{gitintro} that is designed to allow users to manage changes to files, often source files in a software project. This enables developers to "roll back" to a previous version of a file, see the difference between a file at two different times or determine which team member authored a line of code. 
 
+Version control best practices suggest that a developer should be committing code a little at a time and quite often \cite{gitbestpractices}, this makes it a good place to analyse to determine an individual developer or teams working practices in retrospect.
+
+A project manager may want to analyse a git repository to answer questions such as "How large is the average commit size?", "What time of the day are most commits made?" and "Which of my developers is committing the most code that is later replaced?". The answers to these questions may allow improvements in both quality of code and workplace practices.
+
+Mining Software Repositories (MSR) for information to improve Software Engineering practices is a hot area of research right now with an annual dedicated conference \cite{msr2015}. MSR is the process of analysing the rich data available in these repositories to uncover interesting and actionable information about software systems \cite{theroadagainformsr} including identifying pre-existing patterns in code, and automatically linking code to bug reports -- this project aims to aid that discovery. Answering semantically challenging questions such as "Does the git fork flow enable more people to contribute to this project?" could be achieved, potentially changing the shape and attitudes of organisations.
+
+Whilst MSR is a popular research topic a recent paper enumerating the tools used by MSR researchers found that many MSR researchers are using general purpose data mining tools rather than bespoke specialised MSR tools \cite{toolsinminingsoftwarerepositories}.
+
+Model Driven Engineering is an approach to tackle the complexity of data, and how it is interacted with, through the use of high level abstractions called models \cite{modeldrivenengineering} and a set of Domain-specific modelling languages and Transformation engines and generators.   
+	
+Due to the large array of features provided by git and the widespread use of hashes and graph data structures in the underlying system it is often considered to be complex \cite{gitcomplex}\cite{githard}\cite{gitmixedmetaphors}.
+
+Epsilon is a family of languages and tools for code generation, model-to-model transformation, model validation, comparison, migration and refactoring \cite{epsilonhomepage}. Whilst Epsilon comes with support for interacting with EMF, XML and several other types of model formats out-of-the-box it also has a system called the Epsilon Model Connectivity layer which allows developers to implement drivers for other types of models and structured artefacts.
+
+The project being introduced, EpsilonGit, is a driver for Epsilon to enable developers to work on git at a high level abstraction provided by modelling languages to make the job of querying and analysing git repositories conceptually easier and the code produced to do this more concise and easier to understand.  
 
 \section{Background}
 
