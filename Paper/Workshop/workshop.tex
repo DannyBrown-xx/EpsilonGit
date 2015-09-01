@@ -71,7 +71,11 @@ Due to the large array of features provided by git and the widespread use of has
 
 Epsilon is a family of languages and tools for code generation, model-to-model transformation, model validation, comparison, migration and refactoring \cite{epsilonhomepage}. Whilst Epsilon comes with support for interacting with EMF, XML and several other types of model formats out-of-the-box it also has a system called the Epsilon Model Connectivity layer which allows developers to implement drivers for other types of models and structured artefacts.
 
-The project being introduced, EpsilonGit, is a driver for Epsilon to enable developers to work on git at a high level abstraction provided by modelling languages to make the job of querying and analysing git repositories conceptually easier and the code produced to do this more concise and easier to understand.  
+\begin{lstlisting}[caption=List Authors by Number of Commits in Git Bash, label=lst:gitbash]
+git log --format='\%aN <\%aE>' | awk '{arr[\$0]++} END{for (i in arr){print arr[i], i;}}' | sort -rn | cut -d\ -f2-
+\end{lstlisting}
+
+The project being introduced, EpsilonGit, is a driver for Epsilon to enable developers to work on git at a high level abstraction provided by modelling languages to make the job of querying and analysing git repositories conceptually easier. Currently most people "query" their git repositories by viewing their git log or, if they're looking for something more in-depth resulting to complex scripting like that seen in Listing \ref{lst:gitbash} -- EpsilonGit aims to make writing queries for git simpler, more concise and easier to understand.
 
 \section{Background}
 \subsection{The Git Object Model}
@@ -101,7 +105,7 @@ A commit points at one-and-only-one root tree, which contains all the other tree
 Tags specify points in history as being important. Typically people use this functionality to mark release points (v1.0, and so on) \cite{gitdocstags}. They contain the hashcode of the 1-and-only-1 commit they point to, a name (such as "v1.0") and a message explaining why the tagged commit is important \cite{gitforcomputerscientists}.
 
 \subsection{Model Driven Engineering}
-
+Model Driven Engineering (MDE) is an approach to tackle the complexity of data, and how it is interacted with, through the use of high level abstractions called models \cite{modeldrivenengineering} and a set of Domain-specific modelling languages and Transformation engines and generators. "A model is a description of a (part of) systems written in a well-defined language. A well-defined language is a language with well-defined form (syntax), and meaning (semantics), which is suitable for automated interpretation by a computer" \cite{mdaexplained}.
 
 \section{Querying Git Repositories with Epsilon}
 
@@ -126,15 +130,6 @@ Compute and present statistics related to the size/activity in the Git repositor
   \item git://git.eclipse.org/gitroot/m2t/org.eclipse.xpand.git (Xpand)
   \item https://git.eclipse.org/r/papyrus/org.eclipse.papyrus (Papyrus)
   \item git://git.eclipse.org/gitroot/uml2/org.eclipse.uml2.git (UML2)
-\end{itemize}
-
-Possible statistics (can be computed for the lifetime of the repositories or for the last 3 years)
-\begin{itemize}
-  \item Total lines of code
-  \item Lines of code per file extension 
-  \item Number of active committers (e.g. with commits in the last 30 days)
-  \item Median number of files/lines changed per commit (smaller commits are generally better)
-  \item \ldots
 \end{itemize}
 
 \section{Conclusions and Further Work}
