@@ -221,6 +221,16 @@ Commit.all.reject(c | not c.isMergeCommit()).size().println();
 
 \begin{frame}
 	\frametitle{Evaluation, Interpretation and Conclusion}
+	\begin{enumerate}
+		\item Interpretation: EpsilonGit allows queries to be expressed more concisely than in other solutions. It has comparable performance. Multiple Factors: 
+			 \begin{enumerate}
+				\item JGit vs Standard IO
+				\item Java (compiled) vs Python (interpreted)
+				\item Separation of concerns
+			 \end{enumerate}
+		\item Evaluation: Project was success as it fulfilled all acceptance tests and had comparable performance with other solutions
+		\item Conclusion: MDE is a good approach for Mining Software Repositories. More could be done in future to build on work done for this project
+	\end{enumerate}
 \end{frame}
 
 \begin{frame}
