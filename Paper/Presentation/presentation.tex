@@ -119,12 +119,73 @@
 
 \begin{frame}
 	\frametitle{What Is Model Driven Engineering \& Epsilon?}
-	
+	\begin{center}
+	\includegraphics[width=140px]{images/epsilon}
+	\end{center}
+	\begin{enumerate}
+		\item Model Driven Engineering is an approach to tackle the complexity of data, and how it is inter- acted with, through the use of high level abstractions called models and a set of Domain- specific modelling languages and Transformation engines and generators [D. C. Schmidt, 2006].
+		\item Epsilon is a family of languages and tools for code generation, model-to-model transformation, model validation, comparison, migration and refactoring working on models and structured artefacts [Eclipse Foundation, 2015]	
+	\end{enumerate}
+\end{frame}
+
+\section{The Problem}
+\begin{frame}[containsverbatim]
+	\frametitle{Problem Analysis \& Motivation}
+	\begin{enumerate}
+		\item WHAT: Analysing Git is difficult, slow and current solutions don't allow custom queries
+		\item WHY: Hard Problem, Benefits of mining software repositories not realised in mainstream
+		\item WHEN: Since git was released, stats were not considered
+		\item WHO: Project Managers, Organisations, Individuals using millions of repositories affected
+	\end{enumerate}
+	\vspace{1cm}
+	\begin{lstlisting}[caption=A gruesome custom query using Git Bash to list authors by number of commits, label=lst:exampleCode]
+	git log --format='\%aN <\%aE>' | awk '{arr[\$0]++} END{for (i in   arr){print arr[i], i;}}' | sort -rn | cut -d\ -f2-
+	\end{lstlisting}
+\end{frame}
+
+\section{The EpsilonGit Solution}
+\begin{frame}
+	\frametitle{Requirements \& Introducing EpsilonGit}
+	\begin{center}
+		\includegraphics[width=280px]{images/epsilon-git}
+	\end{center}
+	\begin{enumerate}
+		\item Enable complex semantic queries using concise code
+		\item Comparable speed to existing solutions
+		\item First-class integration with Epsilon
+		\item Access to all of git
+	\end{enumerate}
+\end{frame}
+
+\begin{frame}
+	\frametitle{Design, Implementation \& Challenges}
+	\begin{enumerate}
+		\item Design and Implementation took place as part of Agile Methodology
+		\item Integration with Epsilon Model Connectivity via \code{CachedModel}
+		\item JGit used to read git (complications)
+		\item Helper Methods vs Native JGit
+	\end{enumerate}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=200px]{images/epsilon-architecture}
+		\caption{Epsilon Architecture}
+	\end{figure}
 \end{frame}
 
 \begin{frame}[containsverbatim]
-	\begin{lstlisting}[caption=An advanced Git query in EOL, label=lst:exampleCode]
-	
+	\frametitle{Example Query and Analysis Code}
+\begin{lstlisting}[caption=List authors by number of commits using EpsilonGit, label=lst:exampleCode]
+for(author in Author.all.sortBy(a | a.getAllAuthoredCommits().size())) {
+	(author.name + " <" + author.emailAddress + ">").println();
+}	
 	\end{lstlisting}
+
+\begin{lstlisting}[caption=Find Authors who aren't committers, label=lst:exampleCode]
+var onlyAuthors = Author.all.excludingAll(Committer.all).sortBy(a | a.getName());
+\end{lstlisting}
+
+\begin{lstlisting}[caption=Determine how many merges in repository, label=lst:exampleCode]
+Commit.all.reject(c | not c.isMergeCommit()).size().println();
+\end{lstlisting}
 \end{frame}
 \end{document}
