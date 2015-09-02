@@ -11,6 +11,8 @@
 \usepackage[scaled=0.9]{helvet}
 \usepackage{courier,textcomp,amsmath,listings, color}
 \newcommand{\code}[1]{\texttt{#1}}
+\setbeamertemplate{caption}[numbered]
+
 
 % THEME SET UP
 % University colours
@@ -56,173 +58,73 @@
 }
 
 %Presentation information
-\title[EpsilonGit]{EpsilonGit - Advanced Querying of Git Repositories}
-\author[DTB]{Daniel Brown}
+\title[EpsilonGit]{Advanced Querying and Analysis of Git Repositories}
+\author[Daniel Brown]{Daniel Brown\\{\footnotesize Supervised by: Dr. Dimitris Kolovos}}
+
+
 \institute[UoY, CS]{The University of York, Department of Computer Science}
 \date{\today}
 
 \begin{document}
 \frame{\titlepage}
 
-\section{Explanation of Research Problem} %Section title on top of each slide
+\section{Introduction} %Section title on top of each slide
 \begin{frame}
-\frametitle{What is Git?}
-\begin{enumerate}
-	\item Distributed Version Control Software
-	\item Powers popular GitHub social coding platform (96th most popular site worldwide)
-	\item Millions of users managing millions of repositories
-	\item A growing platform...
-	\begin{figure}[H]
-		\centering
-		\includegraphics[width=300px]{images/git-google-trends.png}
-		\caption{The growth of Git relative to other popular version control systems (Google Trends)}
-	\end{figure} 
-\end{enumerate}
-%https://github.com/blog/1724-10-million-repositories
-\end{frame}
-
-\begin{frame}
-\frametitle{How do developers use Git?}
-\begin{enumerate}
-	\item (Sensible) developers make source control the cornerstone of their development
-	\item Small, frequent commits in feature branches
-	\item Accepting pull requests in Open Source communities
-	\item In large-scale projects such as the Linux Kernal, The Roslyn C\# Compiler
-	\item In small scale, entirely local repositories
-\end{enumerate}
-\end{frame}
-
-\begin{frame}
-\frametitle{How do developers query \& analyse their git repositories?}
-\begin{enumerate}
-	\item In short, most don't.
-	\item Due in part to lack of software solutions to help
-	\item Out of the box the best tool for the job is \code{git log}
-\end{enumerate}
-
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=250px]{images/git-log.png}
-	\caption{The output of the \code{git log} command}
-\end{figure} 
-\end{frame}
-
-\begin{frame}
-\frametitle{How do developers query \& analyse their git repositories?}
-\begin{enumerate}
-	\item GitHub provides some additional statistics 
-	\item For developers not using GitHub there is GitInspector or GitStat, they both do roughly the same thing
-	\item \beamergotobutton{\href{https://www.youtube.com/watch?t=36\&v=NjUuAuBcoqs}{Gource Git Visualization Video on YouTube}}\vspace{10 mm}
-\end{enumerate}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=230px]{images/github-analytics-gitinspector-analytics.png}
-	\caption{Left: GitHub repository statistics, Right: The HTML output of GitInspector}
-\end{figure} 
-\end{frame}
-
-\begin{frame}[containsverbatim]
-\frametitle{Pain Points / Oppertunities}
-\begin{enumerate}
-	\item You get the data provided by the queries GitHub/GitInspector makes available and nothing more
-	\item No advanced queries. Can't write a query such as the one shown in Listing \ref{lst:exampleCode}
-	\item You get the data in the formats provided by GitHub/GitInspector and nothing more
-\end{enumerate}
-
-\begin{lstlisting}[caption=An advanced Git query in EOL, label=lst:exampleCode]
-File.all.select(f|f.lines > 200 and 
-  (f.lastModifiedBy = "joe@foo.com" or f.lastModifiedDay = "Wednesday"))
-  \end{lstlisting}
-\end{frame}
-
-\begin{frame}
-\frametitle{Proposed Solution}
-\begin{enumerate}
-	\item A driver for Epsilon through the Epsilon Model Connectivity Layer
-	\item This allows for all the cool stuff Epsilon does to work on Git
-\end{enumerate}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=290px]{images/epsilon-architecture}
-	\caption{The Architecture of Epsilon}
-\end{figure} 
+	\frametitle{Outline of Presentation}
+	\begin{enumerate}
+		\item Literature Review \begin{enumerate}
+									\item What is Git?
+									\item Existing Solutions for Querying and Analysing Git
+									\item What Is Model Driven Engineering \& Epsilon?
+								\end{enumerate} 
+		\item Problem Analysis \& Motivation
+		\item Requirements \& Introducing EpsilonGit
+		\item Design, Implementation and Challenges
+		\item Example Query and Analysis Code
+		\item Comparison to Existing Solutions
+		\item Evaluation, Interpretation and Conclusion
+		\item Q\&A
+	\end{enumerate}
 \end{frame}
 
 \section{Literature Review}
 \begin{frame}
-\frametitle{Literature Review}
-\begin{enumerate}
-	\item Literature review undertaken to:
-		\begin{enumerate} 
-			\item determine what could be done that was novel
-			\item find alternative solutions
-			\item see what existing research could be built upon
-		\end{enumerate}
-	\item Found that no-one has published any papers about a model-driven engineering approach to interfacing with git or any VCS
-	\item The metamodel for git hasn't been formalised (though object model is well understood)
-	\item Lots of information about MDE (with Epsilon) available 
-\end{enumerate}
-\end{frame}
-
-\section{Plan to conduct work}
-
-\begin{frame}
-\frametitle{Planning my Research \& Planning}	
-\begin{enumerate}
-	\item Literature Review
-	\item Small scale tests (EMF generation vs Epsilon Model Connectivity etc.)
-	\item Plan implementation based on results of tests
-\end{enumerate}	
-\end{frame}
-
-
-\begin{frame}
-\frametitle{Planning Implementation Development}	
-\begin{enumerate}
-	\item Initial research amd discussion with supervisor suggests EMC is the way to go
-	\item TDD, Integration Tests etc
-	\item Interface with Git Object Model via EMC interfaces
-	\item Agile is the best buzzword
-\end{enumerate}	
-\end{frame}
-
-\begin{frame}
-\frametitle{Planning report, presentation \& workshop}	
-\begin{enumerate}
-	\item Feature freeze in mid-July. Implementation finish by August.
-	\item Final four weeks dedicated to writing report/workshop/presentation
-	\item Build on this presentation. Build on notes collected in GitHub Wiki over course of project.
+	\frametitle{What is Git?}
+	\begin{enumerate}
+		\item Distributed Version Control System
+		\item Internally an Content Addressable Filesystem comprising of Blobs, Trees, Commits and Tags [S. Chacon and B. Straub, 2014]
+		\item Cornerstone of the development process for millions of users managing millions of repositories including on Social Coding platform Github [B. Doll, 2013].
+		\item Growing...
 	\begin{figure}[H]
 		\centering
-		\includegraphics[width=290px]{images/github-wiki}
-		\caption{The EpsilonGit GitHub wiki is used to keep track of information to use in reports}
-	\end{figure} 
-\end{enumerate}	
+		\includegraphics[width=250px]{images/git-google-trends.png}
+		\caption{The growth of Git relative to other popular version control systems (Google Trends)}
+	\end{figure}
+	\end{enumerate}
 \end{frame}
 
-
-\section{Plan to evaluate work}
 \begin{frame}
-\frametitle{How will EpsilonGit be evaluated?}
-\begin{enumerate}
-	\item No direct competitor to compare against so...
-	\item Compare against the existing git analysis software mentioned previously (speed, range of features, ease of use, etc.)
-	\item Compare with other Epsilon drivers (speed)
-	\item Compare against aims and objectives of project
-\end{enumerate}	
+	\frametitle{Existing Solutions for Querying and Analysing Git}
+	\begin{enumerate}
+		\item Projects hosted in Github can use Github Graphs
+		\item Local solutions include GitInspector and Gitana
+		\item Most people just use the built in \code{git log} command
+	\end{enumerate}
+	\begin{figure}[H]
+		\centering
+		\includegraphics[width=350px]{images/existingsolutions}
+		\caption{The output of Github Graphs, the \code{git log} command and GitInspector}
+	\end{figure}
 \end{frame}
 
-\section{Finishing up}
 \begin{frame}
-\frametitle{Thanks for listening}
-\begin{figure}[H]
-	\centering
-	\includegraphics[width=250px]{images/epsilon-git.png}
-\end{figure} 
-\begin{enumerate}
-	\item I will now answer any questions
-	\item You can read more about the project as it progresses at \beamergotobutton{\href{http://dannybrown.net}{dannybrown.net}}\vspace{10 mm}
-\end{enumerate}
+	\frametitle{What Is Model Driven Engineering \& Epsilon?}
+	
 \end{frame}
 
+\begin{frame}[containsverbatim]
+	\begin{lstlisting}[caption=An advanced Git query in EOL, label=lst:exampleCode]
+	
+	\end{lstlisting}
+\end{frame}
 \end{document}
