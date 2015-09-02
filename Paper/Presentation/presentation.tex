@@ -13,6 +13,7 @@
 \newcommand{\code}[1]{\texttt{#1}}
 \setbeamertemplate{caption}[numbered]
 \usepackage{diagbox}
+\usepackage{datetime}
 
 
 % THEME SET UP
@@ -64,7 +65,8 @@
 
 
 \institute[UoY, CS]{The University of York, Department of Computer Science}
-\date{\today}
+\newdate{date}{03}{09}{2015}
+\date{\displaydate{date}}
 
 \begin{document}
 \frame{\titlepage}
@@ -93,7 +95,7 @@
 	\frametitle{What is Git?}
 	\begin{enumerate}
 		\item Distributed Version Control System
-		\item Internally an Content Addressable Filesystem comprising of Blobs, Trees, Commits and Tags [S. Chacon and B. Straub, 2014]
+		\item Internally, a Content Addressable Filesystem comprising of Blobs, Trees, Commits and Tags [S. Chacon and B. Straub, 2014]
 		\item Cornerstone of the development process for millions of users managing millions of repositories including on Social Coding platform Github [B. Doll, 2013].
 		\item Growing...
 	\begin{figure}[H]
@@ -235,8 +237,7 @@ Commit.all.reject(c | not c.isMergeCommit()).size().println();
 
 \begin{frame}
 	\frametitle{Q\&A}
-	\textit{Thank-you for listening} -- I will now take any questions about EpsilonGit and the project to build it
-	\begin{figure}[h]
+	\textit{Thank-you for listening} -- I will now take any questions	\begin{figure}[h]
 	\centering
 	\includegraphics[width=\textwidth]{../thesis/images/epsilonintegration}
 	\caption{EpsilonGit configuration dialog}
